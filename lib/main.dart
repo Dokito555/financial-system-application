@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/common/constants.dart';
 import 'package:flutter_financial/presentation/pages/home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+late Box box;
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: AppConstants.APP_TITLE,
+      title: APP_NAME,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

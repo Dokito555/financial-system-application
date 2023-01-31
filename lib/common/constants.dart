@@ -1,3 +1,1 @@
-class AppConstants {
-  static const APP_TITLE = "Finance App";
-}
+const APP_NAME = "Finance App";
