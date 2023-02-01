@@ -15,7 +15,7 @@ class Transaction extends Equatable {
   String title;
   String nominal;
   bool isPemasukan;
-  String currentDate;
+  DateTime currentDate;
   String description;
   
   @override
@@ -29,3 +29,5 @@ class Transaction extends Equatable {
   ];
 
 }
+
+//flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs

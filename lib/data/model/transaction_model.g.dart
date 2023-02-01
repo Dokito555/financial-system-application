@@ -12,7 +12,7 @@ TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       nominal: json['nominal'] as String,
       isPemasukan: json['isPemasukan'] as bool,
-      currentDate: json['currentDate'] as String,
+      currentDate: DateTime.parse(json['currentDate'] as String),
       description: json['description'] as String,
     );
 
@@ -22,6 +22,6 @@ Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
       'title': instance.title,
       'nominal': instance.nominal,
       'isPemasukan': instance.isPemasukan,
-      'currentDate': instance.currentDate,
+      'currentDate': instance.currentDate.toIso8601String(),
       'description': instance.description,
     };
