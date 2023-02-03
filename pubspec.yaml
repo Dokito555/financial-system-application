@@ -46,6 +46,7 @@ dependencies:
   path_provider: ^2.0.12
   sqflite: ^2.2.4+1
   get_it: ^7.2.0
+  hive_generator: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 class Transaction extends Equatable {
+  int id;
+  String title;
+  String nominal;
+  bool isPemasukan;
+  DateTime currentDate;
+  String description;
 
   Transaction({
     required this.id,
@@ -11,16 +17,10 @@ class Transaction extends Equatable {
     required this.description
   });
 
-  int id;
-  String title;
-  String nominal;
-  bool isPemasukan;
-  DateTime currentDate;
-  String description;
-  
   @override
   // TODO: implement props
   List<Object?> get props => [
+    id,
     title,
     nominal,
     isPemasukan,
@@ -29,5 +29,3 @@ class Transaction extends Equatable {
   ];
 
 }
-
-//flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
