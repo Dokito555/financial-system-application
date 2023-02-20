@@ -28,7 +28,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  # 
+  # Integrate Swift Pods as Static Libraries
   use_frameworks!
   use_modular_headers!
   # End

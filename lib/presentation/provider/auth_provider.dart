@@ -18,9 +18,9 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password
   }) async {
+    _status = Status.Loading;
+    notifyListeners();
     try {
-      _status = Status.Loading;
-      notifyListeners();
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email, 
         password: password
@@ -56,9 +56,9 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password
   }) async {
+    _status = Status.Loading;
+    notifyListeners();
     try {
-      _status = Status.Loading;
-      notifyListeners();
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, 
         password: password
@@ -91,9 +91,9 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<String> authSignOut() async {
+    _status = Status.Loading;
+    notifyListeners();
     try {
-      _status = Status.Loading;
-      notifyListeners();
       await _firebaseAuth.signOut();
       _status = Status.Loaded;
       notifyListeners();
