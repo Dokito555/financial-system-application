@@ -4,5 +4,8 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<!-- enable internet on macOS -->
+	<key>com.apple.security.network.client</key>
+  	<true/>
 </dict>
 </plist>
