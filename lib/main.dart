@@ -7,12 +7,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/page_router.dart';
 import 'package:flutter_financial/presentation/provider/auth_provider.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'common/constants.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -26,6 +28,8 @@ Future<void> main() async {
       child: MyApp(),
     )
   );
+  // [!!!] Need to check on this [!!!]
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
