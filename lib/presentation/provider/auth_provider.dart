@@ -33,12 +33,12 @@ class AuthProvider extends ChangeNotifier {
         print('No user found for that email.');
         _status = Status.Error;
         notifyListeners();
-        return _message = 'Error --> ${e.code}';
+        return _message = 'No user found for that email';
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
         _status = Status.Error;
         notifyListeners();
-        return _message = 'Error --> ${e.code}';
+        return _message = 'Wrong password provided for that user';
       }
       print('Error --> $e');
       _status = Status.Error;
@@ -71,12 +71,12 @@ class AuthProvider extends ChangeNotifier {
         print('The password provided is too weak.');
         _status = Status.Error;
         notifyListeners();
-        return _message = 'Error --> ${e.code}';
+        return _message = 'The password provided is too weak';
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
         _status = Status.Error;
          notifyListeners();
-        return _message = 'Error --> ${e.code}';
+        return _message = 'he account already exists for that email';
       }
       print('Error --> $e');
       _status = Status.Error;
@@ -90,7 +90,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<String> authSignOut() async {
+  Future<String> authLogout() async {
     _status = Status.Loading;
     notifyListeners();
     try {

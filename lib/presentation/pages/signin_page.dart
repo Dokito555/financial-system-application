@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/common/constants.dart';
-import 'package:flutter_financial/presentation/provider/auth_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/state_enum.dart';
+import '../provider/auth_provider.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
 
   final GlobalKey<FormState> _addPointKey = GlobalKey<FormState>();
   late String email;
@@ -54,14 +54,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text('Already have an account?'),
+                          const Text('Doesn\'t have an account?'),
                           TextButton(
                             child: const Text(
-                              'Login',
+                              'Sign Up',
                               style: TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, AppRouteConstant.signInPageRoute);
+                              Navigator.pushReplacementNamed(context, AppRouteConstant.signUpPageRoute);
                             },
                           )
                         ],
@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(10),
           child: const Text(
-            'Sign Up',
+            'Login',
             style: TextStyle(fontSize: 20),
           )
         ),
@@ -185,7 +185,7 @@ class _SignUpPageState extends State<SignUpPage> {
       
       _onLoading();
 
-      await authProvider.createUserWithEmailPassword(email: email, password: password);
+      await authProvider.authSignInEmailPassword(email: email, password: password);
 
       if (authProvider.status == Status.Error) {
         Fluttertoast.showToast(
@@ -218,7 +218,7 @@ class _SignUpPageState extends State<SignUpPage> {
         height: 50,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
-        child: const Text('Sign Up'),
+        child: const Text('Login'),
         onPressed: () async {
           if (!_addPointKey.currentState!.validate()) {
             return;
