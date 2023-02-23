@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/common/constants.dart';
-import 'package:flutter_financial/presentation/provider/auth_provider.dart';
+import 'package:flutter_financial/presentation/provider/auth_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/state_enum.dart';
+import '../../core/routes/route_paths.dart';
+import '../../core/utility/state_enum.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -61,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               style: TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, AppRouteConstant.signInPageRoute);
+                              Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
                             },
                           )
                         ],
@@ -167,7 +166,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _loginButton(BuildContext context) {
 
-    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+    var authProvider = Provider.of<AuthService>(context, listen: false);
 
     void _onLoading() {
       showDialog(
@@ -195,14 +194,14 @@ class _SignUpPageState extends State<SignUpPage> {
           timeInSecForIosWeb: 1
         );
         Navigator.pop(context);
-      } else if (authProvider.status == Status.Loaded) {
+      } else if (authProvider.status == Status.Success) {
         Fluttertoast.showToast(
           msg: authProvider.message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1
         );
-        Navigator.pushReplacementNamed(context, AppRouteConstant.homeRoute);
+        Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
       } else {
         Fluttertoast.showToast(
           msg: 'Something\'s wrong please wait',

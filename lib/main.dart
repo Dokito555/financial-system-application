@@ -4,12 +4,14 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/page_router.dart';
-import 'package:flutter_financial/presentation/provider/auth_provider.dart';
+import 'package:flutter_financial/core/routes/page_router.dart';
+import 'package:flutter_financial/presentation/provider/auth_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
-import 'common/constants.dart';
+import 'core/routes/route_paths.dart';
+import 'core/utility/constants.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -22,13 +24,13 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
+          create: (_) => AuthService(),
         )
       ],
       child: MyApp(),
     )
   );
-  // [!!!] Need to check on this [!!!]
+  // [!!!] NEED TO CHECK ON THIS MIGHT BE AN ERROR [!!!]
   FlutterNativeSplash.remove();
 }
 
@@ -46,11 +48,16 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // Checking User
     user = FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
-        print('User is currently signed out!');
+        if (kDebugMode) {
+          print('User is currently signed out!');
+        }
       } else {
-        print('User is signed in!');
+        if (kDebugMode) {
+          print('User is signed in!');
+        }
       }
     });
   }
@@ -64,7 +71,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: PageRouter.generateRoute,
-      initialRoute: FirebaseAuth.instance.currentUser == null ? AppRouteConstant.signInPageRoute : AppRouteConstant.homeRoute,
+      initialRoute: FirebaseAuth.instance.currentUser == null ? AppRoutePaths.signInPageRoute : AppRoutePaths.homeRoute,
     );
   }
 

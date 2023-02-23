@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/common/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/state_enum.dart';
-import '../provider/auth_provider.dart';
+import '../../core/routes/route_paths.dart';
+import '../../core/utility/state_enum.dart';
+import '../provider/auth_service.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -61,7 +60,7 @@ class _SignInPageState extends State<SignInPage> {
                               style: TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, AppRouteConstant.signUpPageRoute);
+                              Navigator.pushReplacementNamed(context, AppRoutePaths.signUpPageRoute);
                             },
                           )
                         ],
@@ -167,7 +166,7 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget _loginButton(BuildContext context) {
 
-    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+    var authProvider = Provider.of<AuthService>(context, listen: false);
 
     void _onLoading() {
       showDialog(
@@ -195,14 +194,14 @@ class _SignInPageState extends State<SignInPage> {
           timeInSecForIosWeb: 1
         );
         Navigator.pop(context);
-      } else if (authProvider.status == Status.Loaded) {
+      } else if (authProvider.status == Status.Success) {
         Fluttertoast.showToast(
           msg: authProvider.message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1
         );
-        Navigator.pushReplacementNamed(context, AppRouteConstant.homeRoute);
+        Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
       } else {
         Fluttertoast.showToast(
           msg: 'Something\'s wrong please wait',
