@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
+import '../components/loading.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -48,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       _header(context),
                       _signUpForm(context),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 16,),
                       _loginButton(context),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -168,21 +169,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
     var authProvider = Provider.of<AuthService>(context, listen: false);
 
-    void _onLoading() {
-      showDialog(
-        context: context, 
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      );
-    }
-
     Future<void> signUp() async {
       
-      _onLoading();
+      onLoading;
 
       await authProvider.createUserWithEmailPassword(email: email, password: password);
 

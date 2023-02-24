@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
+import '../components/loading.dart';
 import '../provider/auth_service.dart';
 
 class SignInPage extends StatefulWidget {
@@ -48,7 +49,9 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       _header(context),
                       _signUpForm(context),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 16,),
+                      _forgotPassword(context),
+                      const SizedBox(height: 16,),
                       _loginButton(context),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -164,25 +167,61 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  Widget _forgotPassword(BuildContext context) {
+
+    Future<void> forgotPassword() async {
+
+      var authProvider = Provider.of<AuthService>(context, listen: false);
+
+      onLoading(context);
+
+      await authProvider.authResetPassword(email: email);
+
+      if (authProvider.status == Status.Error) {
+        Fluttertoast.showToast(
+          msg: authProvider.message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1
+        );
+        Navigator.pop(context);
+        print(authProvider.message);
+      } else if (authProvider.status == Status.Success) {
+        Fluttertoast.showToast(
+          msg: authProvider.message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Something\'s wrong please wait',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1
+        );
+        Navigator.pop(context);
+      }
+
+      Navigator.pop(context);
+
+    }
+
+    return TextButton(
+      onPressed: () {
+        forgotPassword();
+      },
+      child: const Text('Forgot Password?'),
+    );
+  }
+
   Widget _loginButton(BuildContext context) {
 
     var authProvider = Provider.of<AuthService>(context, listen: false);
 
-    void _onLoading() {
-      showDialog(
-        context: context, 
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      );
-    }
-
     Future<void> signUp() async {
       
-      _onLoading();
+      onLoading;
 
       await authProvider.authSignInEmailPassword(email: email, password: password);
 
