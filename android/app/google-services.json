@@ -29,6 +29,13 @@
             {
               "client_id": "179517236530-rntc6eic9f0ed1oepsneucr2pa94pcuo.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "179517236530-tcvv4dmi79toa5loic90j95tdbsv1n0k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterFinancial"
+              }
             }
           ]
         }

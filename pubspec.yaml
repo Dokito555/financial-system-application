@@ -52,6 +52,7 @@ dependencies:
   cloud_firestore: ^4.2.0
   fluttertoast: ^8.0.9
   flutter_native_splash: ^2.2.18
+  firebase_crashlytics: ^3.0.15
 
 dev_dependencies:
   flutter_test:

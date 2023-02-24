@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/routes/page_router.dart';
@@ -15,11 +16,22 @@ import 'core/utility/constants.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
   runApp(
     MultiProvider(
       providers: [
@@ -27,9 +39,10 @@ Future<void> main() async {
           create: (_) => AuthService(),
         )
       ],
-      child: MyApp(),
+      child: const MyApp(),
     )
   );
+
   // [!!!] NEED TO CHECK ON THIS MIGHT BE AN ERROR [!!!]
   FlutterNativeSplash.remove();
 }
@@ -40,7 +53,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
+//com.example.flutterFinancial;
 class _MyAppState extends State<MyApp> {
 
   late StreamSubscription<User?> user;
