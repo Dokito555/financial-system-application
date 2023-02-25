@@ -20,3 +20,7 @@ class ConnectionFailure extends Failure {
 class DatabaseFailure extends Failure {
   DatabaseFailure(super.message);
 }
+
+class FirebaseFailure extends Failure {
+  FirebaseFailure(super.message);
+}
