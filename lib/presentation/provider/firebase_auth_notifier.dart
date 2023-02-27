@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/error/failure.dart';
-import 'package:flutter_financial/core/usecase/usecase.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/reset_password.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signIn.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signOut.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signUp.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../core/utility/state_enum.dart';
 
+@injectable
 class FirebaseAuthNotifier extends ChangeNotifier {
 
   FirebaseAuthSignUp firebaseAuthSignUp;

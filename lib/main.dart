@@ -8,17 +8,21 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/routes/page_router.dart';
-import 'package:flutter_financial/presentation/provider/auth_service.dart';
+import 'package:flutter_financial/injection.dart';
+import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:injectable/injectable.dart';
 import 'package:provider/provider.dart';
 import 'core/routes/route_paths.dart';
 import 'core/utility/constants.dart';
 import 'firebase_options.dart';
+import 'package:flutter_financial/injection.dart' as di;
 
 Future<void> main() async {
 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -32,18 +36,22 @@ Future<void> main() async {
     return true;
   };
 
+  // initialize dependency injection
+  await di.configureDependencies(
+    env: Environment.prod
+  );
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => AuthService(),
+          create: (_) => sl<FirebaseAuthNotifier>(),
         )
       ],
       child: const MyApp(),
     )
   );
 
-  // [!!!] NEED TO CHECK ON THIS MIGHT BE AN ERROR [!!!]
   FlutterNativeSplash.remove();
 }
 
@@ -53,7 +61,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-//com.example.flutterFinancial;
+
 class _MyAppState extends State<MyApp> {
 
   late StreamSubscription<User?> user;
@@ -74,17 +82,19 @@ class _MyAppState extends State<MyApp> {
       }
     });
   }
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: APP_NAME,
+      title: applicationName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      onGenerateRoute: PageRouter.generateRoute,
       initialRoute: FirebaseAuth.instance.currentUser == null ? AppRoutePaths.signInPageRoute : AppRoutePaths.homeRoute,
+      navigatorObservers: [routeObserver],
+      onGenerateRoute: PageRouter.generateRoute,
     );
   }
 

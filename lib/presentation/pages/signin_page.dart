@@ -1,10 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
+import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:provider/provider.dart';
 import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
 import '../components/loading.dart';
-import '../provider/auth_service.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -48,7 +49,7 @@ class _SignInPageState extends State<SignInPage> {
                   child: Column(
                     children: [
                       _header(context),
-                      _signUpForm(context),
+                      _signInForm(context),
                       const SizedBox(height: 16,),
                       _forgotPassword(context),
                       const SizedBox(height: 16,),
@@ -106,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget _signUpForm(BuildContext context) {
+  Widget _signInForm(BuildContext context) {
 
     return 
         Column(
@@ -171,35 +172,20 @@ class _SignInPageState extends State<SignInPage> {
 
     Future<void> forgotPassword() async {
 
-      var authProvider = Provider.of<AuthService>(context, listen: false);
+      var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
       onLoading(context);
 
-      await authProvider.authResetPassword(email: email);
+      await authNotifier.authResetPassword(email: email);
 
-      if (authProvider.status == Status.Error) {
-        Fluttertoast.showToast(
-          msg: authProvider.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1
-        );
+      if (authNotifier.status == Status.Error) {
+        ShowToast.toast(authNotifier.message);
         Navigator.pop(context);
-        print(authProvider.message);
-      } else if (authProvider.status == Status.Success) {
-        Fluttertoast.showToast(
-          msg: authProvider.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+        print(authNotifier.message);
+      } else if (authNotifier.status == Status.Success) {
+        ShowToast.toast(authNotifier.message);
       } else {
-        Fluttertoast.showToast(
-          msg: 'Something\'s wrong please wait',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+        ShowToast.toast(authNotifier.message);
         Navigator.pop(context);
       }
 
@@ -217,39 +203,29 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget _loginButton(BuildContext context) {
 
-    var authProvider = Provider.of<AuthService>(context, listen: false);
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
-    Future<void> signUp() async {
-      
+    Future<void> signIn() async {
+
       onLoading;
 
-      await authProvider.authSignInEmailPassword(email: email, password: password);
+      await authNotifier.authSignInEmailPassword(email: email, password: password);
 
-      if (authProvider.status == Status.Error) {
-        Fluttertoast.showToast(
-          msg: authProvider.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1
-        );
-        Navigator.pop(context);
-      } else if (authProvider.status == Status.Success) {
-        Fluttertoast.showToast(
-          msg: authProvider.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+      if (authNotifier.status == Status.Error) {
+        print(authNotifier.message);
+        ShowToast.toast(authNotifier.message);
+      } else if
+      (authNotifier.status == Status.Success) {
+        print(authNotifier.message);
+        ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Something\'s wrong please wait',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+      } else 
+      {
+        print(authNotifier.message);
+        ShowToast.toast(authNotifier.message);
         Navigator.pop(context);
       }
+
     }
  
     return Container(
@@ -261,7 +237,7 @@ class _SignInPageState extends State<SignInPage> {
           if (!_addPointKey.currentState!.validate()) {
             return;
           }
-          signUp();
+          signIn();
         },
       )
     );

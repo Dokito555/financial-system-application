@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/presentation/components/loading.dart';
+import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
-import '../provider/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,37 +64,27 @@ class _HomePageState extends State<HomePage> {
   Widget _logoutButton(BuildContext context) {
 
 
-    var authProvider = Provider.of<AuthService>(context, listen: false);
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
-    void _onLoading() {
-      showDialog(
-        context: context, 
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      );
-    }
+    onLoading(context);
 
     Future<void> _logout() async {
 
-      _onLoading();
+      onLoading(context);
 
-      await authProvider.authLogout();
+      await authNotifier.authSignOut();
 
-      if (authProvider.status == Status.Error) {
+      if (authNotifier.status == Status.Error) {
         Fluttertoast.showToast(
-          msg: authProvider.message,
+          msg: authNotifier.message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1
         );
         Navigator.pop(context);
-      } else if (authProvider.status == Status.Success) {
+      } else if (authNotifier.status == Status.Success) {
         Fluttertoast.showToast(
-          msg: authProvider.message,
+          msg: authNotifier.message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1

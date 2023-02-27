@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/presentation/provider/auth_service.dart';
+import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
 import '../components/loading.dart';
+import '../components/show_toast.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -167,37 +169,27 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _loginButton(BuildContext context) {
 
-    var authProvider = Provider.of<AuthService>(context, listen: false);
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
     Future<void> signUp() async {
       
       onLoading;
 
-      await authProvider.createUserWithEmailPassword(email: email, password: password);
+      await authNotifier.authSignUpEmailPassword(email: email, password: password);
 
-      if (authProvider.status == Status.Error) {
-        Fluttertoast.showToast(
-          msg: authProvider.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1
-        );
+      if (authNotifier.status == Status.Error) {
+        ShowToast.toast(authNotifier.message);
         Navigator.pop(context);
-      } else if (authProvider.status == Status.Success) {
+      } else if (authNotifier.status == Status.Success) {
         Fluttertoast.showToast(
-          msg: authProvider.message,
+          msg: authNotifier.message,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1
         );
         Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
       } else {
-        Fluttertoast.showToast(
-          msg: 'Something\'s wrong please wait',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+        ShowToast.toast(authNotifier.message);
         Navigator.pop(context);
       }
     }
