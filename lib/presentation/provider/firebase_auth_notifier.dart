@@ -42,7 +42,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Loading;
+        _status = Status.Success;
         _message = 'Sign up success';
         notifyListeners();
       }
@@ -63,7 +63,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Loading;
+        _status = Status.Success;
         _message = 'Sign in success';
         notifyListeners();
       }
@@ -81,7 +81,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Loading;
+        _status = Status.Success;
         _message = 'Sign out success';
         notifyListeners();
       }
@@ -101,7 +101,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Loading;
+        _status = Status.Success;
         _message = 'Please reset your password';
         notifyListeners();
       }

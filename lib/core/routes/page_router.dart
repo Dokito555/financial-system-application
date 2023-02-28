@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/routes/route_paths.dart';
-import 'package:flutter_financial/presentation/pages/home_page.dart';
+import 'package:flutter_financial/presentation/pages/dashboard/home_page.dart';
 import 'package:flutter_financial/presentation/pages/signin_page.dart';
 import 'package:flutter_financial/presentation/pages/signup_page.dart';
 

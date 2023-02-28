@@ -58,22 +58,10 @@ class FirebaseAuthRepositoryImpl extends FirebaseAuthRepository {
   @override
   Future<Either<Failure, UserCredential>> authSignUpEmailPassword(String email, String password) async {
     try {
-      final result = await remoteDataSource.authSignInEmailPassword(email, password);
+      final result = await remoteDataSource.authSignUpEmailPassword(email, password);
       return Right(result);
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to network'));
-    } on FirebaseAuthException catch (e) {
-      if (kDebugMode) {
-        print('Failed with error code: ${e.code}');
-        return Left(FirebaseFailure('Failed with error code: ${e.code}'));
-      }
-      if (e.code == 'weak-password') {
-        return Left(FirebaseFailure('The password provided is too weak'));
-      }
-      if (e.code == 'email-already-in-use') {
-        return Left(FirebaseFailure('The account already exists for that email'));
-      }
-      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
     }
   }
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/loading.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../core/routes/route_paths.dart';
-import '../../core/utility/state_enum.dart';
+import '../../../core/routes/route_paths.dart';
+import '../../../core/utility/state_enum.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -66,44 +67,23 @@ class _HomePageState extends State<HomePage> {
 
     var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
-    onLoading(context);
-
-    Future<void> _logout() async {
-
-      onLoading(context);
+    Future<void> logout() async {
 
       await authNotifier.authSignOut();
 
       if (authNotifier.status == Status.Error) {
-        Fluttertoast.showToast(
-          msg: authNotifier.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1
-        );
-        Navigator.pop(context);
+        ShowToast.toast(authNotifier.message);
       } else if (authNotifier.status == Status.Success) {
-        Fluttertoast.showToast(
-          msg: authNotifier.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
+        ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
       } else {
-        Fluttertoast.showToast(
-          msg: 'Something\'s wrong please wait',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
-        Navigator.pop(context);
+        ShowToast.toast(authNotifier.message);
       }
     }
 
     return IconButton(
       onPressed: () async {
-        _logout();
+        logout();
       }, 
       icon: const Icon(Icons.logout)
     );

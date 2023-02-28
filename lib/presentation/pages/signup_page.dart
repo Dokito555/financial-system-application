@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       _header(context),
                       _signUpForm(context),
                       const SizedBox(height: 16,),
-                      _loginButton(context),
+                      _signUpButton(context),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -167,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _loginButton(BuildContext context) {
+  Widget _signUpButton(BuildContext context) {
 
     var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
@@ -179,15 +179,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
       if (authNotifier.status == Status.Error) {
         ShowToast.toast(authNotifier.message);
-        Navigator.pop(context);
+        // Navigator.pop(context);
       } else if (authNotifier.status == Status.Success) {
-        Fluttertoast.showToast(
-          msg: authNotifier.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1
-        );
-        Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
+        ShowToast.toast(authNotifier.message);
+        Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
       } else {
         ShowToast.toast(authNotifier.message);
         Navigator.pop(context);

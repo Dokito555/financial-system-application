@@ -174,22 +174,16 @@ class _SignInPageState extends State<SignInPage> {
 
       var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
-      onLoading(context);
 
       await authNotifier.authResetPassword(email: email);
 
       if (authNotifier.status == Status.Error) {
         ShowToast.toast(authNotifier.message);
-        Navigator.pop(context);
-        print(authNotifier.message);
       } else if (authNotifier.status == Status.Success) {
         ShowToast.toast(authNotifier.message);
       } else {
         ShowToast.toast(authNotifier.message);
-        Navigator.pop(context);
       }
-
-      Navigator.pop(context);
 
     }
 
@@ -207,23 +201,15 @@ class _SignInPageState extends State<SignInPage> {
 
     Future<void> signIn() async {
 
-      onLoading;
-
       await authNotifier.authSignInEmailPassword(email: email, password: password);
 
       if (authNotifier.status == Status.Error) {
-        print(authNotifier.message);
         ShowToast.toast(authNotifier.message);
-      } else if
-      (authNotifier.status == Status.Success) {
-        print(authNotifier.message);
+      } else if (authNotifier.status == Status.Success) {
         ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
-      } else 
-      {
-        print(authNotifier.message);
+      } else {
         ShowToast.toast(authNotifier.message);
-        Navigator.pop(context);
       }
 
     }

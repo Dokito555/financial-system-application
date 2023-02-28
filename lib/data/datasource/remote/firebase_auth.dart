@@ -39,7 +39,7 @@ class FirebaseAuthenticationRemoteDataSourceImpl extends FirebaseAuthenticationR
 
   @override
   Future<void> resetPassword(String email) async {
-    return await firebaseAuth.signOut();
+    return await firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
 }
