@@ -21,7 +21,7 @@ class _SignInPageState extends State<SignInPage> {
   late String password;
 
   TextEditingController emailController = TextEditingController();
-  late TextEditingController passwordController;
+  TextEditingController passwordController = TextEditingController();
 
   bool _isPasswordHide = true;
 
