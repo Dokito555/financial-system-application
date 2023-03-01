@@ -20,8 +20,8 @@ class _SignInPageState extends State<SignInPage> {
   late String email;
   late String password;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  late TextEditingController passwordController;
 
   bool _isPasswordHide = true;
 
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
         Column(
           children: [
             TextFormField(
-              controller: nameController,
+              controller: emailController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Input Your Email',
@@ -227,5 +227,11 @@ class _SignInPageState extends State<SignInPage> {
         },
       )
     );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
   }
 }
