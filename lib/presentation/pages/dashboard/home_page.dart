@@ -42,21 +42,9 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: const Text('Transaksi'),
               onTap: () {
-
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
               },
             ),
-            ListTile(
-              title: const Text('Tagihan'),
-              onTap: () {
-
-              },
-            ),
-            ListTile(
-            title: const Text('Data Transaksi'),
-            onTap: () {
-              
-            },
-          )
         ],
       ),
     );
