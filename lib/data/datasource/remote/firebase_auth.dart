@@ -20,6 +20,7 @@ class FirebaseAuthenticationRemoteDataSourceImpl extends FirebaseAuthenticationR
   FirebaseAuthenticationRemoteDataSourceImpl({
     required this.firebaseAuth,
   });
+  
   User? get currentUser => firebaseAuth.currentUser;
 
   @override

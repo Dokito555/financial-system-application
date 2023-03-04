@@ -42,7 +42,10 @@ class InvoiceModel extends Equatable{
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) => _$InvoiceModelFromJson(json);
 
-  // factory InvoiceModel.fromQueryDocumentSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> json) => _$InvoiceModelDocumentSnapshot(json);
+  // factory InvoiceModel.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //   SnapshotOptions? options,
+  // ) => _$InvoiceModelfromFirestore(snapshot);
 
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
   
