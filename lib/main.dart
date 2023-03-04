@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/routes/page_router.dart';
 import 'package:flutter_financial/injection.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
+    name: 'financial',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -46,6 +48,9 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => sl<FirebaseAuthNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => sl<FirestoreInvoiceNotifier>(),
         )
       ],
       child: const MyApp(),

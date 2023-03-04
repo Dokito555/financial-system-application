@@ -1,6 +1,11 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/presentation/components/loading.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
+import 'package:provider/provider.dart';
 
+import '../../../core/utility/state_enum.dart';
 import '../../../data/model/invoice_model.dart';
 
 class InvoiceFormPage extends StatefulWidget {
@@ -142,7 +147,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             controller: startDateController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              labelText: 'createdDate',
+              labelText: 'Start Date',
             ),
             autofocus: false,
             validator: (value) {
@@ -170,7 +175,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
           controller: expiryDateController,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'createdDate',
+            labelText: 'Expiry Date',
           ),
           autofocus: false,
           validator: (value) {
@@ -188,8 +193,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
 
             if (pickDate != null) {
               setState(() {
-                expiryDateController.text =
-                    formatDate(pickDate, [yyyy, '-', mm, '-', dd]);
+                expiryDateController.text = formatDate(pickDate, [yyyy, '-', mm, '-', dd]);
               });
             }
           },
@@ -212,31 +216,85 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
           totalController: totalController,
         ),
         const SizedBox(height: 10),
-        Container(
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: ElevatedButton(
-              child: const Text('Login'),
-              onPressed: () async {
-                if (!_addPointKey.currentState!.validate()) {
-                  return;
-                }
-
-                final InvoiceModel invoiceModel = InvoiceModel(
-                    invoiceNumber: invoiceNumberController.text.trim(),
-                    paymentNumber: paymentNumberController.text.trim(),
-                    paymentMethod: _paymentMethodValue,
-                    name: nameController.text.trim(),
-                    created: DateTime.parse(createdDateController.text),
-                    startDate: DateTime.parse(startDateController.text),
-                    expiryDate: DateTime.parse(expiryDateController.text),
-                    nominal: nominalController.text.trim(),
-                    total: totalController.text.trim());
-                print(invoiceModel.toJson());
-              },
-            ))
+        _buttonCreateInvoice(addPointKey: _addPointKey, invoiceNumberController: invoiceNumberController, paymentNumberController: paymentNumberController, paymentMethodValue: _paymentMethodValue, nameController: nameController, createdDateController: createdDateController, startDateController: startDateController, expiryDateController: expiryDateController, nominalController: nominalController, totalController: totalController)
       ],
     );
+  }
+}
+
+class _buttonCreateInvoice extends StatelessWidget {
+  const _buttonCreateInvoice({
+    Key? key,
+    required GlobalKey<FormState> addPointKey,
+    required this.invoiceNumberController,
+    required this.paymentNumberController,
+    required String paymentMethodValue,
+    required this.nameController,
+    required this.createdDateController,
+    required this.startDateController,
+    required this.expiryDateController,
+    required this.nominalController,
+    required this.totalController,
+  }) : _addPointKey = addPointKey, _paymentMethodValue = paymentMethodValue, super(key: key);
+
+  final GlobalKey<FormState> _addPointKey;
+  final TextEditingController invoiceNumberController;
+  final TextEditingController paymentNumberController;
+  final String _paymentMethodValue;
+  final TextEditingController nameController;
+  final TextEditingController createdDateController;
+  final TextEditingController startDateController;
+  final TextEditingController expiryDateController;
+  final TextEditingController nominalController;
+  final TextEditingController totalController;
+
+  @override
+  Widget build(BuildContext context) {
+
+    var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
+
+    Future<void> createInvoice(InvoiceModel invoice) async {
+      onLoading;
+
+      await invoiceNotifier.createInvoice(
+        invoice: invoice
+      );
+
+      if (invoiceNotifier.status == Status.Error) {
+        ShowToast.toast(invoiceNotifier.message);
+      } else if (invoiceNotifier.status == Status.Success) {
+        ShowToast.toast(invoiceNotifier.message);
+      } else {
+        ShowToast.toast(invoiceNotifier.message);
+      }
+
+    }
+
+    return Container(
+        height: 50,
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: ElevatedButton(
+          child: const Text('Login'),
+          onPressed: () async {
+            if (!_addPointKey.currentState!.validate()) {
+              return;
+            }
+
+            final InvoiceModel invoice = InvoiceModel(
+              invoiceNumber: invoiceNumberController.text.trim(),
+              paymentNumber: paymentNumberController.text.trim(),
+              paymentMethod: _paymentMethodValue,
+              name: nameController.text.trim(),
+              created: DateTime.parse(createdDateController.text),
+              startDate: DateTime.parse(startDateController.text),
+              expiryDate: DateTime.parse(expiryDateController.text),
+              nominal: nominalController.text.trim(),
+              total: totalController.text.trim()
+            );
+            
+            createInvoice(invoice);
+          },
+        ));
   }
 }
 

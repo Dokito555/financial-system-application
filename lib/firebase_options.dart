@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '179517236530',
     projectId: 'financial-ab5e8',
     authDomain: 'financial-ab5e8.firebaseapp.com',
+    databaseURL: 'https://financial-ab5e8-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'financial-ab5e8.appspot.com',
     measurementId: 'G-L5CKYRF82T',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:179517236530:android:d8a09cbcc617e90105632b',
     messagingSenderId: '179517236530',
     projectId: 'financial-ab5e8',
+    databaseURL: 'https://financial-ab5e8-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'financial-ab5e8.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:179517236530:ios:3bf085afce5b436b05632b',
     messagingSenderId: '179517236530',
     projectId: 'financial-ab5e8',
+    databaseURL: 'https://financial-ab5e8-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'financial-ab5e8.appspot.com',
     iosClientId: '179517236530-tcvv4dmi79toa5loic90j95tdbsv1n0k.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterFinancial',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:179517236530:ios:3bf085afce5b436b05632b',
     messagingSenderId: '179517236530',
     projectId: 'financial-ab5e8',
+    databaseURL: 'https://financial-ab5e8-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'financial-ab5e8.appspot.com',
     iosClientId: '179517236530-tcvv4dmi79toa5loic90j95tdbsv1n0k.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterFinancial',
