@@ -5,4 +5,5 @@ import '../../core/error/failure.dart';
 
 abstract class FirestoreInvoiceRepository {
   Future<Either<Failure, void>> createInvoice(InvoiceModel invoice);
+  Future<Either<Failure, void>> deleteInvoice(String id);
 }
