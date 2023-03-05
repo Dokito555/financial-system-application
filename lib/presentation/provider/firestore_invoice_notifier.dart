@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/domain/usecases/firestore_invoice/create_invoice.dart';
+import 'package:flutter_financial/domain/usecases/firestore_invoice/delete_invoice.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/utility/state_enum.dart';
@@ -9,9 +10,11 @@ import '../../core/utility/state_enum.dart';
 class FirestoreInvoiceNotifier extends ChangeNotifier {
 
   FirestoreCreateInvoice firestoreCreateInvoice;
+  FirestoreDeleteInvoice firestoreDeleteInvoice;
 
   FirestoreInvoiceNotifier({
-    required this.firestoreCreateInvoice
+    required this.firestoreCreateInvoice,
+    required this.firestoreDeleteInvoice
   });
 
   late Status _status;
@@ -35,6 +38,26 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
       (result) {
         _status = Status.Success;
         _message = 'Added';
+        notifyListeners();
+      }
+    );
+  }
+
+  Future<void> deleteInvoice({
+    required String id
+  }) async {
+    _status = Status.Loading;
+    notifyListeners();
+    final result = await firestoreDeleteInvoice.execute(id);
+    result.fold(
+      (failure) {
+        _status = Status.Error;
+        _message = failure.message;
+        notifyListeners();
+      },
+      (result) {
+        _status = Status.Success;
+        _message = 'Completed';
         notifyListeners();
       }
     );

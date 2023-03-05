@@ -13,15 +13,15 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
       paymentMethod: json['paymentMethod'] as String,
       name: json['name'] as String,
       email: json['email'] as String? ?? "",
-      phoneNumber: json['phoneNumber'] as String? ?? "",
+      phoneNumber: json['phoneNumber'] as int?,
       address: json['address'] as String? ?? "",
       created: DateTime.parse(json['created'] as String),
       startDate: DateTime.parse(json['startDate'] as String),
       expiryDate: DateTime.parse(json['expiryDate'] as String),
       description: json['description'] as String? ?? "",
-      nominal: json['nominal'] as String,
+      nominal: json['nominal'] as int,
       quantity: json['quantity'] as int? ?? 1,
-      total: json['total'] as String,
+      total: json['total'] as int,
     );
 
 Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>

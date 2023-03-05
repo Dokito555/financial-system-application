@@ -12,15 +12,15 @@ class InvoiceModel extends Equatable{
   final String paymentMethod;
   final String name;
   final String? email;
-  final String? phoneNumber;
+  int? phoneNumber;
   final String? address;
   final DateTime created;
   final DateTime startDate;
   final DateTime expiryDate;
   final String? description;
-  final String nominal;
+  int nominal;
   int quantity;
-  final String total;
+  int total;
 
   InvoiceModel({
     this.id,
@@ -29,7 +29,7 @@ class InvoiceModel extends Equatable{
     required this.paymentMethod,
     required this.name,
     this.email = "",
-    this.phoneNumber = "",
+    this.phoneNumber,
     this.address = "",
     required this.created,
     required this.startDate,
@@ -42,10 +42,27 @@ class InvoiceModel extends Equatable{
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) => _$InvoiceModelFromJson(json);
 
-  // factory InvoiceModel.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  //   SnapshotOptions? options,
-  // ) => _$InvoiceModelfromFirestore(snapshot);
+  factory InvoiceModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) => InvoiceModel(
+      id: snapshot['id'] as String?,
+      invoiceNumber: snapshot['invoiceNumber'] as String,
+      paymentNumber: snapshot['paymentNumber'] as String,
+      paymentMethod: snapshot['paymentMethod'] as String,
+      name: snapshot['name'] as String,
+      email: snapshot['email'] as String? ?? "",
+      phoneNumber: snapshot['phoneNumber'] as int?,
+      address: snapshot['address'] as String? ?? "",
+      created: DateTime.parse(snapshot['created'] as String),
+      startDate: DateTime.parse(snapshot['startDate'] as String),
+      expiryDate: DateTime.parse(snapshot['expiryDate'] as String),
+      description: snapshot['description'] as String? ?? "",
+      nominal: snapshot['nominal'] as int,
+      quantity: snapshot['quantity'] as int? ?? 1,
+      total: snapshot['total'] as int,
+    );
+
 
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
   

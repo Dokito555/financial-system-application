@@ -29,14 +29,16 @@ import 'package:flutter_financial/domain/usecases/firebase_auth/signUp.dart'
     as _i14;
 import 'package:flutter_financial/domain/usecases/firestore_invoice/create_invoice.dart'
     as _i15;
-import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart'
-    as _i17;
-import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart'
+import 'package:flutter_financial/domain/usecases/firestore_invoice/delete_invoice.dart'
     as _i16;
+import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart'
+    as _i18;
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart'
+    as _i17;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'register_module.dart' as _i18;
+import 'register_module.dart' as _i19;
 
 const String _prod = 'prod';
 
@@ -61,7 +63,7 @@ _i1.GetIt init(
     registerFor: {_prod},
   );
   gh.lazySingleton<_i5.FirebaseFirestore>(
-      () => registerModule.firebaseFiresotre);
+      () => registerModule.firebaseFirestore);
   gh.lazySingleton<_i6.FirebaseFirestoreInvoiceDatabaseRemoteDataSource>(
     () => _i6.FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl(
         db: gh<_i5.FirebaseFirestore>()),
@@ -101,9 +103,16 @@ _i1.GetIt init(
         repository: gh<_i7.FirestoreInvoiceRepository>()),
     registerFor: {_prod},
   );
-  gh.factory<_i16.FirestoreInvoiceNotifier>(() => _i16.FirestoreInvoiceNotifier(
-      firestoreCreateInvoice: gh<_i15.FirestoreCreateInvoice>()));
-  gh.factory<_i17.FirebaseAuthNotifier>(() => _i17.FirebaseAuthNotifier(
+  gh.lazySingleton<_i16.FirestoreDeleteInvoice>(
+    () => _i16.FirestoreDeleteInvoice(
+        repository: gh<_i7.FirestoreInvoiceRepository>()),
+    registerFor: {_prod},
+  );
+  gh.factory<_i17.FirestoreInvoiceNotifier>(() => _i17.FirestoreInvoiceNotifier(
+        firestoreCreateInvoice: gh<_i15.FirestoreCreateInvoice>(),
+        firestoreDeleteInvoice: gh<_i16.FirestoreDeleteInvoice>(),
+      ));
+  gh.factory<_i18.FirebaseAuthNotifier>(() => _i18.FirebaseAuthNotifier(
         firebaseAuthSignUp: gh<_i14.FirebaseAuthSignUp>(),
         firebaseAuthSignIn: gh<_i12.FirebaseAuthSignIn>(),
         firebaseAuthSignOut: gh<_i13.FirebaseAuthSignOut>(),
@@ -112,4 +121,4 @@ _i1.GetIt init(
   return getIt;
 }
 
-class _$RegisterModule extends _i18.RegisterModule {}
+class _$RegisterModule extends _i19.RegisterModule {}
