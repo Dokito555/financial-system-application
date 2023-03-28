@@ -6,3 +6,4 @@ final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 const firestoreInvoice = 'invoice';
 const firestoreTransaciton = 'transaction';
 const firestoreTransacitonLog = 'transactionLog';
+

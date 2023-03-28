@@ -6,6 +6,8 @@ import 'package:injectable/injectable.dart';
 abstract class FirebaseFirestoreInvoiceDatabaseRemoteDataSource {
   Future<void> createInvoice(InvoiceModel invoice);
   Future<void> deleteInvoice(String id);
+  Future<List<InvoiceModel>> fetchInvoices();
+  Future<InvoiceModel> fetchInvoiceDetail(String invoiceNumber);
 }
 
 @prod
@@ -18,36 +20,32 @@ class FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl extends FirebaseFires
     required this.db
   });
 
-
   @override
   Future<void> createInvoice(InvoiceModel invoice) async {
-
-    // ugly ass bulging code 🤮
-    // Bad code need to fix this
-    InvoiceModel invoiceRef = InvoiceModel(
-      id: db.collection(firestoreInvoice).id,
-      invoiceNumber: invoice.invoiceNumber, 
-      paymentNumber: invoice.paymentNumber, 
-      paymentMethod: invoice.paymentMethod, 
-      name: invoice.name, 
-      email: invoice.email,
-      phoneNumber: invoice.phoneNumber,
-      address: invoice.address,
-      created: invoice.created, 
-      startDate: invoice.startDate, 
-      expiryDate: invoice.expiryDate, 
-      description: invoice.description,
-      nominal: invoice.nominal, 
-      quantity: invoice.quantity,
-      total: invoice.total
-    );
-
-    await db.collection(firestoreInvoice).doc().set(invoiceRef.toJson());
+    await db.collection(firestoreInvoice).doc().set(invoice.toJson());
   }
 
   @override
-  Future<void> deleteInvoice(String id) async {
+  Future<void> deleteInvoice(String id) async { 
     await db.collection(firestoreInvoice).doc(id).delete();
+  }
+  
+  @override
+  Future<List<InvoiceModel>> fetchInvoices() async {
+    final snapshot = await db.collection(firestoreInvoice).get();
+    print(snapshot);
+    final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
+    print(data);
+    return data;
+  }
+  
+  @override
+  Future<InvoiceModel> fetchInvoiceDetail(String invoiceNumber) async {
+    final snapshot = await db.collection(firestoreInvoice).where("InvoiceNumber", isEqualTo: invoiceNumber).get();
+    print(snapshot);
+    final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).single;
+    print(data);
+    return data;
   }
 
 }

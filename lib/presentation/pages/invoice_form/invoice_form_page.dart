@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +31,6 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController createdDateController = TextEditingController();
   TextEditingController startDateController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -115,34 +115,6 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             keyboardType: TextInputType.phone),
         InvoiceTextFormField(
             controller: addressController, isValidate: false, text: "Address"),
-        TextFormField(
-          controller: createdDateController,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'createdDate',
-          ),
-          autofocus: false,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return "Date must not be empty";
-            }
-            return null;
-          },
-          onTap: () async {
-            DateTime? pickDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2101));
-
-            if (pickDate != null) {
-              setState(() {
-                createdDateController.text =
-                    formatDate(pickDate, [yyyy, '-', mm, '-', dd]);
-              });
-            }
-          },
-        ),
         const SizedBox(height: 10),
         TextFormField(
             controller: startDateController,
@@ -230,7 +202,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             emailController: emailController,
             phoneNumberController: phoneNumberController,
             addressController: addressController,
-            createdDateController: createdDateController,
+            createdDateController: DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch),
             startDateController: startDateController,
             expiryDateController: expiryDateController,
             descriptionController: descriptionController,

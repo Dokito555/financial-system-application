@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/domain/usecases/firestore_invoice/create_invoice.dart';
 import 'package:flutter_financial/domain/usecases/firestore_invoice/delete_invoice.dart';
+import 'package:flutter_financial/domain/usecases/firestore_invoice/get_invoice.dart';
+import 'package:flutter_financial/domain/usecases/firestore_invoice/get_invoice_detail.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/utility/state_enum.dart';
@@ -11,14 +13,24 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
 
   FirestoreCreateInvoice firestoreCreateInvoice;
   FirestoreDeleteInvoice firestoreDeleteInvoice;
+  FirestoreGetInvoices firestoreGetInvoices;
+  FirestoreGetInvoiceDetail firestoreGetInvoiceDetail;
 
   FirestoreInvoiceNotifier({
     required this.firestoreCreateInvoice,
-    required this.firestoreDeleteInvoice
+    required this.firestoreDeleteInvoice,
+    required this.firestoreGetInvoices,
+    required this.firestoreGetInvoiceDetail
   });
 
   late Status _status;
   Status get status => _status;
+
+  List<InvoiceModel> _invoices = [];
+  List<InvoiceModel> get invoices => _invoices;
+
+  late InvoiceModel _invoice;
+  InvoiceModel get invoice => _invoice;
 
   String _message = '';
   String get message => _message;
@@ -56,6 +68,47 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
         notifyListeners();
       },
       (result) {
+        _status = Status.Success;
+        _message = 'Completed';
+        notifyListeners();
+      }
+    );
+  }
+
+  Future<void> getInvoices() async {
+    _status = Status.Loading;
+    notifyListeners();
+    final result = await firestoreGetInvoices.execute();
+    result.fold(
+      (failure) {
+        _status = Status.Error;
+        _message = failure.message;
+        notifyListeners();
+      }, 
+      (result) {
+        print(result);
+        _invoices = result;
+        _status = Status.Success;
+        _message = 'Completed';
+        notifyListeners();
+      }
+    );
+  }
+
+  Future<void> getInvoiceDetail({
+    required String invoiceNumber
+  }) async {
+    _status = Status.Loading;
+    notifyListeners();
+    final result = await firestoreGetInvoiceDetail.execute(invoiceNumber);
+    result.fold(
+      (failure) {
+        _status = Status.Error;
+        _message = failure.message;
+        notifyListeners();
+      }, 
+      (result) {
+        _invoice = result;
         _status = Status.Success;
         _message = 'Completed';
         notifyListeners();

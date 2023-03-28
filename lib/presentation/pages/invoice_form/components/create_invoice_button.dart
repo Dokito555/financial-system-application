@@ -35,7 +35,7 @@ class CreateInvoiceButton extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController phoneNumberController;
   final TextEditingController addressController;
-  final TextEditingController createdDateController;
+  final DateTime createdDateController;
   final TextEditingController startDateController;
   final TextEditingController expiryDateController;
   final TextEditingController descriptionController;
@@ -83,7 +83,7 @@ class CreateInvoiceButton extends StatelessWidget {
               email: emailController.text.trim(),
               phoneNumber: int.parse(phoneNumberController.text),
               address: addressController.text.trim(),
-              created: DateTime.parse(createdDateController.text),
+              created: createdDateController,
               startDate: DateTime.parse(startDateController.text),
               expiryDate: DateTime.parse(expiryDateController.text),
               nominal: int.parse(nominalController.text.trim()),

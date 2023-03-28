@@ -44,8 +44,9 @@ class InvoiceModel extends Equatable{
 
   factory InvoiceModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) => InvoiceModel(
+  ) {
+    final data = snapshot.data();
+    return InvoiceModel(
       id: snapshot['id'] as String?,
       invoiceNumber: snapshot['invoiceNumber'] as String,
       paymentNumber: snapshot['paymentNumber'] as String,
@@ -62,8 +63,7 @@ class InvoiceModel extends Equatable{
       quantity: snapshot['quantity'] as int? ?? 1,
       total: snapshot['total'] as int,
     );
-
-
+  }
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
   
   @override
