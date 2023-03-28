@@ -56,13 +56,79 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Center(
-                child: Text('Finance App')
+                child: Image.asset('/images/IDNBS.svg', width: 110, height: 51),
               ),
             ),
             ListTile(
-              title: const Text('Transaksi'),
+              leading: Text('Dashboard')
+            ),
+            ListTile(
+              leading: Image.asset('/images/info_l.svg'),
+              title: const Center(
+                child: Text('Informasi'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Image.asset('/images/settings_l.svg'),
+              title: const Center(
+                child: Text('Pengaturan'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Image.asset('/images/dashboard_l.svg'),
+              title: const Center(
+                child: Text('Dashboard'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Text('Tagihan')
+            ),
+            ListTile(
+              leading: Image.asset('/images/add_invoice_l.svg'),
+              title: const Center(
+                child: Text('Buat Tagihan'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Image.asset('/images/invoice_l.svg'),
+              title: const Center(
+                child: Text('Tagihan'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Text('Transaksi')
+            ),
+            ListTile(
+              leading: Image.asset('/images/transaction_l.svg'),
+              title: const Center(
+                child: Text('Transaksi'),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
+              },
+            ),
+            ListTile(
+              leading: Image.asset('/images/log_t_l.svg'),
+              title: const Center(
+                child: Text('Log Transaksi'),
+              ),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutePaths.invoiceFormRoute);
               },

@@ -25,6 +25,9 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
+  String _todayTransactionTotal = '';
+  String get todayTransactionTotal => _todayTransactionTotal;
+
   Future<void> addTransaction({
     required InvoiceModel invoice
   }) async {
@@ -61,6 +64,12 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           notifyListeners();
         }
     );
+  }
+
+  void getTodayTransactionTotal() {
+    final total = _transactions.where((i) => i.startDate.toString() == '2023-03-05T00:00:00.000');
+    _todayTransactionTotal = total.length.toString();
+    notifyListeners();
   }
 
 }

@@ -25,7 +25,7 @@ import 'package:flutter_financial/injection.dart' as di;
 Future<void> main() async {
 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp(
     name: 'financial',
@@ -66,7 +66,7 @@ Future<void> main() async {
     )
   );
 
-  FlutterNativeSplash.remove();
+  // FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: FirebaseAuth.instance.currentUser == null ? AppRoutePaths.signInPageRoute : AppRoutePaths.homeRoute,
+      initialRoute: AppRoutePaths.splashScreenPageRoute,
       navigatorObservers: [routeObserver],
       onGenerateRoute: PageRouter.generateRoute,
     );
