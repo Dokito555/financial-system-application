@@ -49,5 +49,39 @@ class FirestoreInvoiceRepositoryImpl extends FirestoreInvoiceRepository {
       return Left(FirebaseFailure('Failed with error code: ${e.code}'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fetchInvoice() async {
+    try {
+      final result = await remoteDataSource.fetchInvoices();
+      return Right(result);
+    }
+    on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, InvoiceModel>> fetchInvoiceDetail(String invoiceNumber) async {
+    try {
+      final result = await remoteDataSource.fetchInvoiceDetail(invoiceNumber);
+      return Right(result);
+    }
+    on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+
+  
   
 }

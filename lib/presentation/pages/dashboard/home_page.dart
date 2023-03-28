@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/loading.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
@@ -22,7 +23,28 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Finance'),
         actions:  <Widget>[
-          _logoutButton(context)
+          _logoutButton(context),
+          Consumer<FirestoreInvoiceNotifier>(
+            builder:(context, value, child) {
+              if (value.status == Status.Success) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: value.invoices.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text('${value.invoices[index].invoiceNumber}'),
+                        )
+                      ],
+                    );
+                  },
+                );
+              } else {
+                throw Exception();
+              }
+            },
+          )
         ],
       ),
       drawer: _buildDrawer(context)
