@@ -153,9 +153,9 @@ class _SignUpPageState extends State<SignUpPage> {
             if (value!.isEmpty) {
               return "Password must not be empty";
             }
-            if (Validators.isValidPassword(value) == false) {
-              return "Invalid Password";
-            }
+            // if (Validators.isValidPassword(value) == false) {
+            //   return "Invalid Password";
+            // }
             return null;
           },
           onChanged: (String value) {

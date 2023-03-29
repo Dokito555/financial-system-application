@@ -24,27 +24,27 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Finance'),
         actions:  <Widget>[
           _logoutButton(context),
-          Consumer<FirestoreInvoiceNotifier>(
-            builder:(context, value, child) {
-              if (value.status == Status.Success) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: value.invoices.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text('${value.invoices[index].invoiceNumber}'),
-                        )
-                      ],
-                    );
-                  },
-                );
-              } else {
-                throw Exception();
-              }
-            },
-          )
+          // Consumer<FirestoreInvoiceNotifier>(
+          //   builder:(context, value, child) {
+          //     if (value.status == Status.Success) {
+          //       return ListView.builder(
+          //         shrinkWrap: true,
+          //         itemCount: value.invoices.length,
+          //         itemBuilder: (context, index) {
+          //           return Column(
+          //             children: [
+          //               ListTile(
+          //                 title: Text('${value.invoices[index].invoiceNumber}'),
+          //               )
+          //             ],
+          //           );
+          //         },
+          //       );
+          //     } else {
+          //       throw Exception();
+          //     }
+          //   },
+          // )
         ],
       ),
       drawer: _buildDrawer(context)
@@ -56,16 +56,16 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              child: Center(
-                child: Image.asset('/images/IDNBS.svg', width: 110, height: 51),
-              ),
-            ),
+            // DrawerHeader(
+            //   child: Center(
+            //     child: Image.asset('images/IDNBS.svg', width: 110, height: 51),
+            //   ),
+            // ),
             ListTile(
               leading: Text('Dashboard')
             ),
             ListTile(
-              leading: Image.asset('/images/info_l.svg'),
+              // leading: Image.asset('images/info_l.svg'),
               title: const Center(
                 child: Text('Informasi'),
               ),
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('/images/settings_l.svg'),
+              // leading: Image.asset('images/settings_l.svg'),
               title: const Center(
                 child: Text('Pengaturan'),
               ),
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('/images/dashboard_l.svg'),
+              // leading: Image.asset('images/dashboard_l.svg'),
               title: const Center(
                 child: Text('Dashboard'),
               ),
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
               leading: Text('Tagihan')
             ),
             ListTile(
-              leading: Image.asset('/images/add_invoice_l.svg'),
+              // leading: Image.asset('images/add_invoice_l.svg'),
               title: const Center(
                 child: Text('Buat Tagihan'),
               ),
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('/images/invoice_l.svg'),
+              // leading: Image.asset('images/invoice_l.svg'),
               title: const Center(
                 child: Text('Tagihan'),
               ),
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
               leading: Text('Transaksi')
             ),
             ListTile(
-              leading: Image.asset('/images/transaction_l.svg'),
+              // leading: Image.asset('images/transaction_l.svg'),
               title: const Center(
                 child: Text('Transaksi'),
               ),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('/images/log_t_l.svg'),
+              // leading: Image.asset('images/log_t_l.svg'),
               title: const Center(
                 child: Text('Log Transaksi'),
               ),
