@@ -25,8 +25,14 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
-  String _todayTransactionTotal = '';
-  String get todayTransactionTotal => _todayTransactionTotal;
+  late int _todayTransactionTotal;
+  int get todayTransactionTotal => _todayTransactionTotal;
+
+  late int _totalNominal;
+  int get totalNominal => _totalNominal;
+
+  late int _allTimeTransaction;
+  int get allTimeTransaction => _allTimeTransaction;
 
   Future<void> addTransaction({
     required InvoiceModel invoice
@@ -59,6 +65,7 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
       }, 
         (result) {
           _transactions = result;
+          _allTimeTransaction = result.length;
           _status = Status.Success;
           _message = 'Completed';
           notifyListeners();
@@ -66,10 +73,31 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
     );
   }
 
-  void getTodayTransactionTotal() {
-    final total = _transactions.where((i) => i.startDate.toString() == '2023-03-05T00:00:00.000');
-    _todayTransactionTotal = total.length.toString();
+  // void getTodayTransactionTotal() {
+  //   final total = _transactions.where((i) => i.startDate.toString() == '2023-03-05T00:00:00.000');
+  //   _todayTransactionTotal = total.length.toString();
+  //   notifyListeners();
+  // }
+
+  Future<void> getTotalNominal() async {
+    _status = Status.Loading;
     notifyListeners();
+    final result = await firestoreGetTransactions.execute();
+    result.fold(
+        (failure) {
+        _status = Status.Error;
+        _message = failure.message;
+        notifyListeners();
+      }, 
+        (result) {
+          _transactions = result;
+          for (var i = 0; i < _transactions.length; i++) {
+            _totalNominal += _transactions[i].nominal;
+          }
+          _message = 'Completed';
+          notifyListeners();
+        }
+    );
   }
 
 }

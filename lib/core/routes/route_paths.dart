@@ -7,7 +7,7 @@ class AppRoutePaths {
   static const invoiceFormRoute = '/invoiceForm';
   static const splashScreenPageRoute = '/splash';
   static const informationPageRoute = '/info';
-  static const transactionLogPageRoute = '/transaactionlog';
+  static const transactionLogPageRoute = '/transactionlog';
   static const transactionPageRoute = '/transaction';
   static const invoicePageRoute = '/invoice';
 }

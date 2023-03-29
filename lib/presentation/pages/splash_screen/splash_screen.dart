@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/home_page.dart';
 import 'package:flutter_financial/presentation/pages/signIn/signin_page.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child:  Image.asset('images/IDNBS.svg')
+      child:  SvgPicture.asset('images/IDNBS.svg')
     );
   }
 }

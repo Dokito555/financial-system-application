@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/routes/route_paths.dart';
 import '../../../../core/utility/state_enum.dart';
 import '../../../../data/model/invoice_model.dart';
 import '../../../components/loading.dart';
@@ -92,6 +93,7 @@ class CreateInvoiceButton extends StatelessWidget {
             );
             
             createInvoice(invoice);
+            Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
           },
         ));
   }

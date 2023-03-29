@@ -6,6 +6,9 @@ import 'package:injectable/injectable.dart';
 abstract class FirebaseFirestoreTransactionRemoteDataSource {
   Future<void> addTransaction(InvoiceModel invoice);
   Future<List<InvoiceModel>> fetchTransactions();
+  Future<List<InvoiceModel>> fetchTodayTransactions();
+  Future<List<InvoiceModel>> fetchWeeklyTransactions();
+  Future<List<InvoiceModel>> fetchYearlyTransactions();
 }
 
 @prod
@@ -13,6 +16,9 @@ abstract class FirebaseFirestoreTransactionRemoteDataSource {
 class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestoreTransactionRemoteDataSource {
 
   final FirebaseFirestore db;
+  final DateTime todaysDate = DateTime(DateTime.now().day);
+  final DateTime monthlyDate = DateTime(DateTime.now().month);
+  final DateTime yearlyDate = DateTime(DateTime.now().year);
 
   FirebaseFirestoreTransactionRemoteDataSourceImpl({
     required this.db
@@ -29,6 +35,24 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     print(snapshot);
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;
+  }
+  
+  @override
+  Future<List<InvoiceModel>> fetchTodayTransactions() {
+    // TODO: implement fetchTodayTransactions
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<List<InvoiceModel>> fetchWeeklyTransactions() {
+    // TODO: implement fetchWeeklyTransactions
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<List<InvoiceModel>> fetchYearlyTransactions() {
+    // TODO: implement fetchYearlyTransactions
+    throw UnimplementedError();
   }
 
 }
