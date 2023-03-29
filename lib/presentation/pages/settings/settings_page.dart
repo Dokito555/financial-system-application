@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/presentation/components/custom_drawer.dart';
+import 'package:flutter_financial/presentation/components/logout_button.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -11,6 +13,11 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: const <Widget>[
+          LogoutButton()
+        ],
+      ),
       body: SafeArea(
         child: Container(
             padding: const EdgeInsets.only(
@@ -21,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Text('Financial App'),
         ),
       ),
+      drawer: const CustomDrawer(),
     );
   }
 }

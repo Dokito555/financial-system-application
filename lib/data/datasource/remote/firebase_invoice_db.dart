@@ -33,18 +33,14 @@ class FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl extends FirebaseFires
   @override
   Future<List<InvoiceModel>> fetchInvoices() async {
     final snapshot = await db.collection(firestoreInvoice).get();
-    print(snapshot);
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
-    print(data);
     return data;
   }
   
   @override
   Future<InvoiceModel> fetchInvoiceDetail(String invoiceNumber) async {
     final snapshot = await db.collection(firestoreInvoice).where("InvoiceNumber", isEqualTo: invoiceNumber).get();
-    print(snapshot);
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).single;
-    print(data);
     return data;
   }
 

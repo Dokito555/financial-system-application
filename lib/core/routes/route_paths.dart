@@ -10,4 +10,5 @@ class AppRoutePaths {
   static const transactionLogPageRoute = '/transactionlog';
   static const transactionPageRoute = '/transaction';
   static const invoicePageRoute = '/invoice';
+  static const settingsPageRoute = '/settings';
 }

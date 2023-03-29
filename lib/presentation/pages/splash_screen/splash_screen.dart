@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child:  SvgPicture.asset('images/IDNBS.svg')
+      child:  Image.asset('images/IDNBS.png')
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_financial/presentation/pages/dashboard/home_page.dart';
 import 'package:flutter_financial/presentation/pages/information/information_page.dart';
 import 'package:flutter_financial/presentation/pages/invoice/invoice_page.dart';
 import 'package:flutter_financial/presentation/pages/invoice_form/invoice_form_page.dart';
+import 'package:flutter_financial/presentation/pages/settings/settings_page.dart';
 import 'package:flutter_financial/presentation/pages/signIn/signin_page.dart';
 import 'package:flutter_financial/presentation/pages/signUp/signup_page.dart';
 import 'package:flutter_financial/presentation/pages/splash_screen/splash_screen.dart';
@@ -31,6 +32,8 @@ class PageRouter {
         return MaterialPageRoute(builder: (_) => TransactionLogPage());
       case AppRoutePaths.invoicePageRoute:
         return MaterialPageRoute(builder: (_) => InvoicePage());
+      case AppRoutePaths.settingsPageRoute:
+        return MaterialPageRoute(builder: (_) => SettingsPage());
       default:
         return MaterialPageRoute(builder: (_) => Scaffold(
           body: Center(

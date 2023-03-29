@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/presentation/components/custom_drawer.dart';
+import 'package:flutter_financial/presentation/components/logout_button.dart';
 
 class InformationPage extends StatelessWidget {
   const InformationPage({super.key});
@@ -6,6 +8,11 @@ class InformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: const <Widget>[
+          LogoutButton()
+        ],
+      ),
       body: SafeArea(
         child: Container(
             padding: const EdgeInsets.only(
@@ -16,6 +23,7 @@ class InformationPage extends StatelessWidget {
           child: Text('Financial App'),
         ),
       ),
+      drawer: const CustomDrawer(),
     );
   }
 }

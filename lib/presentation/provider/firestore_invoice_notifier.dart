@@ -26,7 +26,10 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
   late Status _status;
   Status get status => _status;
 
-  List<InvoiceModel> _invoices = [];
+  Status _invoicesStatus = Status.Empty;
+  Status get invoicesStatus => _invoicesStatus;
+
+  var _invoices = <InvoiceModel>[];
   List<InvoiceModel> get invoices => _invoices;
 
   late InvoiceModel _invoice;
@@ -76,19 +79,19 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
   }
 
   Future<void> getInvoices() async {
-    _status = Status.Loading;
+    _invoicesStatus = Status.Loading;
     notifyListeners();
+
     final result = await firestoreGetInvoices.execute();
     result.fold(
       (failure) {
-        _status = Status.Error;
+        _invoicesStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
       (result) {
-        print(result);
+        _invoicesStatus = Status.Success;
         _invoices = result;
-        _status = Status.Success;
         _message = 'Completed';
         notifyListeners();
       }

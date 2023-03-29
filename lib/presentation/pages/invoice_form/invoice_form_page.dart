@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_financial/presentation/components/custom_drawer.dart';
 import 'package:flutter_financial/presentation/components/loading.dart';
+import 'package:flutter_financial/presentation/components/logout_button.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/pages/invoice_form/components/invoice_text_form_field.dart';
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
@@ -41,6 +43,12 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Form Tagihan'),
+        actions: const <Widget>[
+          LogoutButton()
+        ],
+      ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
@@ -51,7 +59,6 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
                 Center(
                   child: Column(
                     children: [
-                      _header(context),
                       _invoiceForm(context),
                     ],
                   ),
@@ -61,18 +68,8 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
           ),
         ),
       ),
+      drawer: const CustomDrawer(),
     );
-  }
-
-  Widget _header(BuildContext context) {
-    return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(10),
-        child: const Text(
-          'Finance App',
-          style: TextStyle(
-              color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 30),
-        ));
   }
 
   Widget _invoiceForm(BuildContext context) {

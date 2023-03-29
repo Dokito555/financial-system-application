@@ -11,9 +11,9 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Center(
-                child: Text('Financial Application'),
+                child: Image.asset('images/IDNBS.png')
               ),
             ),
             const ListTile(
@@ -30,7 +30,7 @@ class CustomDrawer extends StatelessWidget {
               leading: const Icon(Icons.hexagon_outlined),
               title: const Text('Pengaturan'),
               onTap: () {
-                Navigator.pushReplacementNamed(context, AppRoutePaths.invoiceFormRoute);
+                Navigator.pushReplacementNamed(context, AppRoutePaths.settingsPageRoute);
               },
             ),
             ListTile(
