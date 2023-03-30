@@ -96,7 +96,7 @@ class CreateInvoiceButton extends StatelessWidget {
             );
             
             createInvoice(invoice);
-            Navigator.pushReplacementNamed(context, AppRoutePaths.transactionPageRoute);
+            Navigator.pushReplacementNamed(context, AppRoutePaths.invoicePageRoute);
           },
         ));
   }

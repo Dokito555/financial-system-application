@@ -179,9 +179,11 @@ class _SignUpPageState extends State<SignUpPage> {
         // Navigator.pop(context);
       } else if (authNotifier.signUpStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
+        if (!context.mounted) return;
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
       } else {
         ShowToast.toast(authNotifier.message);
+        if (!context.mounted) return;
         Navigator.pop(context);
       }
     }

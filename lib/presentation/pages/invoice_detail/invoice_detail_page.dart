@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
@@ -66,7 +67,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
         ));
   }
 
-  Widget _confirmTransaction(BuildContext context, InvoiceModel invoice) {
+  Widget _confirmTransaction(BuildContext context, InvoiceModel invoice){
     var transactionNotifier =
         Provider.of<FirestoreTransactionNotifier>(context, listen: false);
     var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
@@ -79,7 +80,8 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
         ShowToast.toast(transactionNotifier.message);
       } else if (transactionNotifier.addTransactionStatus == Status.Success && invoiceNotifier.deleteInvoiceStatus == Status.Success) {
         ShowToast.toast('${transactionNotifier.message} & ${invoiceNotifier.message}');
-        Navigator.pop(context);
+        if (!context.mounted) return;
+        Navigator.pushReplacementNamed(context, AppRoutePaths.invoicePageRoute);
       } else {
         ShowToast.toast('${transactionNotifier.message} & ${invoiceNotifier.message}');
       }

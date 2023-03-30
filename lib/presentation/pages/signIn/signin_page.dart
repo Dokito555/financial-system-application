@@ -196,6 +196,7 @@ class _SignInPageState extends State<SignInPage> {
         ShowToast.toast(authNotifier.message);
       } else if (authNotifier.signInStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
+        if (!context.mounted) return;
         Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
       } else {
         ShowToast.toast(authNotifier.message);
