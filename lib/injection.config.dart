@@ -75,7 +75,9 @@ _i1.GetIt init(
   );
   gh.lazySingleton<_i6.FirebaseFirestoreTransactionRemoteDataSource>(
     () => _i6.FirebaseFirestoreTransactionRemoteDataSourceImpl(
-        db: gh<_i4.FirebaseFirestore>()),
+      db: gh<_i4.FirebaseFirestore>(),
+      firebaseAuth: gh<_i3.FirebaseAuth>(),
+    ),
     registerFor: {_prod},
   );
   gh.lazySingleton<_i7.FirestoreInvoiceRepository>(

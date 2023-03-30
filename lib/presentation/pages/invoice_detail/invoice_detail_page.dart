@@ -31,7 +31,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
           iconTheme: const IconThemeData(color: Color(0xff777474)),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(
+          title: const Text(
             'Invoice',
             style: TextStyle(color: Colors.black),
           ),
@@ -79,7 +79,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
       if (transactionNotifier.addTransactionStatus == Status.Error || invoiceNotifier.deleteInvoiceStatus == Status.Error) {
         ShowToast.toast(transactionNotifier.message);
       } else if (transactionNotifier.addTransactionStatus == Status.Success && invoiceNotifier.deleteInvoiceStatus == Status.Success) {
-        ShowToast.toast('${transactionNotifier.message} & ${invoiceNotifier.message}');
+        ShowToast.toast(transactionNotifier.message);
         if (!context.mounted) return;
         Navigator.pushReplacementNamed(context, AppRoutePaths.invoicePageRoute);
       } else {

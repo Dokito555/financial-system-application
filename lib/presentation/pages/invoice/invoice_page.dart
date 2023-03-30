@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
-import 'package:flutter_financial/presentation/components/data_card.dart';
+import 'package:flutter_financial/presentation/components/invoice_card.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +32,6 @@ class _InvoicePageState extends State<InvoicePage> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: AppColorConstants.fillColor,
-        // backgroundColor: AppColorConstants.fillColor,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Color(0xff777474)),
           elevation: 0,
@@ -62,29 +61,7 @@ class _InvoicePageState extends State<InvoicePage> {
                     itemCount: data.invoices.length,
                     itemBuilder: (context, index) {
                       final invoice = data.invoices[index];
-                      // return DataCard(invoice: invoice);
-                      return Container(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10,),
-                        color: Colors.white,
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, AppRoutePaths.invoiceDetailPageRoute, arguments: invoice);
-                                },
-                                child: ListTile(
-                                  title: Text(invoice.name),
-                                  subtitle: Text('No. Pembayaran ${invoice.paymentNumber}'),
-                                  trailing: Text(
-                                    NumberFormat.compactCurrency(decimalDigits: 2, locale: "en_US", symbol: "IDR").format(invoice.total),
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ),
-                              ),
-                              Divider(indent: 10, endIndent: 10,)
-                            ],
-                          )
-                      );
+                      return InvoiceCard(invoice: invoice);
                     },
                   );
                 } else {

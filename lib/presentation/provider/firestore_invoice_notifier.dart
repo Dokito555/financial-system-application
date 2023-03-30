@@ -80,7 +80,6 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
       (result) {
         _deleteInvoiceStatus = Status.Success;
         _message = 'Completed';
-        print('Deleted');
         notifyListeners();
       }
     );

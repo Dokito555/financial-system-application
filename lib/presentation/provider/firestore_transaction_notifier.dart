@@ -19,6 +19,9 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   late Status _addTransactionStatus;
   Status get addTransactionStatus => _addTransactionStatus;
 
+  late Status _getTransactionsStatus;
+  Status get geTransactionStatus => _getTransactionsStatus;
+
   List<InvoiceModel> _transactions = [];
   List<InvoiceModel> get transactions => _transactions;
 
@@ -54,30 +57,24 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   }
 
   Future<void> getTransactions() async {
-    _addTransactionStatus = Status.Loading;
+    _getTransactionsStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreGetTransactions.execute();
     result.fold(
         (failure) {
-        _addTransactionStatus = Status.Error;
+        _getTransactionsStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
         (result) {
           _transactions = result;
           _allTimeTransaction = result.length;
-          _addTransactionStatus = Status.Success;
+          _getTransactionsStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
         }
     );
   }
-
-  // void getTodayTransactionTotal() {
-  //   final total = _transactions.where((i) => i.startDate.toString() == '2023-03-05T00:00:00.000');
-  //   _todayTransactionTotal = total.length.toString();
-  //   notifyListeners();
-  // }
 
   Future<void> getTotalNominal() async {
     _addTransactionStatus = Status.Loading;

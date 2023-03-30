@@ -124,6 +124,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Start Date',
+              suffixIcon: Icon(Icons.calendar_month_outlined)
             ),
             autofocus: false,
             validator: (value) {
@@ -152,6 +153,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Expiry Date',
+            suffixIcon: Icon(Icons.calendar_month_outlined)
           ),
           autofocus: false,
           validator: (value) {
@@ -205,7 +207,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             emailController: emailController,
             phoneNumberController: phoneNumberController,
             addressController: addressController,
-            createdDateController: DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch),
+            createdDateController: DateTime.now(),
             startDateController: startDateController,
             expiryDateController: expiryDateController,
             descriptionController: descriptionController,

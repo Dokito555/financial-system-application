@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
+import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/utility/constants.dart';
+import '../../../core/utility/state_enum.dart';
+import '../../components/custom_drawer.dart';
+import '../../components/invoice_card.dart';
+import '../../components/logout_button.dart';
+import '../../provider/firestore_invoice_notifier.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({super.key});
@@ -10,25 +17,59 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage> {
+
+  @override
+    void initState() {
+      super.initState();
+      Future.microtask(() =>
+          Provider.of<FirestoreTransactionNotifier>(context, listen: false)
+              .getTransactions());
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: const <Widget>[
-          LogoutButton()
-        ],
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-            top: 10,
+        extendBodyBehindAppBar: true,
+        backgroundColor: AppColorConstants.fillColor,
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Color(0xff777474)),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Transactions',
+            style: TextStyle(color: Colors.black),
           ),
-          child: Text('Financial App'),
+          actions: const <Widget>[
+            LogoutButton(),
+          ],
         ),
-      ),
-      drawer: const CustomDrawer(),
-    );
+        body:
+          Container(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+            child: Consumer<FirestoreTransactionNotifier>(
+              builder: (context, data, child) {
+                final status = data.geTransactionStatus;
+                if (status == Status.Loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (status == Status.Success) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: data.transactions.length,
+                    itemBuilder: (context, index) {
+                      final invoice = data.transactions[index];
+                      return InvoiceCard(invoice: invoice);
+                    },
+                  );
+                } else {
+                  return Text(data.message);
+                }
+              },
+            ),
+                  ),
+          ),
+        drawer: const CustomDrawer());
   }
 }
