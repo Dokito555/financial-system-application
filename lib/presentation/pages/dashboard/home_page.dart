@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
+import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,8 +24,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: AppColorConstants.fillColor,
       appBar: AppBar(
-        title: const Text('Finance'),
+        iconTheme: const IconThemeData(color: Color(0xff777474)),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text('Dashboard', style: TextStyle(color: Colors.black),),
         actions: const <Widget>[
           LogoutButton()
         ],

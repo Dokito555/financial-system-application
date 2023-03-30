@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
+import 'package:flutter_financial/presentation/components/data_card.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/utility/state_enum.dart';
@@ -15,55 +19,80 @@ class InvoicePage extends StatefulWidget {
 }
 
 class _InvoicePageState extends State<InvoicePage> {
-
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<FirestoreInvoiceNotifier>(context, listen: false).getInvoices()
-    );
+    Future.microtask(() =>
+        Provider.of<FirestoreInvoiceNotifier>(context, listen: false)
+            .getInvoices());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: AppColorConstants.fillColor,
+        // backgroundColor: AppColorConstants.fillColor,
         appBar: AppBar(
-          title: const Text('Finance'),
+          iconTheme: const IconThemeData(color: Color(0xff777474)),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Invoices',
+            style: TextStyle(color: Colors.black),
+          ),
           actions: const <Widget>[
             LogoutButton(),
           ],
         ),
         body:
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Consumer<FirestoreInvoiceNotifier>(
-                  builder: (context, data, child) {
-                    final status = data.invoicesStatus;
-                    if (status == Status.Loading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+          Container(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+            child: Consumer<FirestoreInvoiceNotifier>(
+              builder: (context, data, child) {
+                final status = data.invoicesStatus;
+                if (status == Status.Loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (status == Status.Success) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: data.invoices.length,
+                    itemBuilder: (context, index) {
+                      final invoice = data.invoices[index];
+                      // return DataCard(invoice: invoice);
+                      return Container(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10,),
+                        color: Colors.white,
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, AppRoutePaths.invoiceDetailPageRoute, arguments: invoice);
+                                },
+                                child: ListTile(
+                                  title: Text(invoice.name),
+                                  subtitle: Text('No. Pembayaran ${invoice.paymentNumber}'),
+                                  trailing: Text(
+                                    NumberFormat.compactCurrency(decimalDigits: 2, locale: "en_US", symbol: "IDR").format(invoice.total),
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                ),
+                              ),
+                              Divider(indent: 10, endIndent: 10,)
+                            ],
+                          )
                       );
-                    }
-                    else if (status == Status.Success) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: data.invoices.length,
-                        itemBuilder: (context, index) {
-                          final invoice = data.invoices[index];
-                          return ListTile(
-                            title: Text(invoice.invoiceNumber),
-                          );
-                        },
-                      );
-                    }
-                    else {
-                      return Text(data.message);
-                    }
-                  },
-                )
-              ],
+                    },
+                  );
+                } else {
+                  return Text(data.message);
+                }
+              },
             ),
+                  ),
           ),
         drawer: const CustomDrawer());
   }

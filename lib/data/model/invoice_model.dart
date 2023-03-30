@@ -6,7 +6,7 @@ part 'invoice_model.g.dart';
 
 @JsonSerializable()
 class InvoiceModel extends Equatable{
-  final String? id;
+  final String id;
   final String invoiceNumber;
   final String paymentNumber;
   final String paymentMethod;
@@ -23,7 +23,7 @@ class InvoiceModel extends Equatable{
   int total;
 
   InvoiceModel({
-    this.id,
+    required this.id,
     required this.invoiceNumber,
     required this.paymentNumber,
     required this.paymentMethod,
@@ -47,7 +47,7 @@ class InvoiceModel extends Equatable{
   ) {
     final data = snapshot.data();
     return InvoiceModel(
-      id: snapshot['id'] as String?,
+      id: snapshot['id'] as String,
       invoiceNumber: snapshot['invoiceNumber'] as String,
       paymentNumber: snapshot['paymentNumber'] as String,
       paymentMethod: snapshot['paymentMethod'] as String,

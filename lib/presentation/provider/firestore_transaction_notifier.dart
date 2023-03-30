@@ -16,8 +16,8 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
     required this.firestoreGetTransactions
   });
 
-  late Status _status;
-  Status get status => _status;
+  late Status _addTransactionStatus;
+  Status get addTransactionStatus => _addTransactionStatus;
 
   List<InvoiceModel> _transactions = [];
   List<InvoiceModel> get transactions => _transactions;
@@ -37,16 +37,16 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   Future<void> addTransaction({
     required InvoiceModel invoice
   }) async {
-    _status = Status.Loading;
+    _addTransactionStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreAddTransaction.execute(invoice);
     result.fold(
       (failure) {
-      _status = Status.Error;
+      _addTransactionStatus = Status.Error;
       _message = failure.message;
     },
       (result) {
-        _status = Status.Success;
+        _addTransactionStatus = Status.Success;
         _message = 'Added';
         notifyListeners();
       }
@@ -54,19 +54,19 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   }
 
   Future<void> getTransactions() async {
-    _status = Status.Loading;
+    _addTransactionStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreGetTransactions.execute();
     result.fold(
         (failure) {
-        _status = Status.Error;
+        _addTransactionStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
         (result) {
           _transactions = result;
           _allTimeTransaction = result.length;
-          _status = Status.Success;
+          _addTransactionStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
         }
@@ -80,12 +80,12 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   // }
 
   Future<void> getTotalNominal() async {
-    _status = Status.Loading;
+    _addTransactionStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreGetTransactions.execute();
     result.fold(
         (failure) {
-        _status = Status.Error;
+        _addTransactionStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 

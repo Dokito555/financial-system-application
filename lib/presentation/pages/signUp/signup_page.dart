@@ -5,6 +5,7 @@ import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.d
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
+import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
 import '../../components/loading.dart';
 import '../../components/show_toast.dart';
@@ -62,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           TextButton(
                             child: const Text(
                               'Login',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
                             ),
                             onPressed: () {
                               Navigator.pushReplacementNamed(
@@ -86,13 +87,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
-            child: const Text(
-              'Finance App',
-              style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 30),
-            )),
+            child: Image.asset('images/IDNBS.png')),
         Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
@@ -179,10 +174,10 @@ class _SignUpPageState extends State<SignUpPage> {
       await authNotifier.authSignUpEmailPassword(
           email: email, password: password);
 
-      if (authNotifier.status == Status.Error) {
+      if (authNotifier.signUpStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
         // Navigator.pop(context);
-      } else if (authNotifier.status == Status.Success) {
+      } else if (authNotifier.signUpStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
       } else {
@@ -192,9 +187,13 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     return Container(
+        width: MediaQuery. of(context).size.width,
         height: 50,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColorConstants.primaryColor
+          ),
           child: const Text('Sign Up'),
           onPressed: () async {
             if (!_addPointKey.currentState!.validate()) {

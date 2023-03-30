@@ -10,6 +10,7 @@ import 'package:flutter_financial/presentation/pages/invoice_form/components/inv
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
 import '../../../data/model/invoice_model.dart';
 import 'components/create_invoice_button.dart';
@@ -43,15 +44,20 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: AppColorConstants.fillColor,
       appBar: AppBar(
-        title: const Text('Form Tagihan'),
+        iconTheme: const IconThemeData(color: Color(0xff777474)),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text('Form Tagihan', style: TextStyle(color: Colors.black),),
         actions: const <Widget>[
           LogoutButton()
         ],
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child: Form(
             key: _addPointKey,
             child: ListView(

@@ -22,7 +22,7 @@ class FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl extends FirebaseFires
 
   @override
   Future<void> createInvoice(InvoiceModel invoice) async {
-    await db.collection(firestoreInvoice).doc().set(invoice.toJson());
+    await db.collection(firestoreInvoice).doc(invoice.id).set(invoice.toJson());
   }
 
   @override

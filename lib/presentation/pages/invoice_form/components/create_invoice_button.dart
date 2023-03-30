@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../core/routes/route_paths.dart';
 import '../../../../core/utility/state_enum.dart';
@@ -56,9 +57,9 @@ class CreateInvoiceButton extends StatelessWidget {
         invoice: invoice
       );
 
-      if (invoiceNotifier.status == Status.Error) {
+      if (invoiceNotifier.createInvoiceStataus == Status.Error) {
         ShowToast.toast(invoiceNotifier.message);
-      } else if (invoiceNotifier.status == Status.Success) {
+      } else if (invoiceNotifier.createInvoiceStataus == Status.Success) {
         ShowToast.toast(invoiceNotifier.message);
       } else {
         ShowToast.toast(invoiceNotifier.message);
@@ -67,8 +68,8 @@ class CreateInvoiceButton extends StatelessWidget {
     }
 
     return Container(
+        width: MediaQuery. of(context).size.width,
         height: 50,
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
           child: const Text('Create'),
           onPressed: () async {
@@ -77,6 +78,7 @@ class CreateInvoiceButton extends StatelessWidget {
             }
 
             InvoiceModel invoice = InvoiceModel(
+              id: const Uuid().v4(),
               invoiceNumber: invoiceNumberController.text.trim(),
               paymentNumber: paymentNumberController.text.trim(),
               paymentMethod: _paymentMethodValue,
@@ -87,13 +89,14 @@ class CreateInvoiceButton extends StatelessWidget {
               created: createdDateController,
               startDate: DateTime.parse(startDateController.text),
               expiryDate: DateTime.parse(expiryDateController.text),
+              description: descriptionController.text.trim(),
               nominal: int.parse(nominalController.text.trim()),
               quantity: int.parse(quanityController.text.trim()),
               total: int.parse(totalController.text.trim())
             );
             
             createInvoice(invoice);
-            Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
+            Navigator.pushReplacementNamed(context, AppRoutePaths.transactionPageRoute);
           },
         ));
   }

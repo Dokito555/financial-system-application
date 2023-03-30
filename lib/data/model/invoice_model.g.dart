@@ -7,7 +7,7 @@ part of 'invoice_model.dart';
 // **************************************************************************
 
 InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       invoiceNumber: json['invoiceNumber'] as String,
       paymentNumber: json['paymentNumber'] as String,
       paymentMethod: json['paymentMethod'] as String,

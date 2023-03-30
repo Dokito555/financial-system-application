@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_financial/data/datasource/remote/firebase_transaction.dart';
+import 'package:flutter_financial/data/datasource/remote/firebase_transaction_db.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/core/error/failure.dart';
 import 'package:dartz/dartz.dart';

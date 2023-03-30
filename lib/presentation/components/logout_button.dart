@@ -18,9 +18,9 @@ class LogoutButton extends StatelessWidget {
 
       await authNotifier.authSignOut();
 
-      if (authNotifier.status == Status.Error) {
+      if (authNotifier.signOutStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
-      } else if (authNotifier.status == Status.Success) {
+      } else if (authNotifier.signOutStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
       } else {

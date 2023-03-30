@@ -20,7 +20,7 @@ class _TransactionPageState extends State<TransactionPage> {
       ),
       body: SafeArea(
         child: Container(
-            padding: const EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 10,
             right: 10,
             top: 10,

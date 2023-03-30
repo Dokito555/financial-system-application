@@ -4,14 +4,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_financial/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_financial/data/datasource/remote/firebase_transaction_log.dart';
+import 'package:flutter_financial/data/datasource/remote/firebase_transaction_log_db.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/domain/repository/firestore_transaction_log_repository.dart';
 import 'package:flutter_financial/domain/repository/firestore_transaction_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @prod
-@LazySingleton(as: FirestoreTransacitonRepository)
+@LazySingleton(as: FirestoreTransactionLogRepository)
 class FirestoreTransactionLogRepositoryImpl extends FirestoreTransactionLogRepository {
 
   final FirebaseFirestoreTransactionLogRemoteDataSource remoteDataSource;

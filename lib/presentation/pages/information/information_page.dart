@@ -8,7 +8,10 @@ class InformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0x44000000),
         actions: const <Widget>[
           LogoutButton()
         ],

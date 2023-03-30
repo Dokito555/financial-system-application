@@ -22,8 +22,17 @@ class FirebaseAuthNotifier extends ChangeNotifier {
     required this.firebaseAuthResetPassword
   });
 
-  late Status _status;
-  Status get status => _status;
+  late Status _signUpStatus;
+  Status get signUpStatus => _signUpStatus;
+
+  late Status _signInStatus;
+  Status get signInStatus => _signInStatus;
+
+  late Status _signOutStatus;
+  Status get signOutStatus => _signOutStatus;
+
+  late Status _resetPasswordStatus;
+  Status get resetPasswordStatus => _resetPasswordStatus;
 
   String _message = '';
   String get message => _message;
@@ -32,17 +41,17 @@ class FirebaseAuthNotifier extends ChangeNotifier {
     required String email,
     required String password 
   }) async {
-    _status = Status.Loading;
+    _signUpStatus = Status.Loading;
     notifyListeners();
     final result = await firebaseAuthSignUp.execute(email, password);
     result.fold(
       (failure) {
-        _status = Status.Error;
+        _signUpStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Success;
+        _signUpStatus = Status.Success;
         _message = 'Sign up success';
         notifyListeners();
       }
@@ -53,17 +62,17 @@ class FirebaseAuthNotifier extends ChangeNotifier {
     required String email,
     required String password
   }) async {
-    _status = Status.Loading;
+    _signInStatus = Status.Loading;
     notifyListeners();
     final result = await firebaseAuthSignIn.execute(email, password);
     result.fold(
       (failure) {
-        _status = Status.Error;
+        _signInStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Success;
+        _signInStatus = Status.Success;
         _message = 'Sign in success';
         notifyListeners();
       }
@@ -71,17 +80,17 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   }
 
   Future<void> authSignOut() async {
-    _status = Status.Loading;
+    _signOutStatus = Status.Loading;
     notifyListeners();
     final result = await firebaseAuthSignOut.execute();
     result.fold(
       (failure) {
-        _status = Status.Error;
+        _signOutStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Success;
+        _signOutStatus = Status.Success;
         _message = 'Sign out success';
         notifyListeners();
       }
@@ -91,17 +100,17 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   Future<void> authResetPassword({
     required String email
   }) async {
-    _status = Status.Loading;
+    _resetPasswordStatus = Status.Loading;
     notifyListeners();
     final result = await firebaseAuthResetPassword.execute(email);
     result.fold(
       (failure) {
-        _status = Status.Error;
+        _resetPasswordStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
       (result) {
-        _status = Status.Success;
+        _resetPasswordStatus = Status.Success;
         _message = 'Please reset your password';
         notifyListeners();
       }

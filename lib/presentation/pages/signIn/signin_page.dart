@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,7 @@ class _SignInPageState extends State<SignInPage> {
                           TextButton(
                             child: const Text(
                               'Sign Up',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
                             ),
                             onPressed: () {
                               Navigator.pushReplacementNamed(
@@ -88,13 +89,7 @@ class _SignInPageState extends State<SignInPage> {
         Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
-            child: const Text(
-              'Finance App',
-              style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 30),
-            )),
+            child: Image.asset('images/IDNBS.png')),
         Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
@@ -172,9 +167,9 @@ class _SignInPageState extends State<SignInPage> {
 
       await authNotifier.authResetPassword(email: email);
 
-      if (authNotifier.status == Status.Error) {
+      if (authNotifier.signUpStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
-      } else if (authNotifier.status == Status.Success) {
+      } else if (authNotifier.signUpStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
       } else {
         ShowToast.toast(authNotifier.message);
@@ -185,7 +180,7 @@ class _SignInPageState extends State<SignInPage> {
       onPressed: () {
         forgotPassword();
       },
-      child: const Text('Forgot Password?'),
+      child: const Text('Forgot Password?', style: TextStyle(color: AppColorConstants.primaryColor),),
     );
   }
 
@@ -197,9 +192,9 @@ class _SignInPageState extends State<SignInPage> {
       await authNotifier.authSignInEmailPassword(
           email: email, password: password);
 
-      if (authNotifier.status == Status.Error) {
+      if (authNotifier.signInStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
-      } else if (authNotifier.status == Status.Success) {
+      } else if (authNotifier.signInStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
         Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
       } else {
@@ -208,9 +203,13 @@ class _SignInPageState extends State<SignInPage> {
     }
 
     return Container(
+        width: MediaQuery. of(context).size.width,
         height: 50,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColorConstants.primaryColor
+          ),
           child: const Text('Login'),
           onPressed: () async {
             if (!_addPointKey.currentState!.validate()) {
