@@ -5,6 +5,7 @@ import 'package:flutter_financial/core/error/failure.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_financial/data/datasource/remote/firebase_auth.dart';
+import 'package:flutter_financial/data/model/user_model.dart';
 import 'package:flutter_financial/domain/repository/firebase_auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -69,6 +70,21 @@ class FirebaseAuthRepositoryImpl extends FirebaseAuthRepository {
   Future<Either<Failure, void>> resetPassword(String email) async {
    try {
     final result = await remoteDataSource.resetPassword(email);
+    return Right(result);
+   } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> userFirestore(UserModel user) async {
+    try {
+    final result = await remoteDataSource.userFirestore(user);
     return Right(result);
    } on SocketException {
       return Left(ConnectionFailure('Failed to connect to network'));

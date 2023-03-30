@@ -9,14 +9,14 @@ class UserModel extends Equatable{
   final String name;
   final String email;
   final String phoneNumber;
-  final String profilePicture;
+  final String? profilePicture;
 
   UserModel({
     required this.id,
     required this.name,
     required this.email,
     required this.phoneNumber,
-    required this.profilePicture
+    this.profilePicture
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

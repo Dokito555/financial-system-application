@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/data/model/user_model.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/reset_password.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signIn.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signOut.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signUp.dart';
+import 'package:flutter_financial/domain/usecases/firebase_auth/user_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/utility/state_enum.dart';
@@ -14,12 +17,14 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   FirebaseAuthSignIn firebaseAuthSignIn;
   FirebaseAuthSignOut firebaseAuthSignOut;
   FirebaseAuthResetPassword firebaseAuthResetPassword;
+  FirebaseStoreUser firebaseStoreUser;
 
   FirebaseAuthNotifier({
     required this.firebaseAuthSignUp,
     required this.firebaseAuthSignIn,
     required this.firebaseAuthSignOut,
-    required this.firebaseAuthResetPassword
+    required this.firebaseAuthResetPassword,
+    required this.firebaseStoreUser
   });
 
   late Status _signUpStatus;
@@ -33,6 +38,12 @@ class FirebaseAuthNotifier extends ChangeNotifier {
 
   late Status _resetPasswordStatus;
   Status get resetPasswordStatus => _resetPasswordStatus;
+
+  late Status _storeUserStatus;
+  Status get storeUserStatus => _storeUserStatus;
+
+  late String _userUID;
+  String get userUID => _userUID;
 
   String _message = '';
   String get message => _message;
@@ -51,6 +62,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
+        _userUID = result.user!.uid;
         _signUpStatus = Status.Success;
         _message = 'Sign up success';
         notifyListeners();
@@ -112,6 +124,25 @@ class FirebaseAuthNotifier extends ChangeNotifier {
       (result) {
         _resetPasswordStatus = Status.Success;
         _message = 'Please reset your password';
+        notifyListeners();
+      }
+    );
+  }
+
+  Future<void> storeUser({
+    required UserModel user
+  }) async {
+    _storeUserStatus = Status.Loading;
+    notifyListeners();
+    final result = await firebaseStoreUser.execute(user);
+    result.fold(
+      (failure) {
+        _storeUserStatus = Status.Error;
+        _message = failure.message;
+      }, 
+      (result) {
+        _storeUserStatus = Status.Success;
+        _message = 'Success';
         notifyListeners();
       }
     );

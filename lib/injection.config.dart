@@ -9,42 +9,43 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:cloud_firestore/cloud_firestore.dart' as _i5;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:firebase_auth/firebase_auth.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'data/datasource/remote/firebase_auth.dart' as _i4;
-import 'data/datasource/remote/firebase_invoice_db.dart' as _i6;
-import 'data/datasource/remote/firebase_transaction_db.dart' as _i7;
-import 'data/datasource/remote/firebase_transaction_log_db.dart' as _i14;
-import 'data/repository/firebase_auth_repository_impl.dart' as _i16;
-import 'data/repository/firestore_invoice_repository_impl.dart' as _i9;
-import 'data/repository/firestore_transaction_log_repository_impl.dart' as _i13;
-import 'data/repository/firestore_transaction_repository_impl.dart' as _i11;
-import 'domain/repository/firebase_auth_repository.dart' as _i15;
-import 'domain/repository/firestore_invoice_repository.dart' as _i8;
-import 'domain/repository/firestore_transaction_log_repository.dart' as _i12;
-import 'domain/repository/firestore_transaction_repository.dart' as _i10;
-import 'domain/usecases/firebase_auth/reset_password.dart' as _i17;
-import 'domain/usecases/firebase_auth/signIn.dart' as _i18;
-import 'domain/usecases/firebase_auth/signOut.dart' as _i19;
-import 'domain/usecases/firebase_auth/signUp.dart' as _i20;
-import 'domain/usecases/firestore_invoice/create_invoice.dart' as _i23;
-import 'domain/usecases/firestore_invoice/delete_invoice.dart' as _i24;
-import 'domain/usecases/firestore_invoice/get_invoice.dart' as _i26;
-import 'domain/usecases/firestore_invoice/get_invoice_detail.dart' as _i25;
-import 'domain/usecases/firestore_transaction/add_transaction.dart' as _i21;
-import 'domain/usecases/firestore_transaction/get_transactions.dart' as _i27;
+import 'data/datasource/remote/firebase_auth.dart' as _i14;
+import 'data/datasource/remote/firebase_invoice_db.dart' as _i5;
+import 'data/datasource/remote/firebase_transaction_db.dart' as _i6;
+import 'data/datasource/remote/firebase_transaction_log_db.dart' as _i13;
+import 'data/repository/firebase_auth_repository_impl.dart' as _i27;
+import 'data/repository/firestore_invoice_repository_impl.dart' as _i8;
+import 'data/repository/firestore_transaction_log_repository_impl.dart' as _i12;
+import 'data/repository/firestore_transaction_repository_impl.dart' as _i10;
+import 'domain/repository/firebase_auth_repository.dart' as _i26;
+import 'domain/repository/firestore_invoice_repository.dart' as _i7;
+import 'domain/repository/firestore_transaction_log_repository.dart' as _i11;
+import 'domain/repository/firestore_transaction_repository.dart' as _i9;
+import 'domain/usecases/firebase_auth/reset_password.dart' as _i28;
+import 'domain/usecases/firebase_auth/signIn.dart' as _i29;
+import 'domain/usecases/firebase_auth/signOut.dart' as _i30;
+import 'domain/usecases/firebase_auth/signUp.dart' as _i31;
+import 'domain/usecases/firebase_auth/user_firestore.dart' as _i32;
+import 'domain/usecases/firestore_invoice/create_invoice.dart' as _i17;
+import 'domain/usecases/firestore_invoice/delete_invoice.dart' as _i18;
+import 'domain/usecases/firestore_invoice/get_invoice.dart' as _i20;
+import 'domain/usecases/firestore_invoice/get_invoice_detail.dart' as _i19;
+import 'domain/usecases/firestore_transaction/add_transaction.dart' as _i15;
+import 'domain/usecases/firestore_transaction/get_transactions.dart' as _i21;
 import 'domain/usecases/firestore_transaction_log/add_transaction_log.dart'
-    as _i22;
+    as _i16;
 import 'domain/usecases/firestore_transaction_log/get_transaction_log.dart'
-    as _i28;
-import 'presentation/provider/firebase_auth_notifier.dart' as _i32;
-import 'presentation/provider/firestore_invoice_notifier.dart' as _i29;
-import 'presentation/provider/firestore_transaction_log_notifier.dart' as _i30;
-import 'presentation/provider/firestore_transaction_notifier.dart' as _i31;
-import 'register_module.dart' as _i33;
+    as _i22;
+import 'presentation/provider/firebase_auth_notifier.dart' as _i33;
+import 'presentation/provider/firestore_invoice_notifier.dart' as _i23;
+import 'presentation/provider/firestore_transaction_log_notifier.dart' as _i24;
+import 'presentation/provider/firestore_transaction_notifier.dart' as _i25;
+import 'register_module.dart' as _i34;
 
 const String _prod = 'prod';
 
@@ -63,129 +64,138 @@ _i1.GetIt init(
   );
   final registerModule = _$RegisterModule();
   gh.lazySingleton<_i3.FirebaseAuth>(() => registerModule.firebaseAuth);
-  gh.lazySingleton<_i4.FirebaseAuthenticationRemoteDataSource>(
-    () => _i4.FirebaseAuthenticationRemoteDataSourceImpl(
-        firebaseAuth: gh<_i3.FirebaseAuth>()),
-    registerFor: {_prod},
-  );
-  gh.lazySingleton<_i5.FirebaseFirestore>(
+  gh.lazySingleton<_i4.FirebaseFirestore>(
       () => registerModule.firebaseFirestore);
-  gh.lazySingleton<_i6.FirebaseFirestoreInvoiceDatabaseRemoteDataSource>(
-    () => _i6.FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl(
-        db: gh<_i5.FirebaseFirestore>()),
+  gh.lazySingleton<_i5.FirebaseFirestoreInvoiceDatabaseRemoteDataSource>(
+    () => _i5.FirebaseFirestoreInvoiceDatabaseRemoteDataSourceImpl(
+      db: gh<_i4.FirebaseFirestore>(),
+      firebaseAuth: gh<_i3.FirebaseAuth>(),
+    ),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i7.FirebaseFirestoreTransactionRemoteDataSource>(
-    () => _i7.FirebaseFirestoreTransactionRemoteDataSourceImpl(
-        db: gh<_i5.FirebaseFirestore>()),
+  gh.lazySingleton<_i6.FirebaseFirestoreTransactionRemoteDataSource>(
+    () => _i6.FirebaseFirestoreTransactionRemoteDataSourceImpl(
+        db: gh<_i4.FirebaseFirestore>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i8.FirestoreInvoiceRepository>(
-    () => _i9.FirestoreInvoiceRepositoryImpl(
+  gh.lazySingleton<_i7.FirestoreInvoiceRepository>(
+    () => _i8.FirestoreInvoiceRepositoryImpl(
         remoteDataSource:
-            gh<_i6.FirebaseFirestoreInvoiceDatabaseRemoteDataSource>()),
+            gh<_i5.FirebaseFirestoreInvoiceDatabaseRemoteDataSource>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i10.FirestoreTransacitonRepository>(
-    () => _i11.FirestoreTransactionRepositoryImpl(
+  gh.lazySingleton<_i9.FirestoreTransacitonRepository>(
+    () => _i10.FirestoreTransactionRepositoryImpl(
         remoteDataSource:
-            gh<_i7.FirebaseFirestoreTransactionRemoteDataSource>()),
+            gh<_i6.FirebaseFirestoreTransactionRemoteDataSource>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i12.FirestoreTransactionLogRepository>(
-    () => _i13.FirestoreTransactionLogRepositoryImpl(
+  gh.lazySingleton<_i11.FirestoreTransactionLogRepository>(
+    () => _i12.FirestoreTransactionLogRepositoryImpl(
         remoteDataSource:
-            gh<_i14.FirebaseFirestoreTransactionLogRemoteDataSource>()),
+            gh<_i13.FirebaseFirestoreTransactionLogRemoteDataSource>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i15.FirebaseAuthRepository>(
-    () => _i16.FirebaseAuthRepositoryImpl(
-        remoteDataSource: gh<_i4.FirebaseAuthenticationRemoteDataSource>()),
+  gh.lazySingleton<_i14.FirebaseAuthenticationRemoteDataSource>(
+    () => _i14.FirebaseAuthenticationRemoteDataSourceImpl(
+      firebaseAuth: gh<_i3.FirebaseAuth>(),
+      db: gh<_i4.FirebaseFirestore>(),
+    ),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i17.FirebaseAuthResetPassword>(
-    () => _i17.FirebaseAuthResetPassword(
-        repository: gh<_i15.FirebaseAuthRepository>()),
+  gh.lazySingleton<_i15.FirestoreAddTransaction>(
+    () => _i15.FirestoreAddTransaction(
+        repository: gh<_i9.FirestoreTransacitonRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i18.FirebaseAuthSignIn>(
-    () =>
-        _i18.FirebaseAuthSignIn(repository: gh<_i15.FirebaseAuthRepository>()),
+  gh.lazySingleton<_i16.FirestoreAddTransactionLog>(
+    () => _i16.FirestoreAddTransactionLog(
+        repository: gh<_i11.FirestoreTransactionLogRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i19.FirebaseAuthSignOut>(
-    () =>
-        _i19.FirebaseAuthSignOut(repository: gh<_i15.FirebaseAuthRepository>()),
+  gh.lazySingleton<_i17.FirestoreCreateInvoice>(
+    () => _i17.FirestoreCreateInvoice(
+        repository: gh<_i7.FirestoreInvoiceRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i20.FirebaseAuthSignUp>(
-    () =>
-        _i20.FirebaseAuthSignUp(repository: gh<_i15.FirebaseAuthRepository>()),
+  gh.lazySingleton<_i18.FirestoreDeleteInvoice>(
+    () => _i18.FirestoreDeleteInvoice(
+        repository: gh<_i7.FirestoreInvoiceRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i21.FirestoreAddTransaction>(
-    () => _i21.FirestoreAddTransaction(
-        repository: gh<_i10.FirestoreTransacitonRepository>()),
+  gh.lazySingleton<_i19.FirestoreGetInvoiceDetail>(
+    () => _i19.FirestoreGetInvoiceDetail(
+        repository: gh<_i7.FirestoreInvoiceRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i22.FirestoreAddTransactionLog>(
-    () => _i22.FirestoreAddTransactionLog(
-        repository: gh<_i12.FirestoreTransactionLogRepository>()),
+  gh.lazySingleton<_i20.FirestoreGetInvoices>(
+    () => _i20.FirestoreGetInvoices(
+        repository: gh<_i7.FirestoreInvoiceRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i23.FirestoreCreateInvoice>(
-    () => _i23.FirestoreCreateInvoice(
-        repository: gh<_i8.FirestoreInvoiceRepository>()),
+  gh.lazySingleton<_i21.FirestoreGetTransactions>(
+    () => _i21.FirestoreGetTransactions(
+        repository: gh<_i9.FirestoreTransacitonRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i24.FirestoreDeleteInvoice>(
-    () => _i24.FirestoreDeleteInvoice(
-        repository: gh<_i8.FirestoreInvoiceRepository>()),
+  gh.lazySingleton<_i22.FirestoreGetTransactionsLog>(
+    () => _i22.FirestoreGetTransactionsLog(
+        repository: gh<_i11.FirestoreTransactionLogRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i25.FirestoreGetInvoiceDetail>(
-    () => _i25.FirestoreGetInvoiceDetail(
-        repository: gh<_i8.FirestoreInvoiceRepository>()),
-    registerFor: {_prod},
-  );
-  gh.lazySingleton<_i26.FirestoreGetInvoices>(
-    () => _i26.FirestoreGetInvoices(
-        repository: gh<_i8.FirestoreInvoiceRepository>()),
-    registerFor: {_prod},
-  );
-  gh.lazySingleton<_i27.FirestoreGetTransactions>(
-    () => _i27.FirestoreGetTransactions(
-        repository: gh<_i10.FirestoreTransacitonRepository>()),
-    registerFor: {_prod},
-  );
-  gh.lazySingleton<_i28.FirestoreGetTransactionsLog>(
-    () => _i28.FirestoreGetTransactionsLog(
-        repository: gh<_i12.FirestoreTransactionLogRepository>()),
-    registerFor: {_prod},
-  );
-  gh.factory<_i29.FirestoreInvoiceNotifier>(() => _i29.FirestoreInvoiceNotifier(
-        firestoreCreateInvoice: gh<_i23.FirestoreCreateInvoice>(),
-        firestoreDeleteInvoice: gh<_i24.FirestoreDeleteInvoice>(),
-        firestoreGetInvoices: gh<_i26.FirestoreGetInvoices>(),
-        firestoreGetInvoiceDetail: gh<_i25.FirestoreGetInvoiceDetail>(),
+  gh.factory<_i23.FirestoreInvoiceNotifier>(() => _i23.FirestoreInvoiceNotifier(
+        firestoreCreateInvoice: gh<_i17.FirestoreCreateInvoice>(),
+        firestoreDeleteInvoice: gh<_i18.FirestoreDeleteInvoice>(),
+        firestoreGetInvoices: gh<_i20.FirestoreGetInvoices>(),
+        firestoreGetInvoiceDetail: gh<_i19.FirestoreGetInvoiceDetail>(),
       ));
-  gh.factory<_i30.FirestoreTransactionLogNotifier>(
-      () => _i30.FirestoreTransactionLogNotifier(
-            firestoreAddTransactionLog: gh<_i22.FirestoreAddTransactionLog>(),
-            firestoreGetTransactionsLog: gh<_i28.FirestoreGetTransactionsLog>(),
+  gh.factory<_i24.FirestoreTransactionLogNotifier>(
+      () => _i24.FirestoreTransactionLogNotifier(
+            firestoreAddTransactionLog: gh<_i16.FirestoreAddTransactionLog>(),
+            firestoreGetTransactionsLog: gh<_i22.FirestoreGetTransactionsLog>(),
           ));
-  gh.factory<_i31.FirestoreTransactionNotifier>(
-      () => _i31.FirestoreTransactionNotifier(
-            firestoreAddTransaction: gh<_i21.FirestoreAddTransaction>(),
-            firestoreGetTransactions: gh<_i27.FirestoreGetTransactions>(),
+  gh.factory<_i25.FirestoreTransactionNotifier>(
+      () => _i25.FirestoreTransactionNotifier(
+            firestoreAddTransaction: gh<_i15.FirestoreAddTransaction>(),
+            firestoreGetTransactions: gh<_i21.FirestoreGetTransactions>(),
           ));
-  gh.factory<_i32.FirebaseAuthNotifier>(() => _i32.FirebaseAuthNotifier(
-        firebaseAuthSignUp: gh<_i20.FirebaseAuthSignUp>(),
-        firebaseAuthSignIn: gh<_i18.FirebaseAuthSignIn>(),
-        firebaseAuthSignOut: gh<_i19.FirebaseAuthSignOut>(),
-        firebaseAuthResetPassword: gh<_i17.FirebaseAuthResetPassword>(),
+  gh.lazySingleton<_i26.FirebaseAuthRepository>(
+    () => _i27.FirebaseAuthRepositoryImpl(
+        remoteDataSource: gh<_i14.FirebaseAuthenticationRemoteDataSource>()),
+    registerFor: {_prod},
+  );
+  gh.lazySingleton<_i28.FirebaseAuthResetPassword>(
+    () => _i28.FirebaseAuthResetPassword(
+        repository: gh<_i26.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.lazySingleton<_i29.FirebaseAuthSignIn>(
+    () =>
+        _i29.FirebaseAuthSignIn(repository: gh<_i26.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.lazySingleton<_i30.FirebaseAuthSignOut>(
+    () =>
+        _i30.FirebaseAuthSignOut(repository: gh<_i26.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.lazySingleton<_i31.FirebaseAuthSignUp>(
+    () =>
+        _i31.FirebaseAuthSignUp(repository: gh<_i26.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.lazySingleton<_i32.FirebaseStoreUser>(
+    () => _i32.FirebaseStoreUser(repository: gh<_i26.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.factory<_i33.FirebaseAuthNotifier>(() => _i33.FirebaseAuthNotifier(
+        firebaseAuthSignUp: gh<_i31.FirebaseAuthSignUp>(),
+        firebaseAuthSignIn: gh<_i29.FirebaseAuthSignIn>(),
+        firebaseAuthSignOut: gh<_i30.FirebaseAuthSignOut>(),
+        firebaseAuthResetPassword: gh<_i28.FirebaseAuthResetPassword>(),
+        firebaseStoreUser: gh<_i32.FirebaseStoreUser>(),
       ));
   return getIt;
 }
 
-class _$RegisterModule extends _i33.RegisterModule {}
+class _$RegisterModule extends _i34.RegisterModule {}

@@ -6,6 +6,7 @@ final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 const firestoreInvoice = 'invoice';
 const firestoreTransaciton = 'transaction';
 const firestoreTransacitonLog = 'transactionLog';
+const firestoreUsers = 'users';
 
 class AppColorConstants {
   static const primaryColor = Color(0xff0249B8);

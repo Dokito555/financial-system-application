@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/utility/validators.dart';
+import 'package:flutter_financial/data/model/user_model.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +22,11 @@ class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _addPointKey = GlobalKey<FormState>();
   late String email;
   late String password;
+  late String phoneNumber;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
 
   bool _isPasswordHide = true;
 
@@ -148,9 +151,6 @@ class _SignUpPageState extends State<SignUpPage> {
             if (value!.isEmpty) {
               return "Password must not be empty";
             }
-            // if (Validators.isValidPassword(value) == false) {
-            //   return "Invalid Password";
-            // }
             return null;
           },
           onChanged: (String value) {
@@ -159,25 +159,45 @@ class _SignUpPageState extends State<SignUpPage> {
           onSaved: (String? value) {
             password = value!;
           },
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: phoneNumberController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Input Your Phone Number',
+            labelText: 'Phone Number',
+          ),
+          autofocus: false,
+          keyboardType: TextInputType.phone,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Phone Number must not be empty";
+            }
+            return null;
+          },
+          onChanged: (String value) {
+            phoneNumber = value;
+          },
+          onSaved: (String? value) {
+            phoneNumber = value!;
+          },
         )
       ],
     );
   }
 
   Widget _signUpButton(BuildContext context) {
-    var authNotifier =
-        Provider.of<FirebaseAuthNotifier>(context, listen: false);
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
 
     Future<void> signUp() async {
-      onLoading;
 
-      await authNotifier.authSignUpEmailPassword(
-          email: email, password: password);
-
-      if (authNotifier.signUpStatus == Status.Error) {
+      await authNotifier.authSignUpEmailPassword(email: email, password: password);
+      await authNotifier.storeUser(user: UserModel(id: authNotifier.userUID, name: email, email: email, phoneNumber: phoneNumber));
+      
+      if (authNotifier.signUpStatus == Status.Error || authNotifier.storeUserStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
-        // Navigator.pop(context);
-      } else if (authNotifier.signUpStatus == Status.Success) {
+      } else if (authNotifier.signUpStatus == Status.Success && authNotifier.storeUserStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
         if (!context.mounted) return;
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
@@ -205,10 +225,4 @@ class _SignUpPageState extends State<SignUpPage> {
           },
         ));
   }
-
-  // @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   passwordController.dispose();
-  // }
 }
