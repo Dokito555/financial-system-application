@@ -6,4 +6,4 @@ a school project application
 
 ## !
 
-it might not working on iPhone 14+
+it might not work on iPhone 14+
