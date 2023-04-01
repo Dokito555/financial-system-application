@@ -44,6 +44,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
+    .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;
@@ -66,6 +67,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
     .where('created', isGreaterThan: monthlyDate, isLessThan: tomorrowsDate)
+    .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;
@@ -77,6 +79,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
     .where('created', isGreaterThan: yearlyDate, isLessThan: tomorrowsDate)
+    .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;

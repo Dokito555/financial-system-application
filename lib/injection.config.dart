@@ -26,11 +26,12 @@ import 'domain/repository/firebase_auth_repository.dart' as _i29;
 import 'domain/repository/firestore_invoice_repository.dart' as _i8;
 import 'domain/repository/firestore_transaction_log_repository.dart' as _i12;
 import 'domain/repository/firestore_transaction_repository.dart' as _i10;
+import 'domain/usecases/firebase_auth/get_user.dart' as _i35;
 import 'domain/usecases/firebase_auth/reset_password.dart' as _i31;
 import 'domain/usecases/firebase_auth/signIn.dart' as _i32;
 import 'domain/usecases/firebase_auth/signOut.dart' as _i33;
 import 'domain/usecases/firebase_auth/signUp.dart' as _i34;
-import 'domain/usecases/firebase_auth/user_firestore.dart' as _i35;
+import 'domain/usecases/firebase_auth/user_firestore.dart' as _i36;
 import 'domain/usecases/firestore_invoice/create_invoice.dart' as _i17;
 import 'domain/usecases/firestore_invoice/delete_invoice.dart' as _i18;
 import 'domain/usecases/firestore_invoice/get_invoice.dart' as _i20;
@@ -47,11 +48,11 @@ import 'domain/usecases/firestore_transaction_log/add_transaction_log.dart'
     as _i16;
 import 'domain/usecases/firestore_transaction_log/get_transaction_log.dart'
     as _i24;
-import 'presentation/provider/firebase_auth_notifier.dart' as _i36;
+import 'presentation/provider/firebase_auth_notifier.dart' as _i37;
 import 'presentation/provider/firestore_invoice_notifier.dart' as _i26;
 import 'presentation/provider/firestore_transaction_log_notifier.dart' as _i27;
 import 'presentation/provider/firestore_transaction_notifier.dart' as _i28;
-import 'register_module.dart' as _i37;
+import 'register_module.dart' as _i38;
 
 const String _prod = 'prod';
 
@@ -220,18 +221,23 @@ _i1.GetIt init(
         _i34.FirebaseAuthSignUp(repository: gh<_i29.FirebaseAuthRepository>()),
     registerFor: {_prod},
   );
-  gh.lazySingleton<_i35.FirebaseStoreUser>(
-    () => _i35.FirebaseStoreUser(repository: gh<_i29.FirebaseAuthRepository>()),
+  gh.lazySingleton<_i35.FirebaseGetUser>(
+    () => _i35.FirebaseGetUser(repository: gh<_i29.FirebaseAuthRepository>()),
     registerFor: {_prod},
   );
-  gh.factory<_i36.FirebaseAuthNotifier>(() => _i36.FirebaseAuthNotifier(
+  gh.lazySingleton<_i36.FirebaseStoreUser>(
+    () => _i36.FirebaseStoreUser(repository: gh<_i29.FirebaseAuthRepository>()),
+    registerFor: {_prod},
+  );
+  gh.factory<_i37.FirebaseAuthNotifier>(() => _i37.FirebaseAuthNotifier(
         firebaseAuthSignUp: gh<_i34.FirebaseAuthSignUp>(),
         firebaseAuthSignIn: gh<_i32.FirebaseAuthSignIn>(),
         firebaseAuthSignOut: gh<_i33.FirebaseAuthSignOut>(),
         firebaseAuthResetPassword: gh<_i31.FirebaseAuthResetPassword>(),
-        firebaseStoreUser: gh<_i35.FirebaseStoreUser>(),
+        firebaseStoreUser: gh<_i36.FirebaseStoreUser>(),
+        firebaseGetUser: gh<_i35.FirebaseGetUser>(),
       ));
   return getIt;
 }
 
-class _$RegisterModule extends _i37.RegisterModule {}
+class _$RegisterModule extends _i38.RegisterModule {}

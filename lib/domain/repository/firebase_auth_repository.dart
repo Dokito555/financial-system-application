@@ -10,4 +10,5 @@ abstract class FirebaseAuthRepository {
   Future<Either<Failure, void>> resetPassword(String email);
   Future<Either<Failure, void>> authSignOut();
   Future<Either<Failure, void>> userFirestore(UserModel user);
+  Future<Either<Failure, UserModel>> getUser();
 }

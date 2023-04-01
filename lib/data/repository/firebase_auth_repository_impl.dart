@@ -95,5 +95,20 @@ class FirebaseAuthRepositoryImpl extends FirebaseAuthRepository {
       return Left(FirebaseFailure('Failed with error code: ${e.code}'));
     }
   }
+
+  @override
+  Future<Either<Failure, UserModel>> getUser() async {
+    try {
+    final result = await remoteDataSource.getUser();
+    return Right(result);
+   } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
   
 }

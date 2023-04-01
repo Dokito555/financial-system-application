@@ -15,6 +15,7 @@ abstract class FirebaseAuthenticationRemoteDataSource {
   Future<void> resetPassword(String email);
   Future<void> authSignOut();
   Future<void> userFirestore(UserModel user);
+  Future<UserModel> getUser();
 }
 
 @prod
@@ -27,6 +28,8 @@ class FirebaseAuthenticationRemoteDataSourceImpl extends FirebaseAuthenticationR
     required this.firebaseAuth,
     required this.db
   });
+
+  User? get currentUser => firebaseAuth.currentUser;
 
   @override
   Future<UserCredential> authSignInEmailPassword(String email, String password) async {
@@ -51,6 +54,13 @@ class FirebaseAuthenticationRemoteDataSourceImpl extends FirebaseAuthenticationR
   @override
   Future<void> userFirestore(UserModel user) async {
     await db.collection(firestoreUsers).doc(user.id).set(user.toJson());
+  }
+  
+  @override
+  Future<UserModel> getUser() async {
+    final snapshot = await db.collection(firestoreUsers).doc(currentUser!.uid).get();
+    final data = UserModel.fromFirestore(snapshot);
+    return data;
   }
 
 }

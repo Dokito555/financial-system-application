@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
 import 'package:flutter_financial/presentation/components/logout_button.dart';
 
+import '../../../core/utility/constants.dart';
+
 class InformationPage extends StatelessWidget {
   const InformationPage({super.key});
 
@@ -9,9 +11,12 @@ class InformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: AppColorConstants.fillColor,
       appBar: AppBar(
+        title: const Text('Informasi', style: TextStyle(color: Colors.black),),
+        iconTheme: const IconThemeData(color: Color(0xff777474)),
         elevation: 0,
-        backgroundColor: const Color(0x44000000),
+        backgroundColor: Colors.transparent,
         actions: const <Widget>[
           LogoutButton()
         ],

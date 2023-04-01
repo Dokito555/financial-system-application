@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/data/model/user_model.dart';
+import 'package:flutter_financial/domain/usecases/firebase_auth/get_user.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/reset_password.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signIn.dart';
 import 'package:flutter_financial/domain/usecases/firebase_auth/signOut.dart';
@@ -18,13 +19,15 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   FirebaseAuthSignOut firebaseAuthSignOut;
   FirebaseAuthResetPassword firebaseAuthResetPassword;
   FirebaseStoreUser firebaseStoreUser;
+  FirebaseGetUser firebaseGetUser;
 
   FirebaseAuthNotifier({
     required this.firebaseAuthSignUp,
     required this.firebaseAuthSignIn,
     required this.firebaseAuthSignOut,
     required this.firebaseAuthResetPassword,
-    required this.firebaseStoreUser
+    required this.firebaseStoreUser,
+    required this.firebaseGetUser
   });
 
   late Status _signUpStatus;
@@ -44,6 +47,12 @@ class FirebaseAuthNotifier extends ChangeNotifier {
 
   late String _userUID;
   String get userUID => _userUID;
+
+  late Status _getUserStatus;
+  Status get getUserStatus => _getUserStatus;
+
+  late UserModel _userDetail = UserModel(id: '', name: '', email: '', phoneNumber: '');
+  UserModel get userDetail => _userDetail;
 
   String _message = '';
   String get message => _message;
@@ -142,6 +151,24 @@ class FirebaseAuthNotifier extends ChangeNotifier {
       }, 
       (result) {
         _storeUserStatus = Status.Success;
+        _message = 'Success';
+        notifyListeners();
+      }
+    );
+  }
+
+  Future<void> getUser() async {
+    _getUserStatus = Status.Loading;
+    notifyListeners();
+    final result = await firebaseGetUser.execute();
+    result.fold(
+      (failure) {
+        _getUserStatus = Status.Error;
+        _message = failure.message;
+      }, 
+      (result) {
+        _userDetail = result;
+        _getUserStatus = Status.Success;
         _message = 'Success';
         notifyListeners();
       }

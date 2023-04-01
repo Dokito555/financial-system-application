@@ -37,7 +37,7 @@ class _TransactionPageState extends State<TransactionPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
-            'Transactions',
+            'Transaksi',
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[

@@ -3,6 +3,7 @@ import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/presentation/pages/invoice/components/invoice_card.dart';
+import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -22,9 +23,19 @@ class _InvoicePageState extends State<InvoicePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<FirestoreInvoiceNotifier>(context, listen: false)
-            .getInvoices());
+    Future.microtask(() => Provider.of<FirestoreInvoiceNotifier>(context, listen: false)..getInvoices());
+  }
+
+  Future<void> checkTransaction(InvoiceModel invoice) async {
+
+    var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context);
+    var transactionLogNotifier = Provider.of<FirestoreTransactionLogNotifier>(context);
+
+    final now = DateTime.now();
+    if (invoice.expiryDate.isBefore(now)) {
+      await invoiceNotifier.deleteInvoice(id: invoice.id);
+      await transactionLogNotifier.addTransactionLog(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod: invoice.paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: false));
+    }
   }
 
   @override
@@ -37,7 +48,7 @@ class _InvoicePageState extends State<InvoicePage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
-            'Invoices',
+            'Tagihan',
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[
@@ -65,13 +76,14 @@ class _InvoicePageState extends State<InvoicePage> {
                     itemCount: data.invoices.length,
                     itemBuilder: (context, index) {
                       final invoice = data.invoices[index];
+                      checkTransaction(invoice);
                       return InvoiceCard(invoice: invoice);
                     },
                   ),
                 ),
               );
             }
-            return Center(child: Text('Something\'s wrong please try again'));
+            return const Center(child: Text('Something\'s wrong please try again'));
           },
         ),
         drawer: const CustomDrawer());

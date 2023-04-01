@@ -36,6 +36,7 @@ class FirebaseFirestoreTransactionLogRemoteDataSourceImpl extends FirebaseFirest
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransacitonLog)
+    .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;

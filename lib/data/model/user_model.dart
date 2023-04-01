@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -21,6 +22,19 @@ class UserModel extends Equatable{
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  factory UserModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+  ) {
+    final data = snapshot.data();
+    return UserModel(
+      id: snapshot['id'] as String, 
+      name: snapshot['name'] as String, 
+      email: snapshot['email'] as String, 
+      phoneNumber: snapshot['phoneNumber'] as String,
+      profilePicture: snapshot['profilePicture'] as String? ?? ''
+    );
+  }
   
   @override
   // TODO: implement props
