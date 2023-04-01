@@ -4,14 +4,15 @@ import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/home_page.dart';
 import 'package:flutter_financial/presentation/pages/information/information_page.dart';
 import 'package:flutter_financial/presentation/pages/invoice/invoice_page.dart';
-import 'package:flutter_financial/presentation/pages/invoice_detail/invoice_detail_page.dart';
+import 'package:flutter_financial/presentation/pages/invoice/invoice_detail/invoice_detail_page.dart';
 import 'package:flutter_financial/presentation/pages/invoice_form/invoice_form_page.dart';
 import 'package:flutter_financial/presentation/pages/settings/settings_page.dart';
 import 'package:flutter_financial/presentation/pages/signIn/signin_page.dart';
 import 'package:flutter_financial/presentation/pages/signUp/signup_page.dart';
 import 'package:flutter_financial/presentation/pages/splash_screen/splash_screen.dart';
+import 'package:flutter_financial/presentation/pages/transaction/transaction_detail/transaction_detail_page.dart';
 import 'package:flutter_financial/presentation/pages/transaction/transaction_page.dart';
-import 'package:flutter_financial/presentation/pages/transaction_log/transacction_log_page.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/transaction_log_page.dart';
 
 class PageRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -39,6 +40,9 @@ class PageRouter {
       case AppRoutePaths.invoiceDetailPageRoute:
         var data = settings.arguments as InvoiceModel;
         return MaterialPageRoute(builder: (_) => InvoiceDetailPage(invoice: data));
+      case AppRoutePaths.transactionDetailPageRoute:
+        var data = settings.arguments as InvoiceModel;
+        return MaterialPageRoute(builder: (_) => TransactionDetailPage(invoice: data));
       default:
         return MaterialPageRoute(builder: (_) => Scaffold(
           body: Center(

@@ -21,6 +21,7 @@ class InvoiceModel extends Equatable{
   int nominal;
   int quantity;
   int total;
+  bool? isSuccess;
 
   InvoiceModel({
     required this.id,
@@ -37,7 +38,8 @@ class InvoiceModel extends Equatable{
     this.description = "",
     required this.nominal,
     this.quantity = 1,
-    required this.total
+    required this.total,
+    this.isSuccess
   });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) => _$InvoiceModelFromJson(json);
@@ -62,6 +64,7 @@ class InvoiceModel extends Equatable{
       nominal: snapshot['nominal'] as int,
       quantity: snapshot['quantity'] as int? ?? 1,
       total: snapshot['total'] as int,
+      isSuccess: snapshot['isSuccess'] as bool?
     );
   }
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
@@ -83,6 +86,7 @@ class InvoiceModel extends Equatable{
     description,
     nominal,
     quantity,
-    total
+    total,
+    isSuccess
   ];
 }

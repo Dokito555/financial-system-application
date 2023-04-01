@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -14,7 +13,6 @@ import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.d
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:provider/provider.dart';
 import 'core/routes/route_paths.dart';

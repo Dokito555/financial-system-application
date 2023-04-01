@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/routes/route_paths.dart';
-import 'package:flutter_financial/core/utility/constants.dart';
-import 'package:flutter_financial/data/model/invoice_model.dart';
-import 'package:flutter_financial/presentation/pages/invoice/components/invoice_card.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_financial/presentation/components/custom_drawer.dart';
+import 'package:flutter_financial/presentation/components/logout_button.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/components/transaction_log_card.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
-import '../../components/custom_drawer.dart';
-import '../../components/logout_button.dart';
-import '../../provider/firestore_invoice_notifier.dart';
+import '../../provider/firestore_transaction_log_notifier.dart';
+import '../invoice/components/invoice_card.dart';
+import '../../provider/firestore_transaction_notifier.dart';
 
-class InvoicePage extends StatefulWidget {
-  const InvoicePage({super.key});
+class TransactionLogPage extends StatefulWidget {
+  const TransactionLogPage({super.key});
 
   @override
-  State<InvoicePage> createState() => _InvoicePageState();
+  State<TransactionLogPage> createState() => _TransactionLogPageState();
 }
 
-class _InvoicePageState extends State<InvoicePage> {
-  @override
+class _TransactionLogPageState extends State<TransactionLogPage> {
+
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<FirestoreInvoiceNotifier>(context, listen: false)
-            .getInvoices());
+        Provider.of<FirestoreTransactionLogNotifier>(context, listen: false)
+            .getTransactionsLog());
   }
 
   @override
@@ -37,7 +36,7 @@ class _InvoicePageState extends State<InvoicePage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const Text(
-            'Invoices',
+            'Transactions Log',
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[
@@ -48,9 +47,9 @@ class _InvoicePageState extends State<InvoicePage> {
           Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: SingleChildScrollView(
-            child: Consumer<FirestoreInvoiceNotifier>(
+            child: Consumer<FirestoreTransactionLogNotifier>(
               builder: (context, data, child) {
-                final status = data.invoicesStatus;
+                final status = data.getTransactionLogStatus;
                 if (status == Status.Loading) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -58,10 +57,10 @@ class _InvoicePageState extends State<InvoicePage> {
                 } else if (status == Status.Success) {
                   return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: data.invoices.length,
+                    itemCount: data.transactionsLog.length,
                     itemBuilder: (context, index) {
-                      final invoice = data.invoices[index];
-                      return InvoiceCard(invoice: invoice);
+                      final invoice = data.transactionsLog[index];
+                      return TransactionLogCard(invoice: invoice);
                     },
                   );
                 } else {

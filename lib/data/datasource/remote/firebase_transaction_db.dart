@@ -8,7 +8,7 @@ abstract class FirebaseFirestoreTransactionRemoteDataSource {
   Future<void> addTransaction(InvoiceModel invoice);
   Future<List<InvoiceModel>> fetchTransactions();
   Future<List<InvoiceModel>> fetchTodayTransactions();
-  Future<List<InvoiceModel>> fetchWeeklyTransactions();
+  Future<List<InvoiceModel>> fetchMonthlyTransactions();
   Future<List<InvoiceModel>> fetchYearlyTransactions();
 }
 
@@ -19,6 +19,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
   final FirebaseFirestore db;
   final FirebaseAuth firebaseAuth;
   final DateTime todaysDate = DateTime(DateTime.now().day);
+  final DateTime tomorrowsDate = DateTime.now().add(const Duration(days:1));
   final DateTime monthlyDate = DateTime(DateTime.now().month);
   final DateTime yearlyDate = DateTime(DateTime.now().year);
 
@@ -33,7 +34,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
   Future<void> addTransaction(InvoiceModel invoice) async {
     await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
-    .collection(firestoreTransaciton)
+    .collection(firestoreTransaction)
     .doc(invoice.id)
     .set(invoice.toJson());
   }
@@ -42,28 +43,43 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
   Future<List<InvoiceModel>> fetchTransactions() async {
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
-    .collection(firestoreTransaciton)
+    .collection(firestoreTransaction)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;
   }
   
   @override
-  Future<List<InvoiceModel>> fetchTodayTransactions() {
-    // TODO: implement fetchTodayTransactions
-    throw UnimplementedError();
+  Future<List<InvoiceModel>> fetchTodayTransactions() async {
+    final snapshot = await db.collection(firestoreUsers)
+    .doc(currentUser!.uid)
+    .collection(firestoreTransaction)
+    .where('created', isGreaterThan: todaysDate, isLessThan: tomorrowsDate)
+    .get();
+    final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
+    return data;
   }
   
   @override
-  Future<List<InvoiceModel>> fetchWeeklyTransactions() {
-    // TODO: implement fetchWeeklyTransactions
-    throw UnimplementedError();
+  Future<List<InvoiceModel>> fetchMonthlyTransactions() async {
+    final snapshot = await db.collection(firestoreUsers)
+    .doc(currentUser!.uid)
+    .collection(firestoreTransaction)
+    .where('created', isGreaterThan: monthlyDate, isLessThan: tomorrowsDate)
+    .get();
+    final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
+    return data;
   }
   
   @override
-  Future<List<InvoiceModel>> fetchYearlyTransactions() {
-    // TODO: implement fetchYearlyTransactions
-    throw UnimplementedError();
+  Future<List<InvoiceModel>> fetchYearlyTransactions() async {
+    final snapshot = await db.collection(firestoreUsers)
+    .doc(currentUser!.uid)
+    .collection(firestoreTransaction)
+    .where('created', isGreaterThan: yearlyDate, isLessThan: tomorrowsDate)
+    .get();
+    final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
+    return data;
   }
 
 }

@@ -68,6 +68,7 @@ dependencies:
   google_fonts: ^4.0.1
   date_format: ^2.0.7
   flutter_svg: ^2.0.4
+  syncfusion_flutter_charts: ^21.1.37
   
 
 dev_dependencies:

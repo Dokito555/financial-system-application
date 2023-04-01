@@ -1,3 +1,0 @@
-- native splash screen
-- able to customize
-- read documentation here https://pub.dev/packages/flutter_native_splash

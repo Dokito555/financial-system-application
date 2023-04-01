@@ -17,8 +17,11 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
     required this.firestoreGetTransactionsLog
   });
 
-  late Status _status;
-  Status get status => _status;
+  late Status _addSuccessfulTransactionLogStatus;
+  Status get addSuccessfulTransactionLogStatus => _addSuccessfulTransactionLogStatus;
+
+  Status _getTransactionLogStatus = Status.Empty;
+  Status get getTransactionLogStatus => _getTransactionLogStatus;
 
   List<InvoiceModel> _transactionsLog = [];
   List<InvoiceModel> get transactionsLog => _transactionsLog;
@@ -26,19 +29,19 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
-  Future<void> addTransactionLog({
+  Future<void> addSuccessfulTransactionLog({
     required InvoiceModel invoice
   }) async {
-    _status = Status.Loading;
+    _addSuccessfulTransactionLogStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreAddTransactionLog.execute(invoice);
     result.fold(
       (failure) {
-      _status = Status.Error;
+      _addSuccessfulTransactionLogStatus = Status.Error;
       _message = failure.message;
     },
       (result) {
-        _status = Status.Success;
+        _addSuccessfulTransactionLogStatus = Status.Success;
         _message = 'Added';
         notifyListeners();
       }
@@ -46,22 +49,26 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
   }
 
   Future<void> getTransactionsLog() async {
-    _status = Status.Loading;
+    _getTransactionLogStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreGetTransactionsLog.execute();
     result.fold(
         (failure) {
-        _status = Status.Error;
+        _getTransactionLogStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
         (result) {
           _transactionsLog = result;
-          _status = Status.Success;
+          _getTransactionLogStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
         }
     );
+  }
+
+  Future<void> checkTransaction() async {
+    
   }
 
 }

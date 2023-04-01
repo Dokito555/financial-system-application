@@ -35,6 +35,38 @@ class _HomePageState extends State<HomePage> {
           LogoutButton()
         ],
       ),
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      color: AppColorConstants.lightPurpleColor,
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      color: AppColorConstants.lightBlueColor,
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      color: AppColorConstants.lightPinkColor,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
       drawer: const CustomDrawer()
     );
   }

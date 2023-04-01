@@ -4,7 +4,7 @@ import 'package:flutter_financial/presentation/pages/signUp/signup_page.dart';
 const applicationName = "Finance App";
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 const firestoreInvoice = 'invoice';
-const firestoreTransaciton = 'transaction';
+const firestoreTransaction = 'transaction';
 const firestoreTransacitonLog = 'transactionLog';
 const firestoreUsers = 'users';
 
@@ -18,4 +18,6 @@ class AppColorConstants {
   static const purpleColor = Color(0xff855BEF);
   static const greenColor = Color(0xff34A853);
   static const lightGreyColor = Color(0xffF8FAFB);
+  static const successGreen = Color(0xff3FBE62);
+  static const failedRed = Color(0xffDF6071);
 }

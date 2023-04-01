@@ -49,5 +49,53 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       return Left(FirebaseFailure('Failed with error code: ${e.code}'));
     }
   }
+  
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fetchMonthlyTransactions() async {
+    try {
+      final result = await remoteDataSource.fetchMonthlyTransactions();
+      return Right(result);
+    }
+    on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fetchYearlyTransactions() async {
+    try {
+      final result = await remoteDataSource.fetchYearlyTransactions();
+      return Right(result);
+    }
+    on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fethcTodayTransactions() async {
+    try {
+      final result = await remoteDataSource.fetchTodayTransactions();
+      return Right(result);
+    }
+    on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
 
 }

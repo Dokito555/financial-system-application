@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/presentation/pages/transaction/components/transaction_card.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
 import '../../components/custom_drawer.dart';
-import '../../components/invoice_card.dart';
+import '../invoice/components/invoice_card.dart';
 import '../../components/logout_button.dart';
 import '../../provider/firestore_invoice_notifier.dart';
 
@@ -60,7 +61,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     itemCount: data.transactions.length,
                     itemBuilder: (context, index) {
                       final invoice = data.transactions[index];
-                      return InvoiceCard(invoice: invoice);
+                      return TransactionCard(invoice: invoice);
                     },
                   );
                 } else {

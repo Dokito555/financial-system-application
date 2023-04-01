@@ -1,4 +1,4 @@
-import 'package:flutter_financial/presentation/pages/transaction_log/transacction_log_page.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/transaction_log_page.dart';
 
 class AppRoutePaths {
   static const homeRoute = '/';
@@ -12,4 +12,5 @@ class AppRoutePaths {
   static const invoicePageRoute = '/invoice';
   static const settingsPageRoute = '/settings';
   static const invoiceDetailPageRoute = '/invoiceDetail';
+  static const transactionDetailPageRoute = '/transactionDetail';
 }

@@ -22,6 +22,7 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
       nominal: json['nominal'] as int,
       quantity: json['quantity'] as int? ?? 1,
       total: json['total'] as int,
+      isSuccess: json['isSuccess'] as bool?,
     );
 
 Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
@@ -41,4 +42,5 @@ Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
       'nominal': instance.nominal,
       'quantity': instance.quantity,
       'total': instance.total,
+      'isSuccess': instance.isSuccess,
     };

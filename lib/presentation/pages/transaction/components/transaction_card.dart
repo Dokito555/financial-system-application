@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/utility/constants.dart';
-import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:intl/intl.dart';
 
-import '../../core/routes/route_paths.dart';
+import '../../../../core/routes/route_paths.dart';
+import '../../../../data/model/invoice_model.dart';
 
-class InvoiceCard extends StatelessWidget {
+class TransactionCard extends StatelessWidget {
+
   final InvoiceModel invoice;
 
-  const InvoiceCard({required this.invoice});
+  const TransactionCard({required this.invoice});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class InvoiceCard extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
-                    context, AppRoutePaths.invoiceDetailPageRoute,
+                    context, AppRoutePaths.transactionDetailPageRoute,
                     arguments: invoice);
               },
               child: ListTile(
@@ -31,12 +31,12 @@ class InvoiceCard extends StatelessWidget {
                   subtitle: Text('No. Pembayaran ${invoice.paymentNumber}'),
                   trailing: Text(
                     NumberFormat.compactCurrency(
-                            decimalDigits: 2, locale: "en_US", symbol: "IDR")
+                            decimalDigits: 2, locale: "en_US", symbol: "IDR ")
                         .format(invoice.total),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   )),
             ),
-            Divider(
+            const Divider(
               indent: 10,
               endIndent: 10,
             )
