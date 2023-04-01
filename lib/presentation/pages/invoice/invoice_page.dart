@@ -44,33 +44,36 @@ class _InvoicePageState extends State<InvoicePage> {
             LogoutButton(),
           ],
         ),
-        body:
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: SingleChildScrollView(
-            child: Consumer<FirestoreInvoiceNotifier>(
-              builder: (context, data, child) {
-                final status = data.invoicesStatus;
-                if (status == Status.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (status == Status.Success) {
-                  return ListView.builder(
+        body: Consumer<FirestoreInvoiceNotifier>(
+          builder: (context, data, child) {
+            final status = data.invoicesStatus;
+            if (status == Status.Loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (status == Status.Error) {
+              return Center(child: Text(data.message));
+            }
+            if (status == Status.Empty) {
+              return const Center(child: Text('Empty Data'));
+            }
+            if (status == Status.Success) {
+              return Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: SingleChildScrollView(
+                  child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: data.invoices.length,
                     itemBuilder: (context, index) {
                       final invoice = data.invoices[index];
                       return InvoiceCard(invoice: invoice);
                     },
-                  );
-                } else {
-                  return Text(data.message);
-                }
-              },
-            ),
                   ),
-          ),
+                ),
+              );
+            }
+            return Center(child: Text('Something\'s wrong please try again'));
+          },
+        ),
         drawer: const CustomDrawer());
   }
 }

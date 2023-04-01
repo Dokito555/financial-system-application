@@ -23,11 +23,10 @@ class TransactionLogCard extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
-                    context, AppRoutePaths.invoiceDetailPageRoute,
+                    context, AppRoutePaths.transactionDetailPageRoute,
                     arguments: invoice);
               },
               child: ListTile(
-
                   title: Text(invoice.name),
                   subtitle: Text('No. Pembayaran ${invoice.paymentNumber}'),
                   trailing: Wrap(

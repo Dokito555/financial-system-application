@@ -17,8 +17,11 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
     required this.firestoreGetTransactionsLog
   });
 
-  late Status _addSuccessfulTransactionLogStatus;
-  Status get addSuccessfulTransactionLogStatus => _addSuccessfulTransactionLogStatus;
+  late Status _addTransactionLogStatus;
+  Status get addTransactionLogStatus => _addTransactionLogStatus;
+
+  late Status _addFailedTransactionLogStatus;
+  Status get addFailedTransactionLogStatus => _addFailedTransactionLogStatus;
 
   Status _getTransactionLogStatus = Status.Empty;
   Status get getTransactionLogStatus => _getTransactionLogStatus;
@@ -29,19 +32,19 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
-  Future<void> addSuccessfulTransactionLog({
+  Future<void> addTransactionLog({
     required InvoiceModel invoice
   }) async {
-    _addSuccessfulTransactionLogStatus = Status.Loading;
+    _addTransactionLogStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreAddTransactionLog.execute(invoice);
     result.fold(
       (failure) {
-      _addSuccessfulTransactionLogStatus = Status.Error;
+      _addTransactionLogStatus = Status.Error;
       _message = failure.message;
     },
       (result) {
-        _addSuccessfulTransactionLogStatus = Status.Success;
+        _addTransactionLogStatus = Status.Success;
         _message = 'Added';
         notifyListeners();
       }
@@ -65,10 +68,6 @@ class FirestoreTransactionLogNotifier extends ChangeNotifier {
           notifyListeners();
         }
     );
-  }
-
-  Future<void> checkTransaction() async {
-    
   }
 
 }

@@ -44,33 +44,36 @@ class _TransactionPageState extends State<TransactionPage> {
             LogoutButton(),
           ],
         ),
-        body:
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: SingleChildScrollView(
-            child: Consumer<FirestoreTransactionNotifier>(
-              builder: (context, data, child) {
-                final status = data.geTransactionStatus;
-                if (status == Status.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (status == Status.Success) {
-                  return ListView.builder(
+        body: Consumer<FirestoreTransactionNotifier>(
+          builder: (context, data, child) {
+            final status = data.geTransactionStatus;
+            if (status == Status.Loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (status == Status.Error) {
+              return Center(child: Text(data.message));
+            }
+            if (status == Status.Empty) {
+              return const Center(child: Text('Empty Data'));
+            }
+            if (status == Status.Success) {
+              return Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: SingleChildScrollView(
+                  child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: data.transactions.length,
                     itemBuilder: (context, index) {
                       final invoice = data.transactions[index];
                       return TransactionCard(invoice: invoice);
                     },
-                  );
-                } else {
-                  return Text(data.message);
-                }
-              },
-            ),
                   ),
-          ),
+                ),
+              );
+            }
+            return Center(child: Text('Something\'s wrong please try again'));
+          },
+        ),
         drawer: const CustomDrawer());
   }
 }
