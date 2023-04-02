@@ -30,10 +30,10 @@ class FirebaseAuthNotifier extends ChangeNotifier {
     required this.firebaseGetUser
   });
 
-  late Status _signUpStatus;
+  Status _signUpStatus = Status.Empty;
   Status get signUpStatus => _signUpStatus;
 
-  late Status _signInStatus;
+  Status _signInStatus = Status.Empty;
   Status get signInStatus => _signInStatus;
 
   late Status _signOutStatus;
