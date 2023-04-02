@@ -32,137 +32,56 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-    // body: SafeArea(
-    //   child: Container(
-    //     padding: const EdgeInsets.only(
-    //       left: 10,
-    //       right: 10,
-    //       top: 10,
-    //     ),
-    //     child: Form(
-    //         key: _addPointKey,
-    //         child: ListView(
-    //           children: <Widget>[
-    //             Center(
-    //               child: Column(
-    //                 children: [
-    //                   _header(context),
-    //                   _signInForm(context),
-    //                   const SizedBox(
-    //                     height: 16,
-    //                   ),
-    //                   _forgotPassword(context),
-    //                   const SizedBox(
-    //                     height: 16,
-    //                   ),
-    //                   _loginButton(context),
-    //                   Row(
-    //                     mainAxisAlignment: MainAxisAlignment.center,
-    //                     children: <Widget>[
-    //                       const Text('Doesn\'t have an account?'),
-    //                       TextButton(
-    //                         child: const Text(
-    //                           'Sign Up',
-    //                           style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
-    //                         ),
-    //                         onPressed: () {
-    //                           Navigator.pushReplacementNamed(
-    //                               context, AppRoutePaths.signUpPageRoute
-    //                           );
-    //                         },
-    //                       )
-    //                     ],
-    //                   ),
-    //                 ],
-    //               ),
-    //             )
-    //           ],
-    //         )),
-    //   ),
-    // )
-    // );
-      body: Consumer<FirebaseAuthNotifier>(
-        builder: (context, data, child) {
-          final status = data.signInStatus;
-          if (status == Status.Loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (status == Status.Error) {
-            return Center(child: Text(data.message));
-          }
-          return SafeArea(
-            child: Container(
-              padding: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-                top: 10,
-              ),
-              child: Form(
-                  key: _addPointKey,
-                  child: ListView(
-                    children: <Widget>[
-                      Center(
-                        child: Column(
-                          children: [
-                            _header(context),
-                            _signInForm(context),
-                            const SizedBox(
-                              height: 16,
+    body: SafeArea(
+      child: Container(
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
+          top: 10,
+        ),
+        child: Form(
+            key: _addPointKey,
+            child: ListView(
+              children: <Widget>[
+                Center(
+                  child: Column(
+                    children: [
+                      _header(context),
+                      _signInForm(context),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _forgotPassword(context),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _loginButton(context),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Text('Doesn\'t have an account?'),
+                          TextButton(
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
                             ),
-                            _forgotPassword(context),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            // _loginButton(context),
-                            Container(
-                              width: MediaQuery. of(context).size.width,
-                              height: 50,
-                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: AppColorConstants.primaryColor
-                                ),
-                                child: const Text('Login'),
-                                onPressed: () async {
-                                  if (!_addPointKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  // final notifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
-                                  // notifier.authSignInEmailPassword(email: email, password: password);
-                                  data.authSignInEmailPassword(email: email, password: password);
-                                  if (status == Status.Success) {
-                                    Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
-                                  }
-                                },
-                              )
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const Text('Doesn\'t have an account?'),
-                                TextButton(
-                                  child: const Text(
-                                    'Sign Up',
-                                    style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, AppRoutePaths.signUpPageRoute
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, AppRoutePaths.signUpPageRoute
+                              );
+                            },
+                          )
+                        ],
+                      ),
                     ],
-                  )),
-            ),
-          );
-        },
+                  ),
+                )
+              ],
+            )),
       ),
+    )
     );
   }
 
@@ -267,60 +186,45 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  // Widget _loginButton(BuildContext context) {
-  //   // var authNotifier =
-  //   //     Provider.of<FirebaseAuthNotifier>(context, listen: false);
+  Widget _loginButton(BuildContext context) {
 
-  //   // Future<void> signIn() async {
-  //   //   await authNotifier.authSignInEmailPassword(
-  //   //       email: email, password: password);
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
 
-  //   //   if (authNotifier.signInStatus == Status.Error) {
-  //   //     ShowToast.toast(authNotifier.message);
-  //   //   } else if (authNotifier.signInStatus == Status.Success) {
-  //   //     ShowToast.toast(authNotifier.message);
-  //   //     if (!context.mounted) return;
-  //   //     Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
-  //   //   } else {
-  //   //     ShowToast.toast(authNotifier.message);
-  //   //   }
-  //   // }
+    Future<void> signIn() async {
 
-  //   // return Container(
-  //   //     width: MediaQuery. of(context).size.width,
-  //   //     height: 50,
-  //   //     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //   //     child: ElevatedButton(
-  //   //       style: ElevatedButton.styleFrom(
-  //   //         primary: AppColorConstants.primaryColor
-  //   //       ),
-  //   //       child: const Text('Login'),
-  //   //       onPressed: () async {
-  //   //         if (!_addPointKey.currentState!.validate()) {
-  //   //           return;
-  //   //         }
-  //   //         signIn();
-  //   //       },
-  //   //     ));
+      await authNotifier.authSignInEmailPassword(email: email, password: password);
 
-  //   return Container(
-  //     width: MediaQuery. of(context).size.width,
-  //     height: 50,
-  //     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //     child: ElevatedButton(
-  //       style: ElevatedButton.styleFrom(
-  //         primary: AppColorConstants.primaryColor
-  //       ),
-  //       child: const Text('Login'),
-  //       onPressed: () async {
-  //         if (!_addPointKey.currentState!.validate()) {
-  //           return;
-  //         }
-  //         final notifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
-  //         notifier.authSignInEmailPassword(email: email, password: password);
-  //       },
-  //     )
-  //   );
-  // }
+      if (authNotifier.signInStatus == Status.Error) {
+        ShowToast.toast(authNotifier.message);
+      } else if (authNotifier.signInStatus == Status.Success) {
+        ShowToast.toast(authNotifier.message);
+        if (!context.mounted) return;
+        Navigator.pushReplacementNamed(context, AppRoutePaths.homeRoute);
+      } else {
+        ShowToast.toast(authNotifier.message);
+      }
+
+    }
+
+    return authNotifier.signInStatus == Status.Loading 
+    ? const Center(child: CircularProgressIndicator())
+    : Container(
+        width: MediaQuery. of(context).size.width,
+        height: 50,
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColorConstants.primaryColor
+          ),
+          child: const Text('Login'),
+          onPressed: () async {
+            if (!_addPointKey.currentState!.validate()) {
+              return;
+            }
+            signIn();
+          },
+        )
+      );
+  }
 
 }

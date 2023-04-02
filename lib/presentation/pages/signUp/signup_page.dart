@@ -190,7 +190,8 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _signUpButton(BuildContext context) {
-    var authNotifier = Provider.of<FirebaseAuthNotifier>(context, listen: false);
+
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
 
     Future<void> signUp() async {
 
@@ -210,7 +211,9 @@ class _SignUpPageState extends State<SignUpPage> {
       }
     }
 
-    return Container(
+    return authNotifier.signUpStatus == Status.Loading
+    ? const Center(child: CircularProgressIndicator())
+    : Container(
         width: MediaQuery. of(context).size.width,
         height: 50,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -225,6 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
             }
             signUp();
           },
-        ));
+        )
+      );
   }
 }
