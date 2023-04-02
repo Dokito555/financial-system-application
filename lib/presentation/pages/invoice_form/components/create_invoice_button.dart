@@ -8,6 +8,7 @@ import '../../../../data/model/invoice_model.dart';
 import '../../../components/loading.dart';
 import '../../../components/show_toast.dart';
 import '../../../provider/firestore_invoice_notifier.dart';
+import '../../../provider/firestore_transaction_log_notifier.dart';
 
 class CreateInvoiceButton extends StatelessWidget {
   const CreateInvoiceButton({
@@ -50,16 +51,31 @@ class CreateInvoiceButton extends StatelessWidget {
 
     var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
 
+    Future<bool> checkInvoice(InvoiceModel invoice) async {
+
+      var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
+      var transactionLogNotifier = Provider.of<FirestoreTransactionLogNotifier>(context, listen: false);
+
+      final now = DateTime.now();
+      if (invoice.expiryDate.isBefore(now)) {
+        await invoiceNotifier.deleteInvoice(id: invoice.id);
+        await transactionLogNotifier.addTransactionLog(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod: invoice.paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: false));
+        return false;
+      }
+
+      return true;
+    }
+
     Future<void> createInvoice(InvoiceModel invoice) async {
-      onLoading;
 
-      await invoiceNotifier.createInvoice(
-        invoice: invoice
-      );
+      final invoiceStatus = await checkInvoice(invoice);
+      if (invoiceStatus) {
+        return await invoiceNotifier.createInvoice(invoice: invoice);
+      }
 
-      if (invoiceNotifier.createInvoiceStataus == Status.Error) {
+      if (invoiceNotifier.createInvoiceStatus == Status.Error) {
         ShowToast.toast(invoiceNotifier.message);
-      } else if (invoiceNotifier.createInvoiceStataus == Status.Success) {
+      } else if (invoiceNotifier.createInvoiceStatus == Status.Success) {
         ShowToast.toast(invoiceNotifier.message);
       } else {
         ShowToast.toast(invoiceNotifier.message);
@@ -67,7 +83,9 @@ class CreateInvoiceButton extends StatelessWidget {
 
     }
 
-    return Container(
+    return invoiceNotifier.createInvoiceStatus == Status.Loading
+    ? const Center(child: CircularProgressIndicator())
+    : SizedBox(
         width: MediaQuery. of(context).size.width,
         height: 50,
         child: ElevatedButton(
@@ -98,6 +116,7 @@ class CreateInvoiceButton extends StatelessWidget {
             createInvoice(invoice);
             Navigator.pushReplacementNamed(context, AppRoutePaths.invoicePageRoute);
           },
-        ));
+        )
+      );
   }
 }

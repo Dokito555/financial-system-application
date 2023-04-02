@@ -23,8 +23,8 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
     required this.firestoreGetInvoiceDetail
   });
 
-  late Status _createInvoiceStatus;
-  Status get createInvoiceStataus => _createInvoiceStatus;
+  Status _createInvoiceStatus = Status.Empty;
+  Status get createInvoiceStatus => _createInvoiceStatus;
 
   late Status _deleteInvoiceStatus;
   Status get deleteInvoiceStatus => _deleteInvoiceStatus;

@@ -36,7 +36,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   Status _signInStatus = Status.Empty;
   Status get signInStatus => _signInStatus;
 
-  late Status _signOutStatus;
+  Status _signOutStatus = Status.Empty;
   Status get signOutStatus => _signOutStatus;
 
   late Status _resetPasswordStatus;
@@ -48,7 +48,7 @@ class FirebaseAuthNotifier extends ChangeNotifier {
   late String _userUID;
   String get userUID => _userUID;
 
-  late Status _getUserStatus;
+  late Status _getUserStatus = Status.Empty;
   Status get getUserStatus => _getUserStatus;
 
   late UserModel _userDetail = UserModel(id: '', name: '', email: '', phoneNumber: '');
