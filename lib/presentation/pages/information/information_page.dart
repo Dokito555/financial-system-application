@@ -18,7 +18,7 @@ class InformationPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: const <Widget>[
-          LogoutButton()
+          
         ],
       ),
       body: SafeArea(

@@ -52,7 +52,7 @@ class _InvoicePageState extends State<InvoicePage> {
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[
-            LogoutButton(),
+            
           ],
         ),
         body: Consumer<FirestoreInvoiceNotifier>(

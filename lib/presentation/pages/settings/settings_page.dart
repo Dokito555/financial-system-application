@@ -4,8 +4,10 @@ import 'package:flutter_financial/presentation/components/logout_button.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
+import '../../components/show_toast.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -35,16 +37,12 @@ class _SettingsPageState extends State<SettingsPage> {
         iconTheme: const IconThemeData(color: Color(0xff777474)),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        actions: const <Widget>[
-          LogoutButton()
-        ],
       ),
       body: SafeArea(
         child: Consumer<FirebaseAuthNotifier>(
           builder: (context, data, child) {
           final status = data.getUserStatus;
           final user = data.userDetail;
-          print(status);
           if (status == Status.Loading) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -62,7 +60,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Center(
                   child: Column(
                     children: [
-                      Text(user.name)
+                      Text(user.name),
+                      _logoutButton(context)
                     ],
                   ),
                 ),
@@ -74,6 +73,43 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       drawer: const CustomDrawer(),
+    );
+  }
+
+  Widget _logoutButton(BuildContext context) {
+
+    var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
+
+    Future<void> logout() async {
+
+      await authNotifier.authSignOut();
+
+      if (authNotifier.signOutStatus == Status.Error) {
+        ShowToast.toast(authNotifier.message);
+      } else if (authNotifier.signOutStatus == Status.Success) {
+        ShowToast.toast(authNotifier.message);
+        Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
+      } else {
+        ShowToast.toast(authNotifier.message);
+      }
+
+    }
+
+    return authNotifier.signOutStatus == Status.Loading
+    ? const Center(child: CircularProgressIndicator())
+    : Container(
+        width: MediaQuery. of(context).size.width,
+        height: 50,
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColorConstants.primaryColor
+          ),
+          child: const Text('Logout'),
+          onPressed: () async {
+            logout();
+          },
+       )
     );
   }
 }

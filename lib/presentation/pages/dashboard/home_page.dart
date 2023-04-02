@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         title: Text('Dashboard', style: TextStyle(color: Colors.black),),
         actions: const <Widget>[
-          LogoutButton()
+         
         ],
       ),
       body: SafeArea(

@@ -52,7 +52,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
         backgroundColor: Colors.transparent,
         title: const Text('Form Tagihan', style: TextStyle(color: Colors.black),),
         actions: const <Widget>[
-          LogoutButton()
+          
         ],
       ),
       body: SafeArea(

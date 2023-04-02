@@ -40,7 +40,7 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[
-            LogoutButton(),
+            
           ],
         ),
         body: Consumer<FirestoreTransactionLogNotifier>(
