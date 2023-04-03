@@ -6,6 +6,7 @@ import 'package:flutter_financial/domain/usecases/firestore_transaction/get_mont
 import 'package:flutter_financial/domain/usecases/firestore_transaction/get_todaysTransaction.dart';
 import 'package:flutter_financial/domain/usecases/firestore_transaction/get_transactions.dart';
 import 'package:flutter_financial/domain/usecases/firestore_transaction/get_yearlyTransaction.dart';
+import 'package:flutter_financial/presentation/pages/dashboard/components/total_nominal.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -58,8 +59,11 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   late int _todayTransactionTotal;
   int get todayTransactionTotal => _todayTransactionTotal;
 
-  late int _totalNominal;
+  int _totalNominal = 0;
   int get totalNominal => _totalNominal;
+
+  Status _getTotalNominalStatus = Status.Empty;
+  Status get getTotalNominalStatus => _getTotalNominalStatus;
 
   int _allTimeTransaction = 0;
   int get allTimeTransaction => _allTimeTransaction;
@@ -119,20 +123,21 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   }
 
   Future<void> getTotalNominal() async {
-    _addTransactionStatus = Status.Loading;
+    _getTotalNominalStatus = Status.Loading;
     notifyListeners();
     final result = await firestoreGetTransactions.execute();
     result.fold(
         (failure) {
-        _addTransactionStatus = Status.Error;
+        _getTotalNominalStatus = Status.Error;
         _message = failure.message;
         notifyListeners();
       }, 
         (result) {
           _transactions = result;
           for (var i = 0; i < _transactions.length; i++) {
-            _totalNominal += _transactions[i].nominal;
+            _totalNominal += _transactions[i].total;
           }
+          _getTotalNominalStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
         }

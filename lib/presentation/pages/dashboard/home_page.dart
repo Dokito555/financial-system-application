@@ -10,10 +10,12 @@ import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.d
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
+import 'components/total_nominal.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,20 +54,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      const TotalNominal(),
                       Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: AppColorConstants.lightPinkColor,
+                        ),
                         width: 100,
                         height: 100,
-                        color: AppColorConstants.lightPurpleColor,
+                        
                       ),
                       Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: AppColorConstants.lightBlueColor,
+                        ),
                         width: 100,
                         height: 100,
-                        color: AppColorConstants.lightPinkColor,
-                      ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: AppColorConstants.lightBlueColor,
+                        
                       )
                     ],
                   ),

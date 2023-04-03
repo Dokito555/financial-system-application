@@ -19,11 +19,10 @@ class TransactionLogPage extends StatefulWidget {
 
 class _TransactionLogPageState extends State<TransactionLogPage> {
 
+  @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<FirestoreTransactionLogNotifier>(context, listen: false)
-            .getTransactionsLog());
+    Future.microtask(() => Provider.of<FirestoreTransactionLogNotifier>(context, listen: false).getTransactionsLog());
   }
 
   @override
