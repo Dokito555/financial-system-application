@@ -91,7 +91,9 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
       }
     }
 
-    return Container(
+     return transactionNotifier.addTransactionStatus == Status.Success && invoiceNotifier.deleteInvoiceStatus == Status.Success && transactionLogNotifier.addTransactionLogStatus == Status.Success
+    ? const Center(child: CircularProgressIndicator())
+    : Container(
         width: MediaQuery.of(context).size.width,
         height: 50,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),

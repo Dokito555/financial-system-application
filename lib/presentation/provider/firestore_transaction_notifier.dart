@@ -26,7 +26,7 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
     required this.firestoreGetYearlyTransactions
   });
 
-  late Status _addTransactionStatus;
+  Status _addTransactionStatus = Status.Empty;
   Status get addTransactionStatus => _addTransactionStatus;
 
   Status _getTransactionsStatus = Status.Empty;
@@ -77,6 +77,12 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
   int _yearlyTransactionLenght = 0;
   int get yearlyTransactionLenght => _yearlyTransactionLenght;
 
+  // Status _transactionsChartStatus = Status.Empty;
+  // Status get transactionChartStatus => _transactionsChartStatus;
+
+  // List<TransactionChartModel> _transaction_chart_data = [];
+  // List<TransactionChartModel> get transaction_chart_data => _transaction_chart_data;
+
 
   Future<void> addTransaction({
     required InvoiceModel invoice
@@ -113,6 +119,11 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           _getTransactionsStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
+          for (var i = 0; i < _transactions.length; i++) {
+            _totalNominal += _transactions[i].total;
+          }
+          _getTotalNominalStatus = Status.Success;
+          notifyListeners();
         }
     );
     if (_transactions.isEmpty) {
@@ -122,27 +133,27 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> getTotalNominal() async {
-    _getTotalNominalStatus = Status.Loading;
-    notifyListeners();
-    final result = await firestoreGetTransactions.execute();
-    result.fold(
-        (failure) {
-        _getTotalNominalStatus = Status.Error;
-        _message = failure.message;
-        notifyListeners();
-      }, 
-        (result) {
-          _transactions = result;
-          for (var i = 0; i < _transactions.length; i++) {
-            _totalNominal += _transactions[i].total;
-          }
-          _getTotalNominalStatus = Status.Success;
-          _message = 'Completed';
-          notifyListeners();
-        }
-    );
-  }
+  // Future<void> getTotalNominal() async {
+  //   _getTotalNominalStatus = Status.Loading;
+  //   notifyListeners();
+  //   final result = await firestoreGetTransactions.execute();
+  //   result.fold(
+  //       (failure) {
+  //       _getTotalNominalStatus = Status.Error;
+  //       _message = failure.message;
+  //       notifyListeners();
+  //     }, 
+  //       (result) {
+  //         _transactions = result;
+  //         for (var i = 0; i < _transactions.length; i++) {
+  //           _totalNominal += _transactions[i].total;
+  //         }
+  //         _getTotalNominalStatus = Status.Success;
+  //         _message = 'Completed';
+  //         notifyListeners();
+  //       }
+  //   );
+  // }
 
   Future<void> getTodaysTransaction() async {
     _getTodaysTransactionStatus = Status.Loading;

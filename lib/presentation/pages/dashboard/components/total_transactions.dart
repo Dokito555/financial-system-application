@@ -6,22 +6,21 @@ import 'package:provider/provider.dart';
 import '../../../../core/utility/constants.dart';
 import '../../../../core/utility/state_enum.dart';
 
-class TotalNominal extends StatefulWidget {
-  const TotalNominal({
+class TotalTransactions extends StatefulWidget {
+  const TotalTransactions({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TotalNominal> createState() => _TotalNominalState();
+  State<TotalTransactions> createState() => _TotalTransactionsState();
 }
 
-class _TotalNominalState extends State<TotalNominal> {
+class _TotalTransactionsState extends State<TotalTransactions> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() => Provider.of<FirestoreTransactionNotifier>(context, listen: false)
       ..getTransactions()
-      // ..getTotalNominal()
     );
   }
 
@@ -34,7 +33,7 @@ class _TotalNominalState extends State<TotalNominal> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: AppColorConstants.lightPurpleColor,
+              color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
             width: 100,
@@ -46,10 +45,10 @@ class _TotalNominalState extends State<TotalNominal> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: AppColorConstants.lightPurpleColor,
+              color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 150,
+            width: 100,
             height: 100,
             child: Center(child: Text(data.message))
           );
@@ -58,7 +57,7 @@ class _TotalNominalState extends State<TotalNominal> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: AppColorConstants.lightPurpleColor,
+              color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
             width: 150,
@@ -67,12 +66,11 @@ class _TotalNominalState extends State<TotalNominal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Total Nominal', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                const Text('Total Transactions', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                 const SizedBox(height: 10),
                 Text(
-                  NumberFormat.compactCurrency(
-                    decimalDigits: 2, locale: "en_US", symbol: "").format(data.totalNominal),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  data.allTimeTransaction.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ],
             )

@@ -68,6 +68,8 @@ class InvoiceModel extends Equatable{
     );
   }
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
+
+
   
   @override
   // TODO: implement props

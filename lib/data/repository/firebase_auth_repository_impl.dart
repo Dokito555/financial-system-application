@@ -63,6 +63,11 @@ class FirebaseAuthRepositoryImpl extends FirebaseAuthRepository {
       return Right(result);
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
     }
   }
 

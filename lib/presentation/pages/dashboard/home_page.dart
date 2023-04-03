@@ -6,6 +6,7 @@ import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/all_time_transaction_page.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/monthly_transaction_page.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/todays_transaction_page.dart';
+import 'package:flutter_financial/presentation/pages/dashboard/components/total_transactions.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,26 +54,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const TotalNominal(),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: AppColorConstants.lightPinkColor,
-                        ),
-                        width: 100,
-                        height: 100,
-                        
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: AppColorConstants.lightBlueColor,
-                        ),
-                        width: 100,
-                        height: 100,
-                        
-                      )
+                    children: const [
+                      TotalNominal(),
+                      TotalTransactions(),
                     ],
                   ),
                   const SizedBox(
