@@ -18,10 +18,9 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
 
   final FirebaseFirestore db;
   final FirebaseAuth firebaseAuth;
-  final DateTime todaysDate = DateTime(DateTime.now().day);
-  final DateTime tomorrowsDate = DateTime.now().add(const Duration(days:1));
-  final DateTime monthlyDate = DateTime(DateTime.now().month);
-  final DateTime yearlyDate = DateTime(DateTime.now().year);
+  final DateTime lastMonth = DateTime(DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
+  final DateTime yesterday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+  final DateTime yearlyDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
 
   FirebaseFirestoreTransactionRemoteDataSourceImpl({
     required this.db,
@@ -52,10 +51,12 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
   
   @override
   Future<List<InvoiceModel>> fetchTodayTransactions() async {
+    print(yesterday);
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
-    .where('created', isGreaterThan: todaysDate, isLessThan: tomorrowsDate)
+    .where('created', isGreaterThanOrEqualTo: yesterday.toString())
+    .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
     return data;
@@ -66,7 +67,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
-    .where('created', isGreaterThan: monthlyDate, isLessThan: tomorrowsDate)
+    .where('created', isGreaterThanOrEqualTo: lastMonth.toString())
     .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();
@@ -78,7 +79,7 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)
-    .where('created', isGreaterThan: yearlyDate, isLessThan: tomorrowsDate)
+    .where('created', isGreaterThan: yearlyDate.toString())
     .orderBy('created', descending: true)
     .get();
     final data = snapshot.docs.map((e) => InvoiceModel.fromFirestore(e)).toList();

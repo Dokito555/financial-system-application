@@ -53,7 +53,7 @@ class _TransactionPageState extends State<TransactionPage> {
             if (status == Status.Error) {
               return Center(child: Text(data.message));
             }
-            if (status == Status.Empty) {
+            if (status == Status.Empty || data.transactions.isEmpty) {
               return const Center(child: Text('Empty Data'));
             }
             if (status == Status.Success) {

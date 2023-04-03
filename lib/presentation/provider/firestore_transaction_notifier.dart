@@ -111,6 +111,11 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           notifyListeners();
         }
     );
+    if (_transactions.isEmpty) {
+      _getTransactionsStatus = Status.Empty;
+      _message = 'Empty Data';
+      notifyListeners();
+    }
   }
 
   Future<void> getTotalNominal() async {
@@ -152,6 +157,11 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           notifyListeners();
       }
     );
+    if (_todaysTransaction.isEmpty) {
+      _getTodaysTransactionStatus == Status.Empty;
+      _message = 'Empty Data';
+      notifyListeners();
+    }
   }
 
   Future<void> getMonthlyTransaction() async {
@@ -172,6 +182,11 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           notifyListeners();
       }
     );
+    if (_monthlyTransaction.isEmpty) {
+      _getMonthlyTransactionStatus = Status.Empty;
+     _message = 'Empty Data';
+    notifyListeners();
+    } 
   }
 
   Future<void> getYearlyTransaction() async {
@@ -187,11 +202,17 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
         (result) {
           _yearlyTransaction = result;
           _yearlyTransactionLenght = result.length;
+          
           _getYearlyTransactionStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
       }
     );
+    if (_yearlyTransaction.isEmpty) {
+      _getYearlyTransactionStatus = Status.Empty;
+      _message = 'Empty Data';
+       notifyListeners();
+    }
   }
 
 }

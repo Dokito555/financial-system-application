@@ -10,7 +10,7 @@ class UserModel extends Equatable{
   final String name;
   final String email;
   final String phoneNumber;
-  final String? profilePicture;
+  String? profilePicture = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
   UserModel({
     required this.id,

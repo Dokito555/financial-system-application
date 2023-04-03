@@ -207,7 +207,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             emailController: emailController,
             phoneNumberController: phoneNumberController,
             addressController: addressController,
-            createdDateController: DateTime.now(),
+            createdDateController: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
             startDateController: startDateController,
             expiryDateController: expiryDateController,
             descriptionController: descriptionController,

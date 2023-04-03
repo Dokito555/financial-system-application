@@ -40,7 +40,7 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
             style: TextStyle(color: Colors.black),
           ),
           actions: const <Widget>[
-            
+            LogoutButton(),
           ],
         ),
         body: Consumer<FirestoreTransactionLogNotifier>(
@@ -52,7 +52,7 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
             if (status == Status.Error) {
               return Center(child: Text(data.message));
             }
-            if (status == Status.Empty) {
+            if (status == Status.Empty || data.transactionsLog.isEmpty) {
               return const Center(child: Text('Empty Data'));
             }
             if (status == Status.Success) {

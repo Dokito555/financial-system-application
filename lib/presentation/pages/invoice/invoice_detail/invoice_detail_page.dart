@@ -75,8 +75,9 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
     var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
 
     Future<void> _confirm(InvoiceModel invoice) async {
-      await transactionNotifier.addTransaction(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod:invoice. paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: true));
-      await transactionLogNotifier.addTransactionLog(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod:invoice. paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: true));
+      //add more property
+      await transactionNotifier.addTransaction(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod:invoice. paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: true, email: invoice.email, phoneNumber: invoice.phoneNumber, address: invoice.address, description: invoice.description));
+      await transactionLogNotifier.addTransactionLog(invoice: InvoiceModel(id: invoice.id, invoiceNumber: invoice.invoiceNumber, paymentNumber: invoice.paymentNumber, paymentMethod:invoice. paymentMethod, name: invoice.name, created: invoice.created, startDate: invoice.startDate, expiryDate: invoice.expiryDate, nominal: invoice.nominal, total: invoice.total, isSuccess: true, email: invoice.email, phoneNumber: invoice.phoneNumber, address: invoice.address, description: invoice.description));
       await invoiceNotifier.deleteInvoice(id: invoice.id);
 
       if (transactionNotifier.addTransactionStatus == Status.Error || invoiceNotifier.deleteInvoiceStatus == Status.Error || transactionLogNotifier.addTransactionLogStatus == Status.Error) {

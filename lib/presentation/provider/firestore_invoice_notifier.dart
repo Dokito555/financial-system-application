@@ -97,12 +97,18 @@ class FirestoreInvoiceNotifier extends ChangeNotifier {
         notifyListeners();
       }, 
       (result) {
-        _invoicesStatus = Status.Success;
         _invoices = result;
+        _invoicesStatus = Status.Success;
         _message = 'Completed';
         notifyListeners();
       }
     );
+    
+    if (_invoices.isEmpty) {
+      _invoicesStatus == Status.Empty;
+      _message = 'Empty Data';
+      notifyListeners();
+    }
   }
 
   Future<void> getInvoiceDetail({
