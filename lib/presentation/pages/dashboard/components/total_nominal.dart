@@ -37,7 +37,7 @@ class _TotalNominalState extends State<TotalNominal> {
               color: AppColorConstants.lightPurpleColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 100,
+            width: 160,
             height: 100,
             child: const Center(child: CircularProgressIndicator())
           );
@@ -61,7 +61,7 @@ class _TotalNominalState extends State<TotalNominal> {
               color: AppColorConstants.lightPurpleColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 150,
+            width: 160,
             height: 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

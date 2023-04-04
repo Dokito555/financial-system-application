@@ -48,7 +48,7 @@ class _TotalTransactionsState extends State<TotalTransactions> {
               color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 100,
+            width: 160,
             height: 100,
             child: Center(child: Text(data.message))
           );
@@ -60,7 +60,7 @@ class _TotalTransactionsState extends State<TotalTransactions> {
               color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 150,
+            width: 160,
             height: 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

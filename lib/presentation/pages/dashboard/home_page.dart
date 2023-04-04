@@ -44,13 +44,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
          
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: SafeArea(
+        body: SafeArea(
           child: Container(
             padding: EdgeInsets.only(top: 10, left: 20, right: 20),
             // child: SingleChildScrollView(
-              child: Column(
+              child: ListView(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -98,8 +96,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
           ),
-      ),
       // ),
+
       drawer: const CustomDrawer()
     );
   }
