@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/routes/route_paths.dart';
-import '../../../core/utility/constants.dart';
-import '../../../core/utility/state_enum.dart';
-import '../../components/show_toast.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -20,7 +19,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() => 
       Provider.of<FirebaseAuthNotifier>(context, listen: false)..getUser()
@@ -103,7 +101,7 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: AppColorConstants.primaryColor
+            backgroundColor: AppColorConstants.primaryColor
           ),
           child: const Text('Logout'),
           onPressed: () async {

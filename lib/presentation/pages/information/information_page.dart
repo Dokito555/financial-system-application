@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
-
-import '../../../core/utility/constants.dart';
 
 class InformationPage extends StatelessWidget {
   const InformationPage({super.key});
@@ -28,7 +26,7 @@ class InformationPage extends StatelessWidget {
             right: 10,
             top: 10,
           ),
-          child: Text('Financial App'),
+          child: const Text('Financial App'),
         ),
       ),
       drawer: const CustomDrawer(),

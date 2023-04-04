@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/routes/route_paths.dart';
-import '../../../../data/model/invoice_model.dart';
 
 class TransactionLogCard extends StatelessWidget {
 
   final InvoiceModel invoice;
-  const TransactionLogCard({required this.invoice});
+  const TransactionLogCard({super.key, required this.invoice});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class TransactionLogCard extends StatelessWidget {
                     ]
                   )),
             ),
-            Divider(
+            const Divider(
               indent: 10,
               endIndent: 10,
             )

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
+import 'package:flutter_financial/presentation/components/custom_drawer.dart';
 import 'package:flutter_financial/presentation/pages/invoice/components/invoice_card.dart';
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/utility/state_enum.dart';
-import '../../components/custom_drawer.dart';
-import '../../components/logout_button.dart';
-import '../../provider/firestore_invoice_notifier.dart';
-
 class InvoicePage extends StatefulWidget {
   const InvoicePage({super.key});
 

@@ -1,18 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/loading.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
-import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/pages/invoice_form/components/invoice_text_form_field.dart';
-import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/utility/constants.dart';
-import '../../../core/utility/state_enum.dart';
-import '../../../data/model/invoice_model.dart';
 import 'components/create_invoice_button.dart';
 
 class InvoiceFormPage extends StatefulWidget {

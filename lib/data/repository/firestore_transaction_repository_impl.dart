@@ -25,7 +25,7 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       final result = await remoteDataSource.addTransaction(invoice);
       return Right(result);
     } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to network'));
     } on FirebaseException catch (e) {
       if (kDebugMode) {
         print('Failed with error code: ${e.code}');
@@ -41,7 +41,7 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       return Right(result);
     }
     on SocketException {
-      return Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to network'));
     } on FirebaseException catch (e) {
       if (kDebugMode) {
         print('Failed with error code ${e.code}');
@@ -57,7 +57,7 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       return Right(result);
     }
     on SocketException {
-      return Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to network'));
     } on FirebaseException catch (e) {
       if (kDebugMode) {
         print('Failed with error code ${e.code}');
@@ -73,7 +73,7 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       return Right(result);
     }
     on SocketException {
-      return Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to network'));
     } on FirebaseException catch (e) {
       if (kDebugMode) {
         print('Failed with error code ${e.code}');
@@ -89,7 +89,7 @@ class FirestoreTransactionRepositoryImpl extends FirestoreTransacitonRepository 
       return Right(result);
     }
     on SocketException {
-      return Left(ConnectionFailure('Failed to connect to network'));
+      return const Left(ConnectionFailure('Failed to connect to network'));
     } on FirebaseException catch (e) {
       if (kDebugMode) {
         print('Failed with error code ${e.code}');
