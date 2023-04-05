@@ -51,7 +51,6 @@ class FirebaseFirestoreTransactionRemoteDataSourceImpl extends FirebaseFirestore
   
   @override
   Future<List<InvoiceModel>> fetchTodayTransactions() async {
-    print(yesterday);
     final snapshot = await db.collection(firestoreUsers)
     .doc(currentUser!.uid)
     .collection(firestoreTransaction)

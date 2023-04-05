@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/loading.dart';
 import 'package:flutter_financial/presentation/components/logout_button.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/all_time_transaction_page.dart';
@@ -16,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
+import '../../provider/firestore_transaction_notifier.dart';
 import 'components/total_nominal.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +26,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => Provider.of<FirestoreTransactionNotifier>(context, listen: false)
+      ..getMonthlyTransaction()
+      ..getTodaysTransaction()
+      ..getTransactions()
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,30 +68,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
                   Align(
-                        alignment: Alignment.centerLeft,
-                        child: TabBar(
-                          labelColor: Colors.black,
-                          unselectedLabelColor: Colors.grey,
-                          isScrollable: true,
-                          controller: _tabController,
-                          dividerColor: Colors.transparent,
-                          indicatorColor: Colors.transparent,
-                          tabs: const [
-                            Tab(text: 'All Time',),
-                            Tab(text: 'Today'),
-                            Tab(text: 'This Month'),
-                          ],
-                        ),
-                      ),
+                    alignment: Alignment.centerLeft,
+                    child: TabBar(
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.grey,
+                      isScrollable: true,
+                      controller: _tabController,
+                      dividerColor: Colors.transparent,
+                      indicatorColor: Colors.transparent,
+                      tabs: const [
+                        Tab(text: 'All Time',),
+                        Tab(text: 'Today'),
+                        Tab(text: 'This Month'),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   SizedBox(
                     width: double.infinity,
-                    height: 300,
+                    height: 500,
                     child: TabBarView(
                       physics: const ScrollPhysics(),
                       controller: _tabController,

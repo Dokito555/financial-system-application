@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
 import 'package:flutter_financial/presentation/components/logout_button.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/components/failed_log.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/components/successful_log.dart';
+import 'package:flutter_financial/presentation/pages/transaction_log/components/total_log.dart';
 import 'package:flutter_financial/presentation/pages/transaction_log/components/transaction_log_card.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +12,7 @@ import '../../../core/utility/state_enum.dart';
 import '../../provider/firestore_transaction_log_notifier.dart';
 import '../invoice/components/invoice_card.dart';
 import '../../provider/firestore_transaction_notifier.dart';
+import 'components/transaction_log_list.dart';
 
 class TransactionLogPage extends StatefulWidget {
   const TransactionLogPage({super.key});
@@ -22,7 +26,9 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<FirestoreTransactionLogNotifier>(context, listen: false).getTransactionsLog());
+    Future.microtask(() => Provider.of<FirestoreTransactionLogNotifier>(context, listen: false)
+      ..getTransactionsLog()
+    );
   }
 
   @override
@@ -38,40 +44,22 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
             'Log Transaksi',
             style: TextStyle(color: Colors.black),
           ),
-          actions: const <Widget>[
-            LogoutButton(),
-          ],
         ),
-        body: Consumer<FirestoreTransactionLogNotifier>(
-          builder: (context, data, child) {
-            final status = data.getTransactionLogStatus;
-            if (status == Status.Loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (status == Status.Error) {
-              return Center(child: Text(data.message));
-            }
-            if (status == Status.Empty || data.transactionsLog.isEmpty) {
-              return const Center(child: Text('Empty Data'));
-            }
-            if (status == Status.Success) {
-              return Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: data.transactionsLog.length,
-                    itemBuilder: (context, index) {
-                      final invoice = data.transactionsLog[index];
-                      return TransactionLogCard(invoice: invoice);
-                    },
-                  ),
-                ),
-              );
-            }
-            return Center(child: Text('Something\'s wrong please try again'));
-          },
+        body: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TotalTransactionLog(),  
+                FailedTransactionsLog(),
+                SuccessfulTransactionsLog(),
+              ],
+            ),
+            SizedBox(height: 20),
+            TransactionLogList(),
+          ],
         ),
         drawer: const CustomDrawer());
   }
 }
+

@@ -13,7 +13,7 @@ class AppColorConstants {
   static const fillColor = Color(0xffF8FAFB);
   static const lightPurpleColor = Color(0xffE0D9FF);
   static const lightPinkColor = Color(0xffFFC9DB);
-  static const lightBlueColor = Color(0xffE0D9FF);
+  static const lightGreenColor = Color(0xffBEFFCF);
   static const pinkColor = Color(0xffFF77E1);
   static const purpleColor = Color(0xff855BEF);
   static const greenColor = Color(0xff34A853);

@@ -1,38 +1,36 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/utility/constants.dart';
 import '../../../../core/utility/state_enum.dart';
 
-class TotalTransactions extends StatefulWidget {
-  const TotalTransactions({
-    Key? key,
-  }) : super(key: key);
+class FailedTransactionsLog extends StatefulWidget {
+  const FailedTransactionsLog({super.key});
 
   @override
-  State<TotalTransactions> createState() => _TotalTransactionsState();
+  State<FailedTransactionsLog> createState() => _FailedTransactionsLogState();
 }
 
-class _TotalTransactionsState extends State<TotalTransactions> {
+class _FailedTransactionsLogState extends State<FailedTransactionsLog> {
+
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FirestoreTransactionNotifier>(
+    return Consumer<FirestoreTransactionLogNotifier>(
       builder: (context, data, child) {
-        final status = data.getTotalNominalStatus;
+        final status = data.failedTransactionStatus;
         if (status == Status.Loading) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               color: AppColorConstants.lightPinkColor,
             ),
-            padding: const EdgeInsets.all(10),
-            width: 100,
-            height: 100,
-            child: const Center(child: CircularProgressIndicator())
+              padding: const EdgeInsets.all(10),
+              width: 116,
+              height: 116,
+              child: const Center(child: CircularProgressIndicator()
+            ) 
           );
         }
         if (status == Status.Error) {
@@ -41,31 +39,31 @@ class _TotalTransactionsState extends State<TotalTransactions> {
               borderRadius: BorderRadius.circular(6),
               color: AppColorConstants.lightPinkColor,
             ),
-            padding: const EdgeInsets.all(10),
-            width: 160,
-            height: 100,
-            child: Center(child: Text(data.message))
+              padding: const EdgeInsets.all(10),
+              width: 116,
+              height: 116,
+              child: Center(child: Text(data.message)
+            ) 
           );
         }
-        if (status == Status.Empty || status == Status.Success) {
+        if (status == Status.Success || status == Status.Empty) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 160,
-            height: 100,
+            width: 116,
+            height: 116,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Total Successful Transactions', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                const Text('Failed Transactions',style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                 const SizedBox(height: 10),
-                Text(
-                  data.allTimeTransaction.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
+                data.failedPercentage == double.nan 
+                ? Text('0%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+                : Text('${data.failedPercentage}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
               ],
             )
           );
@@ -73,11 +71,11 @@ class _TotalTransactionsState extends State<TotalTransactions> {
         return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: AppColorConstants.lightPurpleColor,
+              color: AppColorConstants.lightPinkColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 100,
-            height: 100,
+            width: 116,
+            height: 116,
             child: const Center(child: Text('Something\'s wrong please try again '))
           );
       },

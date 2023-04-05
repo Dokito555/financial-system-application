@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/constants.dart';
 import '../../../core/utility/state_enum.dart';
-import '../../components/loading.dart';
 import '../../components/show_toast.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -114,6 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Input Your Email',
             labelText: 'Email',
           ),
+          keyboardType: TextInputType.emailAddress,
           autofocus: false,
           validator: (value) {
             if (value!.isEmpty) {

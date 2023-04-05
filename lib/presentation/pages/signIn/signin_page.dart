@@ -5,7 +5,6 @@ import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.d
 import 'package:provider/provider.dart';
 import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/state_enum.dart';
-import '../../components/loading.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -114,6 +113,7 @@ class _SignInPageState extends State<SignInPage> {
             labelText: 'Email',
           ),
           autofocus: false,
+          keyboardType: TextInputType.emailAddress,
           validator: (value) {
             if (value!.isEmpty) {
               return "Email must not be empty";

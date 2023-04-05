@@ -5,7 +5,6 @@ import 'package:uuid/uuid.dart';
 import '../../../../core/routes/route_paths.dart';
 import '../../../../core/utility/state_enum.dart';
 import '../../../../data/model/invoice_model.dart';
-import '../../../components/loading.dart';
 import '../../../components/show_toast.dart';
 import '../../../provider/firestore_invoice_notifier.dart';
 import '../../../provider/firestore_transaction_log_notifier.dart';
@@ -53,7 +52,6 @@ class CreateInvoiceButton extends StatelessWidget {
 
     Future<bool> checkInvoice(InvoiceModel invoice) async {
 
-      var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
       var transactionLogNotifier = Provider.of<FirestoreTransactionLogNotifier>(context, listen: false);
 
       final now = DateTime.now();
