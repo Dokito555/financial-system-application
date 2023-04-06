@@ -60,9 +60,9 @@ class _SuccessfulTransactionsLogState extends State<SuccessfulTransactionsLog> {
               children: [
                 const Text('Successful Transactions',style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                 const SizedBox(height: 10),
-                data.successfulPercentage == double.nan 
-                ? Text('0%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
-                : Text('${data.successfulPercentage.toInt()}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+                data.successfulPercentage == double.nan
+                ? Text('0%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold))
+                : Text('${data.successfulPercentage.toStringAsFixed(1)}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
               ],
             )
           );

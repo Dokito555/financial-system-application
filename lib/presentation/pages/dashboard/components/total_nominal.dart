@@ -60,7 +60,7 @@ class _TotalNominalState extends State<TotalNominal> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Total Nominal', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
-                const SizedBox(height: 10),
+                const SizedBox(height: 22),
                 Text(
                   NumberFormat.compactCurrency(
                     decimalDigits: 2, locale: "en_US", symbol: "").format(data.totalNominal),

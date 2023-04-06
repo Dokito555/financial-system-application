@@ -61,9 +61,9 @@ class _FailedTransactionsLogState extends State<FailedTransactionsLog> {
               children: [
                 const Text('Failed Transactions',style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                 const SizedBox(height: 10),
-                data.failedPercentage == double.nan 
-                ? Text('0%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
-                : Text('${data.failedPercentage.toInt()}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+                data.failedPercentage == double.nan
+                ? Text('0%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold))
+                : Text('${data.failedPercentage.toStringAsFixed(1)}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
               ],
             )
           );
