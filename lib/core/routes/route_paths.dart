@@ -1,4 +1,3 @@
-import 'package:flutter_financial/presentation/pages/transaction_log/transaction_log_page.dart';
 
 class AppRoutePaths {
   static const homeRoute = '/';

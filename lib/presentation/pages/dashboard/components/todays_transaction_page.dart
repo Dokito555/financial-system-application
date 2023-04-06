@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
+import 'package:flutter_financial/presentation/pages/transaction/components/transaction_card.dart';
+import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/utility/state_enum.dart';
-import '../../../provider/firestore_transaction_notifier.dart';
-import '../../transaction/components/transaction_card.dart';
 
 class TodaysTransactionPage extends StatefulWidget {
   const TodaysTransactionPage({super.key});
@@ -42,7 +42,7 @@ class _TodaysTransactionPageState extends State<TodaysTransactionPage> {
             },
           );
         }
-        return Center(child: Text('Something\'s wrong please try again'));
+        return const Center(child: Text('Something\'s wrong please try again'));
       },
     );
   }

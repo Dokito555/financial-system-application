@@ -1,20 +1,11 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
-import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/all_time_transaction_page.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/monthly_transaction_page.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/todays_transaction_page.dart';
 import 'package:flutter_financial/presentation/pages/dashboard/components/total_transactions.dart';
-import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
-import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../../core/routes/route_paths.dart';
 import '../../../core/utility/constants.dart';
-import '../../../core/utility/state_enum.dart';
 import '../../provider/firestore_transaction_notifier.dart';
 import 'components/total_nominal.dart';
 
@@ -49,14 +40,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         iconTheme: const IconThemeData(color: Color(0xff777474)),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text('Dashboard', style: TextStyle(color: Colors.black),),
+        title: const Text('Dashboard', style: TextStyle(color: Colors.black),),
         actions: const <Widget>[
          
         ],
       ),
         body: SafeArea(
           child: Container(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             // child: SingleChildScrollView(
               child: ListView(
                 children: [

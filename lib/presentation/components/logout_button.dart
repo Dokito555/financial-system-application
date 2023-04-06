@@ -6,7 +6,7 @@ import '../../core/routes/route_paths.dart';
 import '../../core/utility/state_enum.dart';
 import '../provider/firebase_auth_notifier.dart';
 
-class LogoutButton extends StatelessWidget {
+  class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
 
   @override

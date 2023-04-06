@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/data/model/invoice_model.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../core/routes/route_paths.dart';
 
 class InvoiceCard extends StatelessWidget {
   final InvoiceModel invoice;
 
-  const InvoiceCard({required this.invoice});
+  const InvoiceCard({super.key, required this.invoice});
 
   @override
   Widget build(BuildContext context) {
