@@ -113,9 +113,6 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           _getTransactionsStatus = Status.Success;
           _message = 'Completed';
           notifyListeners();
-          // for (var i = 0; i < _transactions.length; i++) {
-          //   _totalNominal = _transactions[i].total;
-          // }
           _totalNominal = 0;
           _transactions.forEach((i) { 
             _totalNominal += i.total;
