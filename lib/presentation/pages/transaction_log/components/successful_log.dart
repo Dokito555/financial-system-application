@@ -62,7 +62,7 @@ class _SuccessfulTransactionsLogState extends State<SuccessfulTransactionsLog> {
                 const SizedBox(height: 10),
                 data.successfulPercentage == double.nan 
                 ? Text('0%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
-                : Text('${data.successfulPercentage}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+                : Text('${data.successfulPercentage.toInt()}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
               ],
             )
           );

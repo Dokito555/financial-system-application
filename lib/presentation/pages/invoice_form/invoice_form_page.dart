@@ -15,6 +15,7 @@ class InvoiceFormPage extends StatefulWidget {
 
 class _InvoiceFormPageState extends State<InvoiceFormPage> {
   final GlobalKey<FormState> _addPointKey = GlobalKey<FormState>();
+
   List<String> paymentMethods = <String>["CLOSE", "OPEN"];
 
   String _paymentMethodValue = "CLOSE";
@@ -71,6 +72,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
 
   Widget _invoiceForm(BuildContext context) {
     return Column(
+      // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         InvoiceTextFormField(
             controller: invoiceNumberController,
@@ -80,19 +82,32 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
             controller: paymentNumberController,
             isValidate: true,
             text: "Payment Number"),
-        DropdownButton(
-          items: paymentMethods.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? value) {
-            setState(() {
-              _paymentMethodValue = value!;
-            });
-          },
-          value: _paymentMethodValue,
+        const SizedBox(height: 20),
+        const Text('Select Payment Method'),
+        const SizedBox(height: 5),
+        SizedBox(
+          width: double.infinity,
+          child: DropdownButtonHideUnderline(
+            child: ButtonTheme(
+              alignedDropdown: true,
+              child: DropdownButton(
+                hint: const Text('Payment Method'),
+                items: paymentMethods
+                    .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                }).toList(),
+                onChanged: (String? value) {
+                  setState(() {
+                    _paymentMethodValue = value!;
+                  });
+                },
+                value: _paymentMethodValue,
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 10),
         InvoiceTextFormField(
@@ -113,9 +128,9 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
         TextFormField(
             controller: startDateController,
             decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Start Date',
-              suffixIcon: Icon(Icons.calendar_month_outlined)
+                border: OutlineInputBorder(),
+                labelText: 'Start Date',
+                suffixIcon: Icon(Icons.calendar_month_outlined)
             ),
             autofocus: false,
             validator: (value) {
@@ -142,9 +157,9 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
         TextFormField(
           controller: expiryDateController,
           decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Expiry Date',
-            suffixIcon: Icon(Icons.calendar_month_outlined)
+              border: OutlineInputBorder(),
+              labelText: 'Expiry Date',
+             suffixIcon: Icon(Icons.calendar_month_outlined)
           ),
           autofocus: false,
           validator: (value) {

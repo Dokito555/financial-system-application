@@ -63,7 +63,7 @@ class _FailedTransactionsLogState extends State<FailedTransactionsLog> {
                 const SizedBox(height: 10),
                 data.failedPercentage == double.nan 
                 ? Text('0%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
-                : Text('${data.failedPercentage}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+                : Text('${data.failedPercentage.toInt()}%', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
               ],
             )
           );
