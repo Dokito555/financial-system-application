@@ -116,6 +116,7 @@ class FirestoreTransactionNotifier extends ChangeNotifier {
           // for (var i = 0; i < _transactions.length; i++) {
           //   _totalNominal = _transactions[i].total;
           // }
+          _totalNominal = 0;
           _transactions.forEach((i) { 
             _totalNominal += i.total;
           });
