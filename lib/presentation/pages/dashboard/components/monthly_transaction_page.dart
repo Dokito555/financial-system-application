@@ -17,15 +17,6 @@ class _MonthlyTransactionPageState extends State<MonthlyTransactionPage> {
   final _scrollController = ScrollController();
 
   @override
-    void initState() {
-      super.initState();
-      Future.microtask(() =>
-          Provider.of<FirestoreTransactionNotifier>(context, listen: false)
-          .getMonthlyTransaction()
-      );
-    }
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<FirestoreTransactionNotifier>(
       builder: (context, data, child) {

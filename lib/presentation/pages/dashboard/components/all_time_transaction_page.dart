@@ -16,15 +16,6 @@ class _AllTimeTransactionPageState extends State<AllTimeTransactionPage> {
   final scrollController = ScrollController();
 
   @override
-    void initState() {
-      super.initState();
-      Future.microtask(() =>
-          Provider.of<FirestoreTransactionNotifier>(context, listen: false)
-          .getTransactions()
-      );
-    }
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<FirestoreTransactionNotifier>(
       builder: (context, data, child) {

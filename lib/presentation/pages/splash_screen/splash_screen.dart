@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
         )
       )
     );
-    print('Splash!');
   }
 
   @override

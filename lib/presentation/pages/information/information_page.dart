@@ -26,7 +26,7 @@ class InformationPage extends StatelessWidget {
             right: 10,
             top: 10,
           ),
-          child: const Text('Financial App'),
+          child: Text('Financial App'),
         ),
       ),
       drawer: const CustomDrawer(),

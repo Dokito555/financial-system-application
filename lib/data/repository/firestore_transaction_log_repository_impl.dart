@@ -50,4 +50,34 @@ class FirestoreTransactionLogRepositoryImpl extends FirestoreTransactionLogRepos
     }
   }
   
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fetchFailedTransactionLog() async {
+    try {
+      final result = await remoteDataSource.fetchFailedTransactionLog();
+      return Right(result);
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<InvoiceModel>>> fetchSuccessfulTransactionLog() async {
+    try {
+      final result = await remoteDataSource.fetchSuccessfulTransactionLog();
+      return Right(result);
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to network'));
+    } on FirebaseException catch (e) {
+      if (kDebugMode) {
+        print('Failed with error code: ${e.code}');
+      }
+      return Left(FirebaseFailure('Failed with error code: ${e.code}'));
+    }
+  }
+  
 }

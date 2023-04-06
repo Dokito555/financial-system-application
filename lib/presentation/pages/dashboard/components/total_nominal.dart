@@ -16,14 +16,6 @@ class TotalNominal extends StatefulWidget {
 }
 
 class _TotalNominalState extends State<TotalNominal> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => Provider.of<FirestoreTransactionNotifier>(context, listen: false)
-      ..getTransactions()
-      // ..getTotalNominal()
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +76,7 @@ class _TotalNominalState extends State<TotalNominal> {
               color: AppColorConstants.lightPurpleColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 100,
+            width: 160,
             height: 100,
             child: const Center(child: Text('Something\'s wrong please try again '))
           );

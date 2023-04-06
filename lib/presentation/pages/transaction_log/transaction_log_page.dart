@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/components/custom_drawer.dart';
-import 'package:flutter_financial/presentation/components/logout_button.dart';
 import 'package:flutter_financial/presentation/pages/transaction_log/components/transaction_log_card.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,9 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<FirestoreTransactionLogNotifier>(context, listen: false).getTransactionsLog());
+    Future.microtask(() => Provider.of<FirestoreTransactionLogNotifier>(context, listen: false)
+      ..getTransactionsLog()
+    );
   }
 
   @override
@@ -35,9 +36,6 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
             'Log Transaksi',
             style: TextStyle(color: Colors.black),
           ),
-          actions: const <Widget>[
-            LogoutButton(),
-          ],
         ),
         body: Consumer<FirestoreTransactionLogNotifier>(
           builder: (context, data, child) {
@@ -72,3 +70,4 @@ class _TransactionLogPageState extends State<TransactionLogPage> {
         drawer: const CustomDrawer());
   }
 }
+

@@ -111,6 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Input Your Email',
             labelText: 'Email',
           ),
+          keyboardType: TextInputType.emailAddress,
           autofocus: false,
           validator: (value) {
             if (value!.isEmpty) {

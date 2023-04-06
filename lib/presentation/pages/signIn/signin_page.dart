@@ -113,6 +113,7 @@ class _SignInPageState extends State<SignInPage> {
             labelText: 'Email',
           ),
           autofocus: false,
+          keyboardType: TextInputType.emailAddress,
           validator: (value) {
             if (value!.isEmpty) {
               return "Email must not be empty";

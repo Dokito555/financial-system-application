@@ -51,7 +51,6 @@ class CreateInvoiceButton extends StatelessWidget {
 
     Future<bool> checkInvoice(InvoiceModel invoice) async {
 
-      var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
       var transactionLogNotifier = Provider.of<FirestoreTransactionLogNotifier>(context, listen: false);
 
       final now = DateTime.now();
