@@ -59,10 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          _profilePage(context),
-                          const Padding(padding: EdgeInsets.all(8)),
-                          Text(user.name),
-                          _logoutButton(context)
+                          profilePage(Icons.person_outline, Colors.blue, user.name, "Name")
                         ],
                       ),
                     ),
@@ -77,39 +74,79 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _profilePage(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [_circularProfile(context)],
+  Widget profilePage(
+      IconData icon, Color color, String textvalue, String title) {
+    return  Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        //userImage
+        //userImage()
+        //userinfo
+        userInfo(icon, color, textvalue, title)
+      ]
     );
   }
 
-  Widget _circularProfile(BuildContext context) {
-    return Stack(
-      children:  [
-        const CircleAvatar(
-          radius: 55,
-          backgroundColor: Colors.blue,
-          child: CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('images/Jinsung.png'),
+   Widget userInfo(IconData icon, Color color, String textvalue, String title) {
+    return Column(
+      children: [
+        ListTile(
+          leading: Container(
+            child: Icon(icon),
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(18)
+            ),
           ),
-        ),
-        Ink(
-decoration:  const ShapeDecoration(shape: CircleBorder()),
-        ),
-        const Positioned(
-          right: 1,
-          bottom: 0,
-          child: IconButton(
-            color: Colors.black,
-            onPressed: null,
-            icon: Icon(Icons.edit),
+          title: Text(title,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          subtitle: Text(textvalue),
+        )
+      ]
     );
   }
+
+
+//   Widget _profilePage(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [_circularProfile(context)],
+//     );
+//   }
+
+//   Widget _circularProfile(BuildContext context) {
+//     return Stack(
+//       children:  [
+//         const CircleAvatar(
+//           radius: 55,
+//           backgroundColor: Colors.blue,
+//           child: CircleAvatar(
+//             radius: 50,
+//             backgroundImage: AssetImage('images/Jinsung.png'),
+//           ),
+//         ),
+//         Ink(
+// decoration:  const ShapeDecoration(shape: CircleBorder()),
+//         ),
+//         const Positioned(
+//           right: 1,
+//           bottom: 0,
+//           child: IconButton(
+//             color: Colors.black,
+//             onPressed: null,
+//             icon: Icon(Icons.edit),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+ 
+
+
 
   Widget _logoutButton(BuildContext context) {
     var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
