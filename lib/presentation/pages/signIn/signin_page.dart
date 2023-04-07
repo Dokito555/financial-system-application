@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
 import 'package:provider/provider.dart';
-import '../../../core/routes/route_paths.dart';
-import '../../../core/utility/state_enum.dart';
-import '../../components/loading.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -114,6 +113,7 @@ class _SignInPageState extends State<SignInPage> {
             labelText: 'Email',
           ),
           autofocus: false,
+          keyboardType: TextInputType.emailAddress,
           validator: (value) {
             if (value!.isEmpty) {
               return "Email must not be empty";
@@ -214,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: AppColorConstants.primaryColor
+            backgroundColor: AppColorConstants.primaryColor
           ),
           child: const Text('Login'),
           onPressed: () async {

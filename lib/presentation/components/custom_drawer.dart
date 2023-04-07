@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
 
-import '../../core/routes/route_paths.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});

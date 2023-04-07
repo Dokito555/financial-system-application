@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/utility/constants.dart';
-import '../../../../core/utility/state_enum.dart';
 
 class TotalNominal extends StatefulWidget {
   const TotalNominal({
@@ -16,14 +16,6 @@ class TotalNominal extends StatefulWidget {
 }
 
 class _TotalNominalState extends State<TotalNominal> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => Provider.of<FirestoreTransactionNotifier>(context, listen: false)
-      ..getTransactions()
-      // ..getTotalNominal()
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +60,7 @@ class _TotalNominalState extends State<TotalNominal> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Total Nominal', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
-                const SizedBox(height: 10),
+                const SizedBox(height: 22),
                 Text(
                   NumberFormat.compactCurrency(
                     decimalDigits: 2, locale: "en_US", symbol: "").format(data.totalNominal),
@@ -84,7 +76,7 @@ class _TotalNominalState extends State<TotalNominal> {
               color: AppColorConstants.lightPurpleColor,
             ),
             padding: const EdgeInsets.all(10),
-            width: 100,
+            width: 160,
             height: 100,
             child: const Center(child: Text('Something\'s wrong please try again '))
           );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class InvoiceTextFormField extends StatelessWidget {
   
-  InvoiceTextFormField({
+  const InvoiceTextFormField({super.key, 
     required this.controller,
     required this.isValidate,
     required this.text,
@@ -22,7 +22,7 @@ class InvoiceTextFormField extends StatelessWidget {
           keyboardType: keyboardType,
           controller: controller,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             hintText: 'Input $text',
             labelText: text,
           ),

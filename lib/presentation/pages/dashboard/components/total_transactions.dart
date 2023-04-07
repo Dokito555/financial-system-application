@@ -1,10 +1,10 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/provider/firestore_transaction_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../core/utility/constants.dart';
-import '../../../../core/utility/state_enum.dart';
 
 class TotalTransactions extends StatefulWidget {
   const TotalTransactions({
@@ -16,13 +16,6 @@ class TotalTransactions extends StatefulWidget {
 }
 
 class _TotalTransactionsState extends State<TotalTransactions> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => Provider.of<FirestoreTransactionNotifier>(context, listen: false)
-      ..getTransactions()
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +59,7 @@ class _TotalTransactionsState extends State<TotalTransactions> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Total Transactions', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                const Text('Total Successful Transactions', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                 const SizedBox(height: 10),
                 Text(
                   data.allTimeTransaction.toString(),

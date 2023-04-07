@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
+import 'package:flutter_financial/data/model/invoice_model.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
+import 'package:flutter_financial/presentation/provider/firestore_invoice_notifier.dart';
+import 'package:flutter_financial/presentation/provider/firestore_transaction_log_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../../../core/routes/route_paths.dart';
-import '../../../../core/utility/state_enum.dart';
-import '../../../../data/model/invoice_model.dart';
-import '../../../components/loading.dart';
-import '../../../components/show_toast.dart';
-import '../../../provider/firestore_invoice_notifier.dart';
-import '../../../provider/firestore_transaction_log_notifier.dart';
 
 class CreateInvoiceButton extends StatelessWidget {
   const CreateInvoiceButton({
@@ -53,7 +51,6 @@ class CreateInvoiceButton extends StatelessWidget {
 
     Future<bool> checkInvoice(InvoiceModel invoice) async {
 
-      var invoiceNotifier = Provider.of<FirestoreInvoiceNotifier>(context, listen: false);
       var transactionLogNotifier = Provider.of<FirestoreTransactionLogNotifier>(context, listen: false);
 
       final now = DateTime.now();

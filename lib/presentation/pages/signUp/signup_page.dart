@@ -1,15 +1,12 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_financial/core/routes/route_paths.dart';
+import 'package:flutter_financial/core/utility/constants.dart';
+import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/core/utility/validators.dart';
 import 'package:flutter_financial/data/model/user_model.dart';
+import 'package:flutter_financial/presentation/components/show_toast.dart';
 import 'package:flutter_financial/presentation/provider/firebase_auth_notifier.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import '../../../core/routes/route_paths.dart';
-import '../../../core/utility/constants.dart';
-import '../../../core/utility/state_enum.dart';
-import '../../components/loading.dart';
-import '../../components/show_toast.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -114,6 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Input Your Email',
             labelText: 'Email',
           ),
+          keyboardType: TextInputType.emailAddress,
           autofocus: false,
           validator: (value) {
             if (value!.isEmpty) {
@@ -219,7 +217,7 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: AppColorConstants.primaryColor
+            backgroundColor: AppColorConstants.primaryColor
           ),
           child: const Text('Sign Up'),
           onPressed: () async {
