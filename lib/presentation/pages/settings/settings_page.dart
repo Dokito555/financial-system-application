@@ -59,8 +59,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                           _circularProfile(context),
                           profilePage(Icons.person_outline, Colors.blue,
-                              user.name, "Name")
+                              user.email, "Name"),
+                              profilePage(Icons.person_outline, Colors.blue,
+                              user.email, "Email"),
+                              profilePage(Icons.person_outline, Colors.blue,
+                              user.email, "Phone Number"),
                         ],
                       ),
                     ),
@@ -78,10 +83,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget profilePage(
       IconData icon, Color color, String textvalue, String title) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-      //userImage
-      //userImage()
       //userinfo
-      userInfo(icon, color, textvalue, title)
+      userInfo(icon, color, textvalue, title),
+      userInfo(icon, color, textvalue, title),
+      userInfo(icon, color, textvalue, title),
     ]);
   }
 
@@ -100,44 +105,45 @@ class _SettingsPageState extends State<SettingsPage> {
           title,
           style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        subtitle: Text(textvalue),
+        subtitle: Text(textvalue,
+        style: const TextStyle(color: Colors.black),),
       )
     ]);
   }
 
-//   Widget _profilePage(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [_circularProfile(context)],
-//     );
-//   }
+  Widget _profilePage(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [_circularProfile(context)],
+    );
+  }
 
-//   Widget _circularProfile(BuildContext context) {
-//     return Stack(
-//       children:  [
-//         const CircleAvatar(
-//           radius: 55,
-//           backgroundColor: Colors.blue,
-//           child: CircleAvatar(
-//             radius: 50,
-//             backgroundImage: AssetImage('images/Jinsung.png'),
-//           ),
-//         ),
-//         Ink(
-// decoration:  const ShapeDecoration(shape: CircleBorder()),
-//         ),
-//         const Positioned(
-//           right: 1,
-//           bottom: 0,
-//           child: IconButton(
-//             color: Colors.black,
-//             onPressed: null,
-//             icon: Icon(Icons.edit),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
+  Widget _circularProfile(BuildContext context) {
+    return Stack(
+      children:  [
+        const CircleAvatar(
+          radius: 55,
+          backgroundColor: Colors.blue,
+          child: CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage('images/git .png'),
+          ),
+        ),
+        Ink(
+decoration:  const ShapeDecoration(shape: CircleBorder()),
+        ),
+        const Positioned(
+          right: 1,
+          bottom: 0,
+          child: IconButton(
+            color: Colors.black,
+            onPressed: null,
+            icon: Icon(Icons.edit),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _logoutButton(BuildContext context) {
     var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
