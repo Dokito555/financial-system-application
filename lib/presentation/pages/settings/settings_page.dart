@@ -59,13 +59,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                           _circularProfile(context),
-                          profilePage(Icons.person_outline, Colors.blue,
-                              user.email, "Name"),
-                              profilePage(Icons.person_outline, Colors.blue,
-                              user.email, "Email"),
-                              profilePage(Icons.person_outline, Colors.blue,
-                              user.email, "Phone Number"),
+                          _circularProfile(context, user.profilePicture!),
+                          const SizedBox(height: 55),
+                          profilePage(Icons.person_outline, Colors.blue,user.name, "Name"),
+                          profilePage(Icons.mail_outline, Colors.amber,user.email, "Email"),
+                          profilePage(Icons.phone_outlined, Colors.green,user.phoneNumber, "Phone Number"),
+                          const SizedBox(height: 30,),
+                          _logoutButton(context),
                         ],
                       ),
                     ),
@@ -84,8 +84,6 @@ class _SettingsPageState extends State<SettingsPage> {
       IconData icon, Color color, String textvalue, String title) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       //userinfo
-      userInfo(icon, color, textvalue, title),
-      userInfo(icon, color, textvalue, title),
       userInfo(icon, color, textvalue, title),
     ]);
   }
@@ -111,14 +109,14 @@ class _SettingsPageState extends State<SettingsPage> {
     ]);
   }
 
-  Widget _profilePage(BuildContext context) {
+  Widget _profilePage(BuildContext context, String image) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [_circularProfile(context)],
+      children: [_circularProfile(context, image)],
     );
   }
 
-  Widget _circularProfile(BuildContext context) {
+  Widget _circularProfile(BuildContext context, String img) {
     return Stack(
       children:  [
         const CircleAvatar(
@@ -126,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
           backgroundColor: Colors.blue,
           child: CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage('images/git .png'),
+            backgroundImage: AssetImage('images/Jinsung.png'),
           ),
         ),
         Ink(

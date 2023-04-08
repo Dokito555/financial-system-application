@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_financial/core/routes/route_paths.dart';
+import 'package:flutter/material.dart'; import 'package:flutter_financial/core/routes/route_paths.dart';
 import 'package:flutter_financial/core/utility/constants.dart';
 import 'package:flutter_financial/core/utility/state_enum.dart';
 import 'package:flutter_financial/presentation/components/show_toast.dart';
@@ -56,9 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                       const SizedBox(
                         height: 16,
                       ),
-                      _loginButton(context),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      _loginButton(context), Row( mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const Text('Doesn\'t have an account?'),
                           TextButton(
