@@ -49,7 +49,7 @@ class _InvoiceFormPageState extends State<InvoiceFormPage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 50),
           child: Form(
             key: _addPointKey,
             child: ListView(

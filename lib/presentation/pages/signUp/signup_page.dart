@@ -19,11 +19,13 @@ class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _addPointKey = GlobalKey<FormState>();
   late String email;
   late String password;
+  late String name;
   late String phoneNumber;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   bool _isPasswordHide = true;
 
@@ -36,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
       child: Container(
         padding: const EdgeInsets.only(
           left: 10,
@@ -63,7 +65,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           TextButton(
                             child: const Text(
                               'Login',
-                              style: TextStyle(fontSize: 15, color: AppColorConstants.primaryColor),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: AppColorConstants.primaryColor),
                             ),
                             onPressed: () {
                               Navigator.pushReplacementNamed(
@@ -76,11 +80,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 )
               ],
-            )
-          ),
-        ),
-      )
-    );
+            )),
+      ),
+    ));
   }
 
   Widget _header(BuildContext context) {
@@ -119,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
             }
             if (Validators.isValidEmail(value) == false) {
               return "Invalid Email";
-            } 
+            }
             return null;
           },
           onChanged: (String value) {
@@ -162,6 +164,28 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          controller: nameController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Input Your Name',
+            labelText: 'Your Name',
+          ),
+          autofocus: false,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Name must not be empty";
+            }
+            return null;
+          },
+          onChanged: (String value) {
+            name = value;
+          },
+          onSaved: (String? value) {
+            name = value!;
+          },
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
           controller: phoneNumberController,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
@@ -188,17 +212,23 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _signUpButton(BuildContext context) {
-
     var authNotifier = Provider.of<FirebaseAuthNotifier>(context);
 
     Future<void> signUp() async {
+      await authNotifier.authSignUpEmailPassword(
+          email: email, password: password);
+      await authNotifier.storeUser(
+          user: UserModel(
+              id: authNotifier.userUID,
+              name: name,
+              email: email,
+              phoneNumber: phoneNumber));
 
-      await authNotifier.authSignUpEmailPassword(email: email, password: password);
-      await authNotifier.storeUser(user: UserModel(id: authNotifier.userUID, name: email, email: email, phoneNumber: phoneNumber));
-      
-      if (authNotifier.signUpStatus == Status.Error || authNotifier.storeUserStatus == Status.Error) {
+      if (authNotifier.signUpStatus == Status.Error ||
+          authNotifier.storeUserStatus == Status.Error) {
         ShowToast.toast(authNotifier.message);
-      } else if (authNotifier.signUpStatus == Status.Success && authNotifier.storeUserStatus == Status.Success) {
+      } else if (authNotifier.signUpStatus == Status.Success &&
+          authNotifier.storeUserStatus == Status.Success) {
         ShowToast.toast(authNotifier.message);
         if (!context.mounted) return;
         Navigator.pushReplacementNamed(context, AppRoutePaths.signInPageRoute);
@@ -210,23 +240,21 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     return authNotifier.signUpStatus == Status.Loading
-    ? const Center(child: CircularProgressIndicator())
-    : Container(
-        width: MediaQuery. of(context).size.width,
-        height: 50,
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColorConstants.primaryColor
-          ),
-          child: const Text('Sign Up'),
-          onPressed: () async {
-            if (!_addPointKey.currentState!.validate()) {
-              return;
-            }
-            signUp();
-          },
-        )
-      );
+        ? const Center(child: CircularProgressIndicator())
+        : Container(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColorConstants.primaryColor),
+              child: const Text('Sign Up'),
+              onPressed: () async {
+                if (!_addPointKey.currentState!.validate()) {
+                  return;
+                }
+                signUp();
+              },
+            ));
   }
 }
