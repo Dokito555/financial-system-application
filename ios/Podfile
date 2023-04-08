@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
+# platform :ios, '11.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -10,9 +10,12 @@ project 'Runner', {
   'Release' => :release,
 }
 
-pod 'Firebase', :modular_headers => true
-pod 'FirebaseCore', :modular_headers => true
-pod 'GoogleUtilities', :modular_headers => true
+# pod 'Firebase', :modular_headers => true
+# pod 'FirebaseCore', :modular_headers => true
+# pod 'GoogleUtilities', :modular_headers => true
+pod 'Firebase'
+pod 'FirebaseCore'
+pod 'GoogleUtilities'
 $RNFirebaseAsStaticFramework = true
 
 def flutter_root
@@ -33,8 +36,8 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
-  use_modular_headers!
+  use_frameworks! :linkage => :static
+  # use_modular_headers!
 
   pod 'BoringSSL-GRPC'
 

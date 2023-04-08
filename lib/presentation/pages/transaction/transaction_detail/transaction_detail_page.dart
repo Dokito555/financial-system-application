@@ -35,26 +35,63 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-              top: 10,
+              left: 20,
+              right: 20,
+              top: 20,
             ),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Tagihan Untuk'),
-                  Text(invoice.name),
-                  invoice.address != null
-                      ? Text(invoice.address!)
-                      : Text('Email ${invoice.email}'),
-                  Text('Invoice Description : ${invoice.description}'),
-                  const Text('Invoice Address Isn\t Available'),
-                  Text('Invoice Date : ${invoice.startDate}'),
-                  Text('Invoice Expiry Date : ${invoice.expiryDate}'),
-                  Text('Invoice Quantity : ${invoice.quantity}'),
-                  Text('Invoice Nominal : ${invoice.nominal}'),
-                  Text('Invoice Total : ${invoice.total}'),
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Tagihan Untuk', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                        SizedBox(height: 20,),
+                        Text('${invoice.name}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                        Text('${invoice.email}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),),
+                        Text('${invoice.address}', style: TextStyle(color: Colors.grey),),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Text('Invoice Date :', style: const TextStyle(color: AppColorConstants.primaryColor)),
+                            SizedBox(width: 60,),
+                            Text('${invoice.startDate}')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('Payment Method :', style: const TextStyle(color: AppColorConstants.primaryColor)),
+                            SizedBox(width: 30,),
+                            Text('${invoice.paymentMethod}',)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('Due Date :', style: const TextStyle(color: AppColorConstants.primaryColor)),
+                            SizedBox(width: 80,),
+                            Text('${invoice.expiryDate}')
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Text('Sub Total'),
+                            SizedBox(width: 60,),
+                            Text('${invoice.nominal}')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('Total'),
+                            SizedBox(width: 90,),
+                            Text('${invoice.total}',)
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

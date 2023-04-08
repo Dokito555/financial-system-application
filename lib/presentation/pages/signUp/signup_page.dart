@@ -206,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
           onSaved: (String? value) {
             phoneNumber = value!;
           },
-        )
+        ),
       ],
     );
   }
